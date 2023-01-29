@@ -1,0 +1,22 @@
+{
+  "name": "foodie",
+  "version": "1.0.0",
+  "description": "This project creates a web application that allows the user to write, edit, and share recipes. The application would then automatically calculate relevant data (macronutrients, nutritional value, daily recommended intake, etc.) based on the ingredients of the recipe. The data would be used to create an interactive visualization (graphs, charts, etc.) in the application. Users will be able to follow other accounts, like and share recipes, and save \"favorited\" recipes. Users can also filter recipes by certain criteria (i.e. most liked, high protein, low calorie, etc.).\r ### Members\r **Front-End**\r  Dylan DePasquale and Richard Qian  \r  **Back-End**\r Pranav Venu and Paul Jablonowski",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DylanDePasquale24/Foodie.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DylanDePasquale24/Foodie/issues"
+  },
+  "homepage": "https://github.com/DylanDePasquale24/Foodie#readme",
+  "dependencies": {
+    "typescript": "^4.9.4"
+  }
+}
