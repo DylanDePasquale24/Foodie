@@ -23,10 +23,15 @@ console.log(results);
 console.log(num);
 console.log(emp);
 console.log(sum);
-var Color;
-(function (Color) {
-    Color[Color["Red"] = 0] = "Red";
-    Color[Color["Green"] = 1] = "Green";
-    Color[Color["Blue"] = 2] = "Blue";
-})(Color || (Color = {}));
-let c = Color.Blue;
+let c = 2 /* Color.Blue */;
+// Tuples are useful for functions that return multiple values/types
+let swapNums;
+function swapNumbers(num1, num2) {
+    return [num2, num1];
+}
+swapNums = swapNumbers(10, 20);
+swapNums[0];
+swapNums[1];
+let department;
+department = "IT";
+department = 10;

@@ -1,4 +1,4 @@
-let lname : string;
+let lname: string;
 lname = "Qian";
 // lname = 10;
 let newname = lname.toUpperCase();
@@ -14,11 +14,11 @@ let result = parseInt(dob);
 let isValid: boolean = true;
 console.log(isValid);
 
-let empList : string[];
+let empList: string[];
 
 empList = ["Qian1", "Qian2", "Qian3"];
 
-let numList : Array<number>;
+let numList: Array<number>;
 
 numList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -44,9 +44,9 @@ const enum Color {
 let c: Color = Color.Blue;
 
 // Tuples are useful for functions that return multiple values/types
-let swapNums : [number, number];
+let swapNums: [number, number];
 
-function swapNumbers(num1: number, num2: number) : [number, number] {
+function swapNumbers(num1: number, num2: number): [number, number] {
     return [num2, num1];
 }
 
