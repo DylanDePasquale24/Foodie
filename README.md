@@ -1,6 +1,6 @@
 # Foodie
 ### Description 
-This branch follows an online Angular tutorial from freecodecamp. **DO NOT** do a 'git pull' to pull changes from main.
+This branch follows an online Angular tutorial from freecodecamp. **DO NOT** back merge the 'main' branch into this branch.
 Video: https://www.youtube.com/watch?v=3qBXWUpoPHo
 ### Members
 **Front-End**
