@@ -11,6 +11,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var _Employee_id;
+Object.defineProperty(exports, "__esModule", { value: true });
 class Employee {
     //constructor(){} multiple constructor implementations not allowed
     constructor(id, name, address) {
@@ -19,6 +20,9 @@ class Employee {
         this.name = name;
         this.address = address;
     }
+    login() {
+        return { name: this.name, id: __classPrivateFieldGet(this, _Employee_id, "f"), email: "" };
+    }
     get empId() {
         return __classPrivateFieldGet(this, _Employee_id, "f");
     }
@@ -26,14 +30,20 @@ class Employee {
         __classPrivateFieldSet(this, _Employee_id, id, "f");
     }
     getNamewithAddress() {
-        return `${this.name} stays at ${this.address}`;
+        return `${this.name} stays at ${this.address.street}`;
     }
     static getEmployeeCount() {
         return 50;
     }
 }
 _Employee_id = new WeakMap();
-let john = new Employee(1, "John", "123 London Street");
+let john = new Employee(1, "John", {
+    street: "123 London Street",
+    city: "London",
+    state: "UK",
+    pin: "12345"
+});
+// Using getters and setters
 john.empId = 200;
 console.log(john.empId);
 class Manager extends Employee {
@@ -41,11 +51,16 @@ class Manager extends Employee {
         super(id, name, address);
     }
     getNamewithAddress() {
-        return `${this.name} is a manager at ${this.address}`;
+        return `${this.name} is a manager at ${this.address.street}`;
     }
 }
 let address = john.getNamewithAddress();
-let mike = new Manager(2, "Mike", "456 Main Street");
+let mike = new Manager(2, "Mike", {
+    street: "456 Main Street",
+    city: "New York",
+    state: "USA",
+    pin: "67890"
+});
 console.log(john);
 console.log(address);
 console.log(mike.getNamewithAddress());
