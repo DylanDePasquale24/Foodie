@@ -65,3 +65,4 @@ console.log(john);
 console.log(address);
 console.log(mike.getNamewithAddress());
 console.log(Employee.getEmployeeCount());
+//# sourceMappingURL=class.js.map
