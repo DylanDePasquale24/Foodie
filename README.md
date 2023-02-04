@@ -1,6 +1,6 @@
 # Foodie
 ### Description 
-This branch follows an online Angular tutorial from freecodecamp. **DO NOT** back merge the 'main' branch into this branch.
+This branch follows an online Angular tutorial from freecodecamp. **DO NOT** back merge any branch into this branch nor merge this branch into any others. This branch only serves as a Sandbox for TS and Angular.
 Video: https://www.youtube.com/watch?v=3qBXWUpoPHo
 ### Members
 **Front-End**
