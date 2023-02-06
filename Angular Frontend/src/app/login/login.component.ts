@@ -17,7 +17,7 @@ export class LoginComponent {
   loginPassword: string | null = null
   constructor(
     private httpClient: HttpClient,
-    private router: Router
+    // private router: Router
   ){
   }
   register(){
@@ -30,7 +30,7 @@ export class LoginComponent {
     }).subscribe((response: any) => {
       if(response){
         localStorage.setItem('token', response.jwt)
-        this.router.navigate(['profile'])
+        // this.router.navigate(['profile'])
       }
       this.registerFirstName = null
       this.registerLastName = null
@@ -45,7 +45,7 @@ export class LoginComponent {
     }).subscribe((response: any) => {
       if(response){
         localStorage.setItem('token', response.jwt)
-        this.router.navigate(['profile'])
+        // this.router.navigate(['profile'])
       }
       this.loginEmail = null
       this.loginPassword = null
