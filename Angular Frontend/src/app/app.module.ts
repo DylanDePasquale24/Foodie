@@ -6,9 +6,12 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 // import { JwtInterceptor } from './jwt.interceptor';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatButtonModule } from '@angular/material/button'
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -26,6 +29,9 @@ const routes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(routes),
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
     FormsModule
   ],
   exports: [RouterModule],

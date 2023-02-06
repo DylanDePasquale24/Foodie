@@ -8,18 +8,29 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  isLogin: boolean = false
-  registerFirstName: string | null = null
-  registerLastName: string | null = null
-  registerEmail: string | null = null
-  registerPassword: string | null = null
-  loginEmail: string | null = null
-  loginPassword: string | null = null
+  onLoginPage: boolean 
+
+  registerFirstName: string | null
+  registerLastName: string | null 
+  registerEmail: string | null 
+  registerPassword: string | null
+
+  loginEmail: string | null
+  loginPassword: string | null
+
   constructor(
     private httpClient: HttpClient,
     // private router: Router
   ){
+    this.onLoginPage = false
+    this.registerFirstName = null
+    this.registerLastName = null
+    this.registerEmail = null
+    this.registerPassword = null
+    this.loginEmail = null
+    this.loginPassword = null
   }
+
   register(){
     console.log(this.registerFirstName, this.registerPassword)
     this.httpClient.post('http://localhost:8080/register', {
@@ -38,6 +49,7 @@ export class LoginComponent {
       this.registerPassword = null
     })
   }
+
   login(){
     this.httpClient.post('http://localhost:8080/login', {
       email: this.loginEmail,
