@@ -1,8 +1,21 @@
 
-#loginPage{
+.loginPage {
+    /* Global Element Position */    
+    margin: auto;
     position: relative;
-    top: 50px;
-    left: 50px;
+    top: 75px;
+    
+    /* Actual Element Properties */
+    width: 25%;
+    padding: 25px 10px;
+    text-align: center;
+    
+    /*Border */
+    border-style: groove;
+    border-width: 2px;
+    border-radius: 7px;
+}
 
-    /* do margins */
+.loginUnit{
+    padding: 5px;
 }
