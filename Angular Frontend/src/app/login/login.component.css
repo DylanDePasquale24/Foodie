@@ -16,6 +16,11 @@
     border-radius: 7px;
 }
 
-.loginUnit{
+mat-form-field{
+    /*Can style all mat-form-field elements*/
     padding: 5px;
+}
+
+button{
+    margin: 3px 5px;
 }

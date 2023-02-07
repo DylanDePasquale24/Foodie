@@ -2,61 +2,48 @@
 
     <h1>Register Account</h1>
 
-    
-    <!-- First Name -->
-    <span class="loginUnit">
-        <mat-form-field>
-            <mat-label>First Name</mat-label>
-            <input [(ngModel)]="registerFirstName" matInput required placeholder="ex. John">
-        </mat-form-field>
-    </span>
 
+    <!-- First Name -->
+    <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input [(ngModel)]="registerFirstName" matInput required placeholder="ex. John">
+    </mat-form-field>
+    
 
     <!-- Last Name -->
-    <span class="loginUnit">
-        <mat-form-field>
-            <mat-label>Last Name</mat-label>
-            <input [(ngModel)]="registerLastName" matInput required placeholder="ex. Doe">
-        </mat-form-field>
-    </span>
-
+    <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input [(ngModel)]="registerLastName" matInput required placeholder="ex. Doe">
+    </mat-form-field>
+    
 
     <!-- Email -->
-    <span class="loginUnit">
-        <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input [(ngModel)]="registerEmail" matInput required placeholder="ex. johndoe@email.com">
-        </mat-form-field>
-    </span>
-
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input [(ngModel)]="registerEmail" matInput required placeholder="ex. johndoe@email.com">
+    </mat-form-field>
+    
 
     <!-- Password -->
-    <span class="loginUnit">
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input [(ngModel)]="registerPassword" matInput required>
-            <mat-hint align="end">Min 8 characters</mat-hint>
-        </mat-form-field>
-    </span> 
-
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input [(ngModel)]="registerPassword" matInput required>
+        <mat-hint align="end">Min 8 characters</mat-hint>
+    </mat-form-field>
+  
 
     <!-- Register Btn -->
-    <span class="loginUnit">
-        <button (click)="register()" mat-raised-button color="accent" [disabled]="!registerFirstName || !registerLastName || !registerEmail || !registerPassword">
-            Register
-        </button>
-    </span>
+    <button color="warn" (click)="register()" mat-raised-button color="accent" [disabled]="!registerFirstName || !registerLastName || !registerEmail || !registerPassword">
+        Register
+    </button>
     
-
+    
     <!-- Have Acc Btn -->
-    <span class="loginUnit">
-        <button (click)="onLoginPage = true" mat-raised-button color="accent">
-            I Already Have an Account 
-        </button>
-    </span>
+    <button (click)="onLoginPage = true" mat-raised-button color="accent">
+        I Already Have an Account 
+    </button>
     
 </div>
-
 
 <div class="loginPage" *ngIf="onLoginPage">
 
@@ -64,38 +51,30 @@
 
 
     <!-- Email -->
-    <span class="loginUnit">
-        <mat-form-field>
-            <mat-label>Email</mat-label>
-            <input [(ngModel)]="loginEmail" matInput required placeholder="ex. johndoe@email.com">
-        </mat-form-field>
-    </span>
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input [(ngModel)]="loginEmail" matInput required placeholder="ex. johndoe@email.com">
+    </mat-form-field>
     
 
     <!-- Password -->
-    <span class="loginUnit">
-        <mat-form-field>
-            <mat-label>Password</mat-label>
-            <input [(ngModel)]="loginPassword" matInput required>
-        </mat-form-field>
-    </span>
-    
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input [(ngModel)]="loginPassword" matInput required>
+    </mat-form-field>
+
 
     <!-- Login Btn  -->
-    <span class="loginUnit">
-        <button (click)="login()" mat-raised-button color="accent" [disabled]="!loginEmail || !loginPassword">
-            Login
-        </button>
-    </span>
-   
+    <button (click)="login()" mat-raised-button color="accent" [disabled]="!loginEmail || !loginPassword">
+        Login
+    </button>
 
+   
     <!-- New Acc Btn -->
-    <span class="loginUnit">
-        <button (click)="onLoginPage = false" mat-raised-button color="accent">
-            New? Create an Account
-        </button>
-    </span>
-    
+    <button (click)="onLoginPage = false" mat-raised-button color="accent">
+        New? Create an Account
+    </button>
+
 </div>
 
 
@@ -104,7 +83,6 @@
 <!-- 
     TO DO:
 
-    - Style Login Page (border, center, display vertically)
     - Email Verification
     - Password Verification (meets min characters/ has a number, etc)
     - Hide password as you type
