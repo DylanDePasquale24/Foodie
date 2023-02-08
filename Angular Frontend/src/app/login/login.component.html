@@ -33,13 +33,13 @@
   
 
     <!-- Register Btn -->
-    <button color="warn" (click)="register()" mat-raised-button color="accent" [disabled]="!registerFirstName || !registerLastName || !registerEmail || !registerPassword">
+    <button (click)="register()" mat-raised-button color="accent" [disabled]="!registerFirstName || !registerLastName || !registerEmail || !registerPassword">
         Register
     </button>
     
     
     <!-- Have Acc Btn -->
-    <button (click)="onLoginPage = true" mat-raised-button color="accent">
+    <button (click)="onLoginPage = true" mat-raised-button color="primary">
         I Already Have an Account 
     </button>
     
@@ -71,7 +71,7 @@
 
    
     <!-- New Acc Btn -->
-    <button (click)="onLoginPage = false" mat-raised-button color="accent">
+    <button (click)="onLoginPage = false" mat-raised-button color="primary">
         New? Create an Account
     </button>
 
