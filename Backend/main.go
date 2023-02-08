@@ -25,17 +25,11 @@ func main() {
 
 	r.Use(cors.New(config))
 
-	r.GET("/ping", func(c *gin.Context) {
-		// Status Code 200
-		c.JSON(http.StatusOK, gin.H{
-			"message" : "pong",
-		})
-	})
-
 	r.POST("/register", func(c *gin.Context) {
 		var registerData Register
 
 		// Bind JSON data to object
+		// This gets the JSON data from the request body
 		err := c.BindJSON(&registerData)
 		if (err != nil) {
 			c.JSON(http.StatusInternalServerError, "")
@@ -47,19 +41,91 @@ func main() {
 			c.JSON(http.StatusInternalServerError, "")
 		}
 
-		var user User
-
 		// Make a database connection
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 		// Make a new user when a user registers
-		user = User{FirstName: registerData.FirstName, LastName: registerData.LastName, Email: registerData.Email, Password: hashPass}
+		var user = Users{FirstName: registerData.FirstName, LastName: registerData.LastName, Email: registerData.Email, Password: hashPass}
 		db.Create(&user)
 
 		// Create a JSON Web Token (JWT) to login
+		// Expiration time is in milliseconds
+		expirationTime := time.Now().Add(30000 * time.Minute)
+		// Create the JWT claims, that includes the username and expiry time
+		var claims = Claims{Email: registerData.Email, RegisteredClaims: jwt.RegisteredClaims{
+			ExpiresAt: jwt.NewNumericDate(expirationTime),
+			},
+		}
 		
+		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+		// Creates the JWT string
+		tokenString, err := token.SignedString(jwtKey)
+		if (err != nil) {
+			c.JSON(http.StatusInternalServerError, "")
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Success",
+			"id": user.ID,
+			"jwt": tokenString,
+		})
 	})
+
+	// This checks that the inputted username and password match the ones
+	// in the database, and if so, it returns a JWT and logs in the user
+	r.POST("/login", func(c *gin.Context) {
+		var loginData Login
+		var user Users
+
+		// Bind JSON data to object
+		// This gets the JSON data from the request body
+		err := c.BindJSON(&loginData)
+		if (err != nil) {
+			c.JSON(http.StatusInternalServerError, "")
+		}
+
+		// Make a database connection
+		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
+		db.First(&user, "email = ?", loginData.Email)
+
+		checkPasswordHash := CheckPasswordHash(loginData.Password, user.Password)
+		// If password is correct enter the if statement, otherwise cause an error
+		if (checkPasswordHash) {
+			// Expiration time is in milliseconds
+			expirationTime := time.Now().Add(5 * time.Minute)
+
+			// Create the JWT claims, that includes the username and expiry time
+			var claims = Claims{Email: loginData.Email, RegisteredClaims: jwt.RegisteredClaims{
+				ExpiresAt: jwt.NewNumericDate(expirationTime),
+				},
+			}
+			
+			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	
+			// Creates the JWT string
+			tokenString, err := token.SignedString(jwtKey)
+			if (err != nil) {
+				c.JSON(http.StatusInternalServerError, "")
+			}
+	
+			c.JSON(http.StatusOK, gin.H{
+				"message": "Success",
+				"jwt": tokenString,
+			})
+		} else {
+			c.JSON(http.StatusInternalServerError, "")
+		}
+	})
+
+	// When the inputted username and password matches the ones stored, 
+	// the auth() method verifies the token that is found in the authorization header
+	r.GET("/user-session", auth(), func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Success",
+		})
+	})
 
 	// Runs server
 	r.Run()
@@ -87,7 +153,7 @@ type Login struct {
 }
 
 // User endpoint
-type User struct {
+type Users struct {
 	ID int64
 	FirstName string `gorm:"column:firstName"`
 	LastName string `gorm:"column:lastName"`
@@ -100,7 +166,7 @@ type Tabler interface {
 }
 
 // Overrides the table name used by User to `profiles`
-func (User) TableName() string {
+func (Users) TableName() string {
 	return "user"
 }
 
@@ -113,7 +179,11 @@ func HashPassword(password string) (string, error) {
 // Used to check if the password the user inputted when logging in matches the hashed password
 func CheckPasswordHash(password string, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
+	if (err == nil) {
+		return true
+	} else {
+		return false
+	}
 }
 
 func auth() gin.HandlerFunc {
