@@ -28,7 +28,7 @@
     </mat-form-field>
 
     <!-- Register Btn -->
-    <button color="warn" (click)="register()" mat-raised-button color="accent"
+    <button (click)="register()" mat-raised-button color="primary"
         [disabled]="!registerFirstName || !registerLastName || !registerEmail || !registerPassword">
         Register
     </button>
@@ -57,7 +57,7 @@
     </mat-form-field>
 
     <!-- Login Btn  -->
-    <button (click)="login()" mat-raised-button color="accent" [disabled]="!loginEmail || !loginPassword">
+    <button (click)="login()" mat-raised-button color="primary" [disabled]="!loginEmail || !loginPassword">
         Login
     </button>
 
