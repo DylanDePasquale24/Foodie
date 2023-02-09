@@ -3,6 +3,12 @@
 **Front-End**: Dylan DePasquale and Richard Qian <br>
 **Back-End**: Pranav Venu and Paul Jablonowski
 
+### Sprint 1 Branch: https://github.com/DylanDePasquale24/Foodie/tree/sprint-1
+
+## Links to Demos
+- Link to Front-End Demo: https://youtu.be/OxOeIirK4a8 
+- Link to Back-End Demo: https://www.youtube.com/watch?v=aiTAasD-TFg 
+
 ## User Stories
 
 As a user of Foodie, I would like to create recipes and add their ingredients for my own reference. <br>
