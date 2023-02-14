@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { FormsModule } from '@angular/forms';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -32,7 +33,8 @@ const routes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    MatToolbarModule,
   ],
   exports: [RouterModule],
   providers: [
