@@ -8,8 +8,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const routes: Routes = [
   {path: '', title:'Foodie', component: LandingComponent},
-  {path: 'login', title: 'Login', component: LoginComponent, pathMatch: 'full'},
-  {path: 'home', title: 'Home', component: HomeComponent, pathMatch: 'full'},
+  {path: 'login', title: 'Foodie - Login', component: LoginComponent, pathMatch: 'full'},
+  {path: 'home', title: 'Foodie - Home', component: HomeComponent, pathMatch: 'full'},
   {path: '**', title: 'Page Not Found', component: PageNotFoundComponent}
 ];
 
