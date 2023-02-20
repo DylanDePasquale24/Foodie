@@ -21,11 +21,6 @@ mat-form-field{
     padding: 5px;
 }
 
-mat-toolbar span{
-    flex: 1 1 auto;
-    text-align: center;
-}
-
 button{
     margin: 3px 5px;
 }

@@ -41,7 +41,7 @@ export class LoginComponent {
     }).subscribe((response: any) => {
       if(response){
         localStorage.setItem('token', response.jwt)
-        // this.router.navigate(['profile'])
+        // this.router.navigate(['home'])
       }
       this.registerFirstName = null
       this.registerLastName = null
