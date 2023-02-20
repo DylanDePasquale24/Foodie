@@ -1,5 +1,3 @@
-<app-toolbar></app-toolbar>
-
 <div class="loginPage" *ngIf="!onLoginPage">
 
     <h1>Register Account</h1>
@@ -54,7 +52,7 @@
     <!-- Password -->
     <mat-form-field>
         <mat-label>Password</mat-label>
-        <input [(ngModel)]="loginPassword" matInput required>
+        <input [(ngModel)]="loginPassword" matInput required minlength="8" type="password">
     </mat-form-field>
 
     <!-- Login Btn  -->
@@ -78,4 +76,5 @@
     - Email Verification
     - Password Verification (meets min characters/ has a number, etc)
     - Hide password as you type
+    - Instead of disabled login/register buttons, have it show an error if not all required info is inputted
 -->

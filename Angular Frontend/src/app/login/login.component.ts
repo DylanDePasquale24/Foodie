@@ -31,7 +31,7 @@ export class LoginComponent {
     this.loginPassword = null
   }
 
-  register(){
+  register(): void{
     console.log(this.registerFirstName, this.registerPassword)
     this.httpClient.post('http://localhost:8080/register', {
       firstName: this.registerFirstName,
@@ -50,7 +50,7 @@ export class LoginComponent {
     })
   }
 
-  login(){
+  login(): void{
     this.httpClient.post('http://localhost:8080/login', {
       email: this.loginEmail,
       password: this.loginPassword
