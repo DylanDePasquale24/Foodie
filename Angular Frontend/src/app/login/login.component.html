@@ -25,7 +25,7 @@
     <!-- Password -->
     <mat-form-field>
         <mat-label>Password</mat-label>
-        <input [(ngModel)]="registerPassword" matInput required>
+        <input [(ngModel)]="registerPassword" matInput required minlength="8" type="password">
         <mat-hint align="end">Min 8 characters</mat-hint>
     </mat-form-field>
 
