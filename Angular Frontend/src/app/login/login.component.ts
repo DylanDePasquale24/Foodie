@@ -20,7 +20,7 @@ export class LoginComponent {
 
   constructor(
     private httpClient: HttpClient,
-    // private router: Router
+    private router: Router
   ){
     this.onLoginPage = false
     this.registerFirstName = null
@@ -31,8 +31,8 @@ export class LoginComponent {
     this.loginPassword = null
   }
 
-  register(): void{
-    console.log(this.registerFirstName, this.registerPassword)
+  register(): void {
+    
     this.httpClient.post('http://localhost:8080/register', {
       firstName: this.registerFirstName,
       lastName: this.registerLastName,
@@ -57,7 +57,7 @@ export class LoginComponent {
     }).subscribe((response: any) => {
       if(response){
         localStorage.setItem('token', response.jwt)
-        // this.router.navigate(['profile'])
+        // this.router.navigate(['home'])
       }
       this.loginEmail = null
       this.loginPassword = null

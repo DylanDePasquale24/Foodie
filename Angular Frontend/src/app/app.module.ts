@@ -17,6 +17,7 @@ import { HomeComponent } from './home/home.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 
 
@@ -26,7 +27,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     HomeComponent,
     LandingComponent,
     LoginComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    PageNotFoundComponent
     
   ],
   imports: [
