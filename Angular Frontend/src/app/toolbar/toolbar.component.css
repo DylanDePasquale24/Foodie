@@ -1,6 +1,11 @@
 mat-toolbar span{
     flex: 1 1 auto;
-    text-align: left;
     margin-left: 15px;
-    font-size: 125%;
+}
+
+img{
+    height: 80px;
+    margin-top: 20px;
+    position: relative;
+    right : 20px;
 }
