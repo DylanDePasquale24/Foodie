@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginPageStateService } from '../login-page-state.service';
+import { LoginPageStateService } from '../../services/login-page-state.service';
 
 @Component({
   selector: 'app-login',

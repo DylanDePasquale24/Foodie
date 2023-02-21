@@ -26,7 +26,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 // APP SERVICES
-import { LoginPageStateService } from './login-page-state.service';
+import { LoginPageStateService } from '../services/login-page-state.service';
 
 
 
