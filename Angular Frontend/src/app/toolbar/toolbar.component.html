@@ -1,6 +1,14 @@
 <mat-toolbar color="primary">
     <span>Foodie</span>
-    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <button mat-icon-button 
+        aria-label="Menu icon in the toolbar"
+        [matMenuTriggerFor]="menu">
         <mat-icon>menu</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+        <button (click)="goToLogin()" mat-menu-item>
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
+        </button>
+    </mat-menu>
 </mat-toolbar>

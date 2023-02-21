@@ -1,18 +1,23 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+// ANGULAR MATERIAL MODULES
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog'
+import { MatMenuModule } from '@angular/material/menu';
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 // import { AuthGuard } from './auth.guard';
 // import { JwtInterceptor } from './jwt.interceptor';
 
+// APP COMPONENTS
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LandingComponent } from './landing/landing.component';
@@ -43,7 +48,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatIconModule,
     FormsModule,
     MatToolbarModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule
   ],
   exports: [],
   providers: [
