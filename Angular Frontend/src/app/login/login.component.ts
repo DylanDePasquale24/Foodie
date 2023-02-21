@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginPageStateService } from '../login-page-state.service';
 
 @Component({
   selector: 'app-login',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-  onLoginPage: boolean 
+  onLoginPage: boolean;
 
   registerFirstName: string | null
   registerLastName: string | null 
@@ -20,7 +21,8 @@ export class LoginComponent {
 
   constructor(
     private httpClient: HttpClient,
-    private router: Router
+    private router: Router,
+    private loginPageStateService: LoginPageStateService
   ){
     this.onLoginPage = false
     this.registerFirstName = null
@@ -29,6 +31,12 @@ export class LoginComponent {
     this.registerPassword = null
     this.loginEmail = null
     this.loginPassword = null
+  }
+
+  ngOnInit(): void {
+    this.loginPageStateService.onLoginPage$.subscribe((value: boolean) => {
+      this.onLoginPage = value
+    })
   }
 
   register(): void {

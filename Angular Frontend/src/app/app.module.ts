@@ -25,6 +25,9 @@ import { LoginComponent } from './login/login.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+// APP SERVICES
+import { LoginPageStateService } from './login-page-state.service';
+
 
 
 @NgModule({
@@ -54,6 +57,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   exports: [],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    LoginPageStateService
   ],
   bootstrap: [AppComponent]
 })
