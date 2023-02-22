@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"strings"
 	"time"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
@@ -12,7 +13,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func main() { 
+func main() {
 	// Data Source Name (DSN) user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local
 	dsn := "root:@tcp(127.0.0.1:3306)/websitedatabase?charset=utf8mb4&parseTime=True&loc=Local"
 
@@ -20,8 +21,8 @@ func main() {
 
 	config := cors.DefaultConfig()
 
-	config.AllowHeaders = []string {"Authorization", "content-type"}
-	config.AllowOrigins = []string {"http://localhost:4200"}
+	config.AllowHeaders = []string{"Authorization", "content-type"}
+	config.AllowOrigins = []string{"http://localhost:4200"}
 
 	r.Use(cors.New(config))
 
@@ -31,13 +32,13 @@ func main() {
 		// Bind JSON data to object
 		// This gets the JSON data from the request body
 		err := c.BindJSON(&registerData)
-		if (err != nil) {
+		if err != nil {
 			c.JSON(http.StatusInternalServerError, "")
 		}
 
 		// Hash the password
 		hashPass, err := HashPassword(registerData.Password)
-		if (err != nil) {
+		if err != nil {
 			c.JSON(http.StatusInternalServerError, "")
 		}
 
@@ -54,22 +55,22 @@ func main() {
 		// Create the JWT claims, that includes the username and expiry time
 		var claims = Claims{Email: registerData.Email, RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
-			},
+		},
 		}
-		
+
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 		// Creates the JWT string
 		tokenString, err := token.SignedString(jwtKey)
-		if (err != nil) {
+		if err != nil {
 			c.JSON(http.StatusInternalServerError, "")
 		}
 
 		c.JSON(http.StatusOK, gin.H{
 			"isSuccess": true,
-			"id": user.ID,
-			"jwt": tokenString,
-			"message": "Success"
+			"id":        user.ID,
+			"jwt":       tokenString,
+			"message":   "Success",
 		})
 	})
 
@@ -82,7 +83,7 @@ func main() {
 		// Bind JSON data to object
 		// This gets the JSON data from the request body
 		err := c.BindJSON(&loginData)
-		if (err != nil) {
+		if err != nil {
 			c.JSON(http.StatusInternalServerError, "")
 		}
 
@@ -93,34 +94,34 @@ func main() {
 
 		checkPasswordHash := CheckPasswordHash(loginData.Password, user.Password)
 		// If password is correct enter the if statement, otherwise cause an error
-		if (checkPasswordHash) {
+		if checkPasswordHash {
 			// Expiration time is in milliseconds
 			expirationTime := time.Now().Add(5 * time.Minute)
 
 			// Create the JWT claims, that includes the username and expiry time
 			var claims = Claims{Email: loginData.Email, RegisteredClaims: jwt.RegisteredClaims{
 				ExpiresAt: jwt.NewNumericDate(expirationTime),
-				},
+			},
 			}
-			
+
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	
+
 			// Creates the JWT string
 			tokenString, err := token.SignedString(jwtKey)
-			if (err != nil) {
+			if err != nil {
 				c.JSON(http.StatusInternalServerError, "")
 			}
-	
+
 			c.JSON(http.StatusOK, gin.H{
 				"message": "Success",
-				"jwt": tokenString,
+				"jwt":     tokenString,
 			})
 		} else {
 			c.JSON(http.StatusInternalServerError, "")
 		}
 	})
 
-	// When the inputted username and password matches the ones stored, 
+	// When the inputted username and password matches the ones stored,
 	// the auth() method verifies the token that is found in the authorization header
 	r.GET("/user-session", auth(), func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -142,24 +143,24 @@ var jwtKey = []byte("secret_key")
 // Register endpoint
 type Register struct {
 	FirstName string `json: firstName`
-	LastName string `json: lastName`
-	Email string `json: email`
-	Password string `json: password`
+	LastName  string `json: lastName`
+	Email     string `json: email`
+	Password  string `json: password`
 }
 
 // Login endpoint
 type Login struct {
-	Email string `json: email`
+	Email    string `json: email`
 	Password string `json: password`
 }
 
 // User endpoint
 type Users struct {
-	ID int64
+	ID        int64
 	FirstName string `gorm:"column:firstName"`
-	LastName string `gorm:"column:lastName"`
-	Email string
-	Password string
+	LastName  string `gorm:"column:lastName"`
+	Email     string
+	Password  string
 }
 
 type Tabler interface {
@@ -180,7 +181,7 @@ func HashPassword(password string) (string, error) {
 // Used to check if the password the user inputted when logging in matches the hashed password
 func CheckPasswordHash(password string, hash string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	if (err == nil) {
+	if err == nil {
 		return true
 	} else {
 		return false
@@ -198,7 +199,7 @@ func auth() gin.HandlerFunc {
 			return []byte(jwtKey), nil
 		})
 
-		if (err != nil) {
+		if err != nil {
 			// Runs this if there is an error
 			c.JSON(http.StatusInternalServerError, "")
 		} else {
