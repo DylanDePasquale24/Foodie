@@ -66,9 +66,10 @@ func main() {
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Success",
+			"isSuccess": true,
 			"id": user.ID,
 			"jwt": tokenString,
+			"message": "Success"
 		})
 	})
 
