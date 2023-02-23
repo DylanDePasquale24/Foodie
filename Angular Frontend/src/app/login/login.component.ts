@@ -28,8 +28,8 @@ export class LoginComponent {
   loginPassword: string | null
 
 
-  isRegistering: boolean
-  isLoggingIn: boolean
+  registerSpinner: boolean
+  loginSpinner: boolean
   hasBackendError: boolean
 
   
@@ -47,8 +47,8 @@ export class LoginComponent {
     this.loginEmail = null
     this.loginPassword = null
 
-    this.isRegistering = false
-    this.isLoggingIn = false
+    this.registerSpinner = false
+    this.loginSpinner = false
     this.hasBackendError = false
   }
 
@@ -61,7 +61,7 @@ export class LoginComponent {
 
   register(): void {
 
-    this.isRegistering = true;
+    this.registerSpinner = true;
 
     //instead of having a disabled button, do some sort of check here to make sure each field is properly filled out
     //for each invalid input of register, show an invalid thing underneath like pic
@@ -84,19 +84,13 @@ export class LoginComponent {
     })
     .subscribe((response: Response) => {
       
-      this.isRegistering = false
-      console.log(response) 
-
-      if(!response.isSuccess){
-
-        console.log('Success')
-
+      this.registerSpinner = false
+      if(response.isSuccess){
+      
         //do stuff with authguard and jwt to ensure security
         localStorage.setItem('token', response.jwt)
         this.router.navigate(['home'])
-        
       }else{
-        console.log('not Success')
         this.hasBackendError = true
       }
 
@@ -106,12 +100,11 @@ export class LoginComponent {
       this.registerPassword = null
     })
 
-    
   }
 
   login(): void{
 
-    this.isLoggingIn = true
+    this.loginSpinner = true
   
     this.httpClient
     .post('http://localhost:8080/login', {
@@ -122,14 +115,12 @@ export class LoginComponent {
     })
     .subscribe((response: any) => {
 
-      this.isLoggingIn = false
-      if(response){
-        localStorage.setItem('token', response.jwt)
-        // this.router.navigate(['home'])
+      this.loginSpinner = false
 
-        console.log('Success!!!')
+      if(response.isSuccess){
+        localStorage.setItem('token', response.jwt)
+        this.router.navigate(['home'])
       }else{
-        console.log('Not a success')
         this.hasBackendError = true
       }
 
@@ -142,7 +133,6 @@ export class LoginComponent {
     this.onLoginPage = true
     this.hasBackendError = false
   }
-  
   goToRegister(): void{
     this.onLoginPage = false
     this.hasBackendError = false

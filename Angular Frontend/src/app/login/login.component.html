@@ -4,7 +4,7 @@
 
     <!-- Error Message -->
     <div class="errorTopper" *ngIf="hasBackendError">
-        <p>That account already exists! Please try again. </p> 
+        <p>We could not register that account! Please try again. </p> 
     </div>
 
     <!-- First Name -->
@@ -43,7 +43,7 @@
     </button>
 
     <!-- Progress Spinner -->
-    <div class="loadingFooter" *ngIf="isRegistering">
+    <div class="loadingFooter" *ngIf="registerSpinner">
         <p>
             Registering...
             <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
@@ -86,7 +86,7 @@
     </button>
 
     <!-- Progress Spinner -->
-    <div class="loadingFooter" *ngIf="isLoggingIn">
+    <div class="loadingFooter" *ngIf="loginSpinner">
         <p>
             Logging in...
             <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
