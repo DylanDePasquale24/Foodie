@@ -126,7 +126,10 @@ export class LoginComponent {
 
       this.loginEmail = null
       this.loginPassword = null
+      return;
     })
+
+
   }
 
   goToLogin(): void{
