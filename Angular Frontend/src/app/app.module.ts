@@ -28,6 +28,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 // APP SERVICES
 import { LoginPageStateService } from '../services/login-page-state.service';
+import { LoginToolbarComponent } from './login-toolbar/login-toolbar.component';
 
 
 
@@ -38,7 +39,8 @@ import { LoginPageStateService } from '../services/login-page-state.service';
     LandingComponent,
     LoginComponent,
     ToolbarComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LoginToolbarComponent
     
   ],
   imports: [
