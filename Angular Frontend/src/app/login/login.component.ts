@@ -27,6 +27,11 @@ export class LoginComponent {
   loginEmail: string | null
   loginPassword: string | null
 
+
+  isRegistering: boolean
+  isLoggingIn: boolean
+  hasBackendError: boolean
+
   
 
   constructor(
@@ -42,6 +47,9 @@ export class LoginComponent {
     this.loginEmail = null
     this.loginPassword = null
 
+    this.isRegistering = false
+    this.isLoggingIn = false
+    this.hasBackendError = false
   }
 
   ngOnInit(): void {
@@ -53,17 +61,18 @@ export class LoginComponent {
 
   register(): void {
 
+    this.isRegistering = true;
 
     //instead of having a disabled button, do some sort of check here to make sure each field is properly filled out
     //for each invalid input of register, show an invalid thing underneath like pic
     //when get past this and actually a register error or login error w server, you can show a banner at the top like pic
+    //WHEN RETURN AFTER THESE, SET ISREGISTERING BACK TO FALSE
+
     
-    //Also display a (registering...) html thing while it loads here
 
 
 
     //post user info to the backend and provide them w these 4 data variables as an object
-    //see if you can make an named object first and a seperate function to clean it up
     this.httpClient
     .post<Response>('http://localhost:8080/register', {
 
@@ -75,9 +84,10 @@ export class LoginComponent {
     })
     .subscribe((response: Response) => {
       
+      this.isRegistering = false
       console.log(response) 
 
-      if(response.isSuccess){
+      if(!response.isSuccess){
 
         console.log('Success')
 
@@ -87,7 +97,7 @@ export class LoginComponent {
         
       }else{
         console.log('not Success')
-        //ngIf error html thing
+        this.hasBackendError = true
       }
 
       this.registerFirstName = null
@@ -95,39 +105,46 @@ export class LoginComponent {
       this.registerEmail = null
       this.registerPassword = null
     })
+
+    
   }
-
-
-
-
 
   login(): void{
 
+    this.isLoggingIn = true
   
-  
-    this.httpClient.post('http://localhost:8080/login', {
+    this.httpClient
+    .post('http://localhost:8080/login', {
+
       email: this.loginEmail,
       password: this.loginPassword
-    }).subscribe((response: any) => {
 
-      if(response != null){
+    })
+    .subscribe((response: any) => {
+
+      this.isLoggingIn = false
+      if(response){
         localStorage.setItem('token', response.jwt)
         // this.router.navigate(['home'])
 
         console.log('Success!!!')
       }else{
         console.log('Not a success')
+        this.hasBackendError = true
       }
-
-      //when the response is invalid and it throws an error, we cant go into the else statement,
-      //so we need some sort of response when there is an error so we can properly do an else condition.
-      //it has to do with the any typing... itd be ideal if we can already set a type for the response in case of error and failure
-      
-      
-    
 
       this.loginEmail = null
       this.loginPassword = null
     })
+  }
+
+  goToLogin(): void{
+    this.onLoginPage = true
+    this.hasBackendError = false
+  }
+  
+  goToRegister(): void{
+    this.onLoginPage = false
+    this.hasBackendError = false
   }
 }

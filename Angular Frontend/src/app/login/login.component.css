@@ -4,10 +4,9 @@
     margin: auto;
     position: relative;
     top: 75px;
-    
-    /* Actual Element Properties */
     width: 485px;
 
+    /* Actual Element Properties */
     padding: 25px 10px;
     text-align: center;
     
@@ -15,6 +14,30 @@
     border-style: groove;
     border-width: 2px;
     border-radius: 7px;
+}
+
+.loadingFooter {
+    padding-top: 25px;
+    
+}
+
+.errorTopper {
+    
+    width: 412px;
+    padding: 10px;
+    padding-bottom: 1px;
+    
+
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    border-style: hidden;
+    border-width: 1px;
+    border-radius: 10px;
+    
+    background-color: rgba(255, 51, 51, .5);
 }
 
 mat-form-field{

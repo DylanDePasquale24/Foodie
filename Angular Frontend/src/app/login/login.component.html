@@ -2,6 +2,11 @@
 
     <h1>Register Account</h1>
 
+    <!-- Error Message -->
+    <div class="errorTopper" *ngIf="hasBackendError">
+        <p>That account already exists! Please try again. </p> 
+    </div>
+
     <!-- First Name -->
     <mat-form-field>
         <mat-label>First Name</mat-label>
@@ -33,15 +38,30 @@
     </button>
 
     <!-- Have Acc Btn -->
-    <button (click)="onLoginPage = true" mat-raised-button color="primary">
+    <button (click)="goToLogin()" mat-raised-button color="primary">
         I Already Have an Account 
     </button>
 
+    <!-- Progress Spinner -->
+    <div class="loadingFooter" *ngIf="isRegistering">
+        <p>
+            Registering...
+            <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+        </p>
+    </div>
+
 </div>
+
+
 
 <div class="loginPage" *ngIf="onLoginPage">
 
     <h1>Login</h1>
+
+    <!-- Error Message -->
+    <div class="errorTopper" *ngIf="hasBackendError">
+        <p>Username or Password is Incorrect! Please try again. </p> 
+    </div>
 
     <!-- Email -->
     <mat-form-field>
@@ -61,12 +81,19 @@
     </button>
 
     <!-- New Acc Btn -->
-    <button (click)="onLoginPage = false" mat-raised-button color="primary">
+    <button (click)="goToRegister()" mat-raised-button color="primary">
         New? Create an Account
     </button>
 
-</div>
+    <!-- Progress Spinner -->
+    <div class="loadingFooter" *ngIf="isLoggingIn">
+        <p>
+            Logging in...
+            <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+        </p>
+    </div>
 
+</div>
 
 
 
