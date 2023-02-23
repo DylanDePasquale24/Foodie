@@ -45,7 +45,7 @@ func main() {
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		if err != nil || db.Ping() != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": "Error connecting to database"
+				"message": "Error connecting to database",
 			})
 		}
 
@@ -55,7 +55,7 @@ func main() {
 		copy := db.FirstOrCreate(&user, Users{Email: registerData.Email})
 		if copy.Error != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": "Error in database"
+				"message": "Error in database",
 			})
 		}
 		else if copy.RowsAffected == 1 {
