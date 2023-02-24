@@ -1,61 +1,6 @@
 <app-login-toolbar></app-login-toolbar>
-<div class="loginPage" *ngIf="!onLoginPage">
 
-    <h1>Register Account</h1>
-
-    <!-- Error Message -->
-    <div class="errorTopper" *ngIf="hasBackendError">
-        <p>We could not register that account! Please try again. </p> 
-    </div>
-
-    <!-- First Name -->
-    <mat-form-field>
-        <mat-label>First Name</mat-label>
-        <input [(ngModel)]="registerFirstName" matInput required placeholder="ex. John">
-    </mat-form-field>
-
-    <!-- Last Name -->
-    <mat-form-field>
-        <mat-label>Last Name</mat-label>
-        <input [(ngModel)]="registerLastName" matInput required placeholder="ex. Doe">
-    </mat-form-field>
-
-    <!-- Email -->
-    <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input [(ngModel)]="registerEmail" matInput required placeholder="ex. johndoe@email.com">
-    </mat-form-field>
-
-    <!-- Password -->
-    <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input [(ngModel)]="registerPassword" matInput required minlength="8" type="password">
-        <mat-hint align="end">Min 8 characters</mat-hint>
-    </mat-form-field>
-
-    <!-- Register Btn -->
-    <button (click)="register()" mat-raised-button color="accent">
-        Register
-    </button>
-
-    <!-- Have Acc Btn -->
-    <button (click)="goToLogin()" mat-raised-button color="primary">
-        I Already Have an Account 
-    </button>
-
-    <!-- Progress Spinner -->
-    <div class="loadingFooter" *ngIf="registerSpinner">
-        <p>
-            Registering...
-            <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
-        </p>
-    </div>
-
-</div>
-
-
-
-<div class="loginPage" *ngIf="onLoginPage">
+<div class="loginPage">
 
     <h1>Login</h1>
 
@@ -67,27 +12,27 @@
     <!-- Email -->
     <mat-form-field>
         <mat-label>Email</mat-label>
-        <input [(ngModel)]="loginEmail" matInput required placeholder="ex. johndoe@email.com">
+        <input [(ngModel)]="email" matInput required placeholder="ex. johndoe@email.com">
     </mat-form-field>
 
     <!-- Password -->
     <mat-form-field>
         <mat-label>Password</mat-label>
-        <input [(ngModel)]="loginPassword" matInput required minlength="8" type="password">
+        <input [(ngModel)]="password" matInput required minlength="8" type="password">
     </mat-form-field>
 
     <!-- Login Btn  -->
-    <button (click)="login()" mat-raised-button color="accent">
+    <button (click)="Submit()" mat-raised-button color="accent">
         Login
     </button>
 
     <!-- New Acc Btn -->
-    <button (click)="goToRegister()" mat-raised-button color="primary">
+    <button (click)="GoTo()" mat-raised-button color="primary">
         New? Create an Account
     </button>
 
     <!-- Progress Spinner -->
-    <div class="loadingFooter" *ngIf="loginSpinner">
+    <div class="loadingFooter" *ngIf="loadingSpinner">
         <p>
             Logging in...
             <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
@@ -95,13 +40,3 @@
     </div>
 
 </div>
-
-
-
-<!-- 
-    TO DO:
-
-    - Email Verification
-    - Password Verification (meets min characters/ has a number, etc)
-    - Instead of disabled login/register buttons, have it show an error if not all required info is inputted
--->

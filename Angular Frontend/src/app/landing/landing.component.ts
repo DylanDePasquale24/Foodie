@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginPageStateService } from '../../services/login-page-state.service';
 
 @Component({
   selector: 'app-landing',
@@ -9,14 +8,13 @@ import { LoginPageStateService } from '../../services/login-page-state.service';
 })
 export class LandingComponent {
 
-  constructor(private router: Router, private loginPageStateService: LoginPageStateService) { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
 
   }
 
   goToLogin() {
-    this.loginPageStateService.setOnLoginPage(false); 
     this.router.navigate(['login'])
   }
 }
