@@ -53,7 +53,7 @@ func main() {
 		}
 
 		// Make a new user when a user registers
-		var user = Users{FirstName: registerData.FirstName, LastName: registerData.LastName, Email: registerData.Email, Password: hashPass}
+		var user = Users{FirstName: registerData.firstName, LastName: registerData.LastName, Email: registerData.Email, Password: hashPass}
 
 		copy := db.FirstOrCreate(&user, Users{Email: registerData.Email})
 		if copy.Error != nil {
@@ -61,7 +61,8 @@ func main() {
 				"isSuccess": false,
 				"message": "Error in database",
 			})
-		} else if copy.RowsAffected == 1 {
+		}
+		if copy.RowsAffected == 1 {
 			expirationTime := time.Now().Add(30000 * time.Minute)
 			// Create the JWT claims, that includes the username and expiry time
 			var claims = Claims{Email: registerData.Email, RegisteredClaims: jwt.RegisteredClaims{
@@ -83,7 +84,8 @@ func main() {
 				"jwt":       tokenString,
 				"message":   "Successfully registered User",
 			})
-		} else {
+		} 
+		if copy.RowsAffected == 0{
 			c.JSON(http.StatusOK, gin.H{
 				"isSuccess": false,
 				"message":   "Email already in use",
