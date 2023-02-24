@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginPageStateService } from '../../services/login-page-state.service';
+
 
 @Component({
   selector: 'app-toolbar',
@@ -9,10 +9,9 @@ import { LoginPageStateService } from '../../services/login-page-state.service';
 })
 export class ToolbarComponent {
 
-  constructor(private router: Router, private loginPageStateService: LoginPageStateService) { }
+  constructor(private router: Router) { }
 
   goToLogin() {
-    this.loginPageStateService.setOnLoginPage(true);  
     this.router.navigate(['login'])
   }
 

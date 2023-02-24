@@ -1,1 +1,55 @@
-<p>register works!</p>
+<app-login-toolbar></app-login-toolbar>
+
+<div class="loginPage">
+
+    <h1>Register Account</h1>
+
+    <!-- Error Message -->
+    <div class="errorTopper" *ngIf="hasBackendError">
+        <p>We could not register that account! Please try again. </p> 
+    </div>
+
+    <!-- First Name -->
+    <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input [(ngModel)]="firstName" matInput required placeholder="ex. John">
+    </mat-form-field>
+
+    <!-- Last Name -->
+    <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input [(ngModel)]="lastName" matInput required placeholder="ex. Doe">
+    </mat-form-field>
+
+    <!-- Email -->
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input [(ngModel)]="email" matInput required placeholder="ex. johndoe@email.com">
+    </mat-form-field>
+
+    <!-- Password -->
+    <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input [(ngModel)]="password" matInput required minlength="8" type="password">
+        <mat-hint align="end">Min 8 characters</mat-hint>
+    </mat-form-field>
+
+    <!-- Register Btn -->
+    <button (click)="Submit()" mat-raised-button color="accent">
+        Register
+    </button>
+
+    <!-- Have Acc Btn -->
+    <button (click)="GoTo()" mat-raised-button color="primary">
+        I Already Have an Account 
+    </button>
+
+    <!-- Progress Spinner -->
+    <div class="loadingFooter" *ngIf="loadingSpinner">
+        <p>
+            Registering...
+            <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+        </p>
+    </div>
+
+</div>

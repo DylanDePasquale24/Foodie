@@ -25,11 +25,10 @@ import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
-// APP SERVICES
-import { LoginPageStateService } from '../services/login-page-state.service';
 import { LoginToolbarComponent } from './login-toolbar/login-toolbar.component';
 import { RegisterComponent } from './register/register.component';
+
+// APP SERVICES
 
 
 
@@ -63,7 +62,6 @@ import { RegisterComponent } from './register/register.component';
   exports: [],
   providers: [
     // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    LoginPageStateService
   ],
   bootstrap: [AppComponent]
 })
