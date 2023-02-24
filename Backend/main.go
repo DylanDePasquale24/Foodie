@@ -107,7 +107,7 @@ func main() {
 
 		// Make a database connection
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-		sql, err := db.DB()
+		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"message": "Error connecting to database",
@@ -136,8 +136,9 @@ func main() {
 			}
 
 			c.JSON(http.StatusOK, gin.H{
-				"message": "Success",
+				"isSuccess": false,
 				"jwt":     tokenString,
+				"message": "Success",
 			})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{
