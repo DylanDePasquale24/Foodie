@@ -21,7 +21,11 @@ export class LoginComponent {
   password: string | null
 
   loadingSpinner: boolean
-  hasBackendError: boolean
+  showErrorFlag: boolean
+
+  errorMessage: string 
+  DEFAULT_ERROR : string
+  
 
 
 
@@ -29,13 +33,23 @@ export class LoginComponent {
     this.email = null
     this.password = null
     this.loadingSpinner = false
-    this.hasBackendError = false
+    this.showErrorFlag = false
+    this.DEFAULT_ERROR = 'Username or Password is Incorrect! Please try again.'
+    this.errorMessage = this.DEFAULT_ERROR
   }
 
   Submit(): void{
-
     this.loadingSpinner = true
   
+    //Verify All Fields Entered
+    if(!this.email || !this.password){
+      this.errorMessage = 'Please enter a value for all required fields. Please try again.'
+      this.showErrorFlag = true
+      this.loadingSpinner = false
+      return;
+    }
+
+
     this.httpClient
     .post<Response>('http://localhost:8080/login', {
       email: this.email,
@@ -50,7 +64,7 @@ export class LoginComponent {
         localStorage.setItem('token', response.jwt)
         this.router.navigate(['home'])
       }else{
-        this.hasBackendError = true
+        this.showErrorFlag = true
       }
 
       this.email = null
@@ -63,58 +77,31 @@ export class LoginComponent {
   GoTo(): void{
     this.router.navigate(['register'])
   }
-}
+  isValidEmail(email : string): boolean{
 
+    let isChar = (c: string): boolean => {
+      return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+    }
+    
+    if (!isChar(email.charAt(0))) {
+      return false;
+    }
 
-
-
-// register(): void {
-
-//   this.loadingSpinner = true;
-
-//   //instead of having a disabled button, do some sort of check here to make sure each field is properly filled out
-//   //for each invalid input of register, show an invalid thing underneath like pic
-//   //when get past this and actually a register error or login error w server, you can show a banner at the top like pic
-//   //WHEN RETURN AFTER THESE, SET ISREGISTERING BACK TO FALSE
-
-
-//   if (this.registerFirstName)
+    let atPos = -1;
+    let dotPos = -1;
   
-
-
-
-//   //post user info to the backend and provide them w these 4 data variables as an object
-//   this.httpClient
-//   .post<Response>('http://localhost:8080/register', {
-
-//     firstName: this.registerFirstName,
-//     lastName: this.registerLastName,
-//     email: this.registerEmail,
-//     password: this.registerPassword,
-
-//   })
-//   .subscribe((response: Response) => {
-    
-//     this.registerSpinner = false
-//     if(response.isSuccess){
-    
-//       //do stuff with authguard and jwt to ensure security
-//       localStorage.setItem('token', response.jwt)
-//       this.router.navigate(['home'])
-//     }else{
-//       this.hasBackendError = true
-//     }
-
-//     this.registerFirstName = null
-//     this.registerLastName = null
-//     this.registerEmail = null
-//     this.registerPassword = null
-//   })
-// }
-
-
-
-// goToLogin(): void{
-//   this.onLoginPage = true
-//   this.hasBackendError = false
-// }
+    for (let i = 0; i < email.length; i++) {
+      if (email.charAt(i) === '@') {
+        atPos = i;
+      } else if (email.charAt(i) === '.') {
+        dotPos = i;
+      }
+    }
+  
+    if (atPos === -1 || dotPos === -1 || atPos > dotPos || dotPos >= (email.length - 1)) {
+      return false;
+    }
+  
+    return true;
+  }
+}

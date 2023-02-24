@@ -5,8 +5,8 @@
     <h1>Login</h1>
 
     <!-- Error Message -->
-    <div class="errorTopper" *ngIf="hasBackendError">
-        <p>Username or Password is Incorrect! Please try again. </p> 
+    <div class="errorTopper" *ngIf="showErrorFlag">
+        <p>{{errorMessage}}</p> 
     </div>
 
     <!-- Email -->

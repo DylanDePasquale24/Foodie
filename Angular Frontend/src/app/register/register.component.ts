@@ -28,16 +28,36 @@ export class RegisterComponent extends LoginComponent {
     super(httpClient, router);
     this.firstName = null
     this.lastName = null
+    this.DEFAULT_ERROR = 'We could not register that account! Please try again.'
+    this.errorMessage = this.DEFAULT_ERROR
   }
 
   override Submit(): void {
     this.loadingSpinner = true;
 
-    //instead of having a disabled button, do some sort of check here to make sure each field is properly filled out
-    //for each invalid input of register, show an invalid thing underneath like pic
-    //when get past this and actually a register error or login error w server, you can show a banner at the top like pic
-    //WHEN RETURN AFTER THESE, SET ISREGISTERING BACK TO FALSE
-  
+    //Verify All Fields Entered
+    if(!this.firstName || !this.lastName || !this.email || !this.password){
+      this.errorMessage = 'Please enter a value for all required fields. Please try again.'
+      this.showErrorFlag = true
+      this.loadingSpinner = false
+      return;
+    }
+
+    //Verify Password
+    if(this.password.length < 8){
+      this.errorMessage = 'Your password must be a minimum of 8 characters! Please try again.'
+      this.showErrorFlag = true
+      this.loadingSpinner = false
+      return;
+    }
+    
+    //Verify Email
+    if(!this.isValidEmail(this.email)){
+      this.errorMessage = 'Please enter a valid email!'
+      this.showErrorFlag = true
+      this.loadingSpinner = false
+      return;
+    }
     
   
   
@@ -62,7 +82,7 @@ export class RegisterComponent extends LoginComponent {
         this.router.navigate(['home'])
 
       }else{
-        this.hasBackendError = true
+        this.showErrorFlag = true
       }
   
       this.firstName = null
@@ -72,6 +92,8 @@ export class RegisterComponent extends LoginComponent {
     })
   }
 
+
+  
   override GoTo(): void {
     this.router.navigate(['login'])
   }

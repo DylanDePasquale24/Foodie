@@ -5,8 +5,8 @@
     <h1>Register Account</h1>
 
     <!-- Error Message -->
-    <div class="errorTopper" *ngIf="hasBackendError">
-        <p>We could not register that account! Please try again. </p> 
+    <div class="errorTopper" *ngIf="showErrorFlag">
+        <p>{{errorMessage}}</p> 
     </div>
 
     <!-- First Name -->
