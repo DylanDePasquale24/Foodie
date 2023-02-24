@@ -47,6 +47,7 @@ func main() {
 		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
+				"isSuccess": false,
 				"message": "Error connecting to database",
 			})
 		}
@@ -57,6 +58,7 @@ func main() {
 		copy := db.FirstOrCreate(&user, Users{Email: registerData.Email})
 		if copy.Error != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
+				"isSuccess": false,
 				"message": "Error in database",
 			})
 		} else if copy.RowsAffected == 1 {
@@ -110,6 +112,7 @@ func main() {
 		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
+				"isSuccess": false,
 				"message": "Error connecting to database",
 			})
 		}
@@ -136,7 +139,7 @@ func main() {
 			}
 
 			c.JSON(http.StatusOK, gin.H{
-				"isSuccess": false,
+				"isSuccess": true,
 				"jwt":       tokenString,
 				"message":   "Successfully logged in",
 			})
@@ -152,6 +155,7 @@ func main() {
 	// the auth() method verifies the token that is found in the authorization header
 	r.GET("/user-session", auth(), func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
+			"isSuccess": true,
 			"message": "Success",
 		})
 	})
