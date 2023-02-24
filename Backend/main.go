@@ -46,7 +46,7 @@ func main() {
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"isSuccess": false,
 				"message": "Error connecting to database",
 			})
@@ -57,7 +57,7 @@ func main() {
 
 		copy := db.FirstOrCreate(&user, Users{Email: registerData.Email})
 		if copy.Error != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"isSuccess": false,
 				"message": "Error in database",
 			})
@@ -84,7 +84,7 @@ func main() {
 				"message":   "Successfully registered User",
 			})
 		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"isSuccess": false,
 				"message":   "Email already in use",
 			})
@@ -111,7 +111,7 @@ func main() {
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"isSuccess": false,
 				"message": "Error connecting to database",
 			})
@@ -135,7 +135,7 @@ func main() {
 			// Creates the JWT string
 			tokenString, err := token.SignedString(jwtKey)
 			if err != nil {
-				c.JSON(http.StatusInternalServerError, "")
+				c.JSON(http.StatusOK, "")
 			}
 
 			c.JSON(http.StatusOK, gin.H{
@@ -144,7 +144,7 @@ func main() {
 				"message":   "Successfully logged in",
 			})
 		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{
+			c.JSON(http.StatusOK, gin.H{
 				"isSuccess": false,
 				"message":   "Inccorect password",
 			})
