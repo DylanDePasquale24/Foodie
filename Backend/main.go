@@ -137,8 +137,8 @@ func main() {
 
 			c.JSON(http.StatusOK, gin.H{
 				"isSuccess": false,
-				"jwt":     tokenString,
-				"message": "Success",
+				"jwt":       tokenString,
+				"message":   "Successfully logged in",
 			})
 		} else {
 			c.JSON(http.StatusInternalServerError, gin.H{
