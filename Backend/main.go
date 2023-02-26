@@ -17,39 +17,39 @@ func main() {
 	// Data Source Name (DSN) user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local
 	dsn := "root:@tcp(127.0.0.1:3306)/websitedatabase?charset=utf8mb4&parseTime=True&loc=Local"
 
-	r := gin.Default()
+	router := gin.Default()
 
 	config := cors.DefaultConfig()
 
 	config.AllowHeaders = []string{"Authorization", "content-type"}
 	config.AllowOrigins = []string{"http://localhost:4200"}
 
-	r.Use(cors.New(config))
+	router.Use(cors.New(config))
 
-	r.POST("/register", func(c *gin.Context) {
+	router.POST("/register", func(ginContext *gin.Context) {
 		var registerData Register
 
 		// Bind JSON data to object
 		// This gets the JSON data from the request body
-		err := c.BindJSON(&registerData)
+		err := ginContext.BindJSON(&registerData)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, "")
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse data from front-end")
+			return
 		}
 
 		// Hash the password
 		hashPass, err := HashPassword(registerData.Password)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, "")
+			ginContext.JSON(http.StatusInternalServerError, "Could not hash password")
+			return
 		}
 
 		// Make a database connection
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"isSuccess": false,
-				"message": "Error connecting to database",
-			})
+			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database")
+			return
 		}
 
 		// Make a new user when a user registers
@@ -57,12 +57,8 @@ func main() {
 
 		copy := db.FirstOrCreate(&user, Users{Email: registerData.Email})
 		if copy.Error != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"isSuccess": false,
-				"message": "Error in database",
-			})
-		}
-		if copy.RowsAffected == 1 {
+			ginContext.JSON(http.StatusInternalServerError, "Couldnt create user")
+		} else if copy.RowsAffected == 1 {
 			expirationTime := time.Now().Add(30000 * time.Minute)
 			// Create the JWT claims, that includes the username and expiry time
 			var claims = Claims{Email: registerData.Email, RegisteredClaims: jwt.RegisteredClaims{
@@ -75,48 +71,38 @@ func main() {
 			// Creates the JWT string
 			tokenString, err := token.SignedString(jwtKey)
 			if err != nil {
-				c.JSON(http.StatusInternalServerError, "")
+				ginContext.JSON(http.StatusInternalServerError, "Couldn't create jwt")
 			}
 
-			c.JSON(http.StatusOK, gin.H{
-				"isSuccess": true,
-				"id":        user.ID,
-				"jwt":       tokenString,
-				"message":   "Successfully registered User",
+			ginContext.JSON(http.StatusOK, gin.H{
+				"id":  user.ID,
+				"jwt": tokenString,
 			})
-		} 
-		if copy.RowsAffected == 0{
-			c.JSON(http.StatusOK, gin.H{
-				"isSuccess": false,
-				"message":   "Email already in use",
-			})
+		} else {
+			ginContext.JSON(http.StatusInternalServerError, "Email already in use")
 		}
-
 		// Create a JSON Web Token (JWT) to login
 		// Expiration time is in milliseconds
 	})
 
 	// This checks that the inputted username and password match the ones
 	// in the database, and if so, it returns a JWT and logs in the user
-	r.POST("/login", func(c *gin.Context) {
+	router.POST("/login", func(ginContext *gin.Context) {
 		var loginData Login
 		var user Users
 
 		// Bind JSON data to object
 		// This gets the JSON data from the request body
-		err := c.BindJSON(&loginData)
+		err := ginContext.BindJSON(&loginData)
 		if err != nil {
-			c.JSON(http.StatusInternalServerError, "")
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse data from front-end")
 		}
 
 		// Make a database connection
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
-			c.JSON(http.StatusOK, gin.H{
-				"isSuccess": false,
-				"message": "Error connecting to database",
-			})
+			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database")
 		}
 		db.First(&user, "email = ?", loginData.Email)
 
@@ -137,33 +123,25 @@ func main() {
 			// Creates the JWT string
 			tokenString, err := token.SignedString(jwtKey)
 			if err != nil {
-				c.JSON(http.StatusOK, "")
+				ginContext.JSON(http.StatusInternalServerError, "Could not create jwt")
 			}
 
-			c.JSON(http.StatusOK, gin.H{
-				"isSuccess": true,
-				"jwt":       tokenString,
-				"message":   "Successfully logged in",
+			ginContext.JSON(http.StatusOK, gin.H{
+				"jwt": tokenString,
 			})
 		} else {
-			c.JSON(http.StatusOK, gin.H{
-				"isSuccess": false,
-				"message":   "Incorrect password",
-			})
+			ginContext.JSON(http.StatusInternalServerError, "Incorrect password")
 		}
 	})
 
 	// When the inputted username and password matches the ones stored,
 	// the auth() method verifies the token that is found in the authorization header
-	r.GET("/user-session", auth(), func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"isSuccess": true,
-			"message": "Success",
-		})
+	router.GET("/user-session", auth(), func(ginContext *gin.Context) {
+		ginContext.JSON(http.StatusOK, "Success")
 	})
 
 	// Runs server
-	r.Run()
+	router.Run()
 }
 
 type Claims struct {

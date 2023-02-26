@@ -3,12 +3,10 @@ import { LoginComponent } from '../login/login.component';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
+//when it's a success, we only need these 2 variables
 interface Response {
-
-  isSuccess: boolean
   id: number
   jwt: string
-  message: string
 }
 
 
@@ -28,7 +26,7 @@ export class RegisterComponent extends LoginComponent {
     super(httpClient, router);
     this.firstName = null
     this.lastName = null
-    this.DEFAULT_ERROR = 'We could not register that account! Please try again.'
+    this.DEFAULT_ERROR = 'We could not register that account! Please try again later.'
     this.errorMessage = this.DEFAULT_ERROR
   }
 
@@ -75,26 +73,62 @@ export class RegisterComponent extends LoginComponent {
     .subscribe((response: Response) => {
       
       this.loadingSpinner = false
+      console.log(response)
+      this.router.navigate(['home'])
 
-      if(response.isSuccess){
-        //do stuff with authguard and jwt to ensure security
-        localStorage.setItem('token', response.jwt)
-        this.router.navigate(['home'])
-
-      }else{
-        this.showErrorFlag = true
-      }
+      //do stuff with authguard and jwt to ensure security
+      //localStorage.setItem('token', response.jwt)
+      
   
       this.firstName = null
       this.lastName = null
       this.email = null
       this.password = null
+    }, (err) => {
+   
+      this.loadingSpinner = false
+      this.showErrorFlag = true
+      this.errorMessage = this.DEFAULT_ERROR
+
+      this.firstName = null
+      this.lastName = null
+      this.email = null
+      this.password = null
+
+      //debug info
+      console.log(err) 
     })
   }
 
-
-  
   override GoTo(): void {
     this.router.navigate(['login'])
+  }
+
+  isValidEmail(email : string): boolean{
+
+    let isChar = (c: string): boolean => {
+      return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
+    }
+    
+    if (!isChar(email.charAt(0))) {
+      return false;
+    }
+
+    let atPos = -1;
+    let dotPos = -1;
+  
+    for (let i = 0; i < email.length; i++) {
+      if (email.charAt(i) === '@') {
+        atPos = i;
+      } else if (email.charAt(i) === '.') {
+        dotPos = i;
+      }
+    }
+  
+    if (atPos === -1 || dotPos === -1 || atPos > dotPos || dotPos >= (email.length - 1)) {
+      return false;
+    }
+  
+    return true;
   }
 }
