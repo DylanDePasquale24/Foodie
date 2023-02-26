@@ -53,7 +53,7 @@ func main() {
 		}
 
 		// Make a new user when a user registers
-		var user = Users{FirstName: registerData.firstName, LastName: registerData.LastName, Email: registerData.Email, Password: hashPass}
+		var user = Users{FirstName: registerData.FirstName, LastName: registerData.LastName, Email: registerData.Email, Password: hashPass}
 
 		copy := db.FirstOrCreate(&user, Users{Email: registerData.Email})
 		if copy.Error != nil {
@@ -148,7 +148,7 @@ func main() {
 		} else {
 			c.JSON(http.StatusOK, gin.H{
 				"isSuccess": false,
-				"message":   "Inccorect password",
+				"message":   "Incorrect password",
 			})
 		}
 	})
