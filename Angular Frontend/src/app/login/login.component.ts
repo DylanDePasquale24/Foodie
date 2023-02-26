@@ -3,10 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 interface Response {
-  isSuccess: boolean
-  id: number
   jwt: string
-  message: string
 }
 
 @Component({
@@ -57,18 +54,28 @@ export class LoginComponent {
 
     })
     .subscribe((response: Response) => {
+      
+      console.log(response)
+      this.loadingSpinner = false
+      this.router.navigate(['home'])
+      
+      //authguard stuff
+      //localStorage.setItem('token', response.jwt)
+  
+      this.email = null
+      this.password = null
+
+    }, (err) =>{
 
       this.loadingSpinner = false
-
-      if(response.isSuccess){
-        localStorage.setItem('token', response.jwt)
-        this.router.navigate(['home'])
-      }else{
-        this.showErrorFlag = true
-      }
+      this.showErrorFlag = true
+      this.errorMessage = this.DEFAULT_ERROR
 
       this.email = null
       this.password = null
+
+      //debug info
+      console.log(err)
     })
   }
 
@@ -76,32 +83,5 @@ export class LoginComponent {
   
   GoTo(): void{
     this.router.navigate(['register'])
-  }
-  isValidEmail(email : string): boolean{
-
-    let isChar = (c: string): boolean => {
-      return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
-    }
-    
-    if (!isChar(email.charAt(0))) {
-      return false;
-    }
-
-    let atPos = -1;
-    let dotPos = -1;
-  
-    for (let i = 0; i < email.length; i++) {
-      if (email.charAt(i) === '@') {
-        atPos = i;
-      } else if (email.charAt(i) === '.') {
-        dotPos = i;
-      }
-    }
-  
-    if (atPos === -1 || dotPos === -1 || atPos > dotPos || dotPos >= (email.length - 1)) {
-      return false;
-    }
-  
-    return true;
   }
 }
