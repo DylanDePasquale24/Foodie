@@ -53,7 +53,7 @@ func main() {
 		}
 
 		// Make a new user when a user registers
-		var user = Users{FirstName: registerData.FirstName, LastName: registerData.LastName, Email: registerData.Email, Password: hashPass}
+		var user = Users{FirstName: registerData.firstName, LastName: registerData.LastName, Email: registerData.Email, Password: hashPass}
 
 		copy := db.FirstOrCreate(&user, Users{Email: registerData.Email})
 		if copy.Error != nil {
@@ -81,7 +81,6 @@ func main() {
 		} else {
 			ginContext.JSON(http.StatusInternalServerError, "Email already in use")
 		}
-
 		// Create a JSON Web Token (JWT) to login
 		// Expiration time is in milliseconds
 	})
