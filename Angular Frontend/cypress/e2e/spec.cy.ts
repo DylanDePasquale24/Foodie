@@ -19,4 +19,9 @@ describe('Goes to Landing Page', () => {
     cy.get('#mainInfo button').click();
     cy.url().should('include', '/register');
   });
+
+  it('Clicking logo in toolbar directs to landing page', () => {
+    cy.get('app-login-toolbar').get('img').click();
+    cy.url().should('eq', 'http://localhost:4200/');
+  });
 })
