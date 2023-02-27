@@ -127,6 +127,7 @@ func main() {
 			}
 
 			ginContext.JSON(http.StatusOK, gin.H{
+				"userName":  user.Name,
 				"jwt": tokenString,
 			})
 		} else {
@@ -139,6 +140,7 @@ func main() {
 	router.GET("/user-session", auth(), func(ginContext *gin.Context) {
 		ginContext.JSON(http.StatusOK, "Success")
 	})
+	
 
 	// Runs server
 	router.Run()
