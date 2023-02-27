@@ -39,4 +39,10 @@ describe('LandingComponent', () => {
     component.goToLogin();
     expect(router.navigate).toHaveBeenCalledWith(['login']);
   });
+
+  it('should navigate to register page', () => {
+    spyOn(router, 'navigate');
+    component.goToRegister();
+    expect(router.navigate).toHaveBeenCalledWith(['register']);
+  });
 });
