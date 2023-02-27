@@ -72,8 +72,8 @@ export class RegisterComponent extends LoginComponent {
     })
     .subscribe((response: Response) => {
       
-      this.loadingSpinner = false
       console.log(response)
+      this.loadingSpinner = false
       this.router.navigate(['home'])
 
       //do stuff with authguard and jwt to ensure security

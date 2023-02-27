@@ -33,14 +33,14 @@ func main() {
 		// This gets the JSON data from the request body
 		err := ginContext.BindJSON(&registerData)
 		if err != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Could not parse data from front-end")
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
 			return
 		}
 
 		// Hash the password
 		hashPass, err := HashPassword(registerData.Password)
 		if err != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Could not hash password")
+			ginContext.JSON(http.StatusInternalServerError, "Could not securely hash password.")
 			return
 		}
 
@@ -48,7 +48,7 @@ func main() {
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database")
+			ginContext.JSON(http.StatusInternalServerError, "Could not connect to database.")
 			return
 		}
 
@@ -57,7 +57,7 @@ func main() {
 
 		copy := db.FirstOrCreate(&user, Users{Email: registerData.Email})
 		if copy.Error != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Couldnt create user")
+			ginContext.JSON(http.StatusInternalServerError, "Could not create user.")
 		} else if copy.RowsAffected == 1 {
 			expirationTime := time.Now().Add(30000 * time.Minute)
 			// Create the JWT claims, that includes the username and expiry time
@@ -71,7 +71,7 @@ func main() {
 			// Creates the JWT string
 			tokenString, err := token.SignedString(jwtKey)
 			if err != nil {
-				ginContext.JSON(http.StatusInternalServerError, "Couldn't create jwt")
+				ginContext.JSON(http.StatusInternalServerError, "Couldn't create jwt.")
 			}
 
 			ginContext.JSON(http.StatusOK, gin.H{
@@ -79,7 +79,7 @@ func main() {
 				"jwt": tokenString,
 			})
 		} else {
-			ginContext.JSON(http.StatusInternalServerError, "Email already in use")
+			ginContext.JSON(http.StatusInternalServerError, "Email already in use.")
 		}
 		// Create a JSON Web Token (JWT) to login
 		// Expiration time is in milliseconds
@@ -95,14 +95,14 @@ func main() {
 		// This gets the JSON data from the request body
 		err := ginContext.BindJSON(&loginData)
 		if err != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Could not parse data from front-end")
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
 		}
 
 		// Make a database connection
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database")
+			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
 		}
 		db.First(&user, "email = ?", loginData.Email)
 
@@ -123,14 +123,14 @@ func main() {
 			// Creates the JWT string
 			tokenString, err := token.SignedString(jwtKey)
 			if err != nil {
-				ginContext.JSON(http.StatusInternalServerError, "Could not create jwt")
+				ginContext.JSON(http.StatusInternalServerError, "Could not create jwt.")
 			}
 
 			ginContext.JSON(http.StatusOK, gin.H{
 				"jwt": tokenString,
 			})
 		} else {
-			ginContext.JSON(http.StatusInternalServerError, "Incorrect password")
+			ginContext.JSON(http.StatusInternalServerError, "Incorrect password.")
 		}
 	})
 
