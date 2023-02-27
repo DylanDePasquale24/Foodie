@@ -26,7 +26,7 @@ export class RegisterComponent extends LoginComponent {
     super(httpClient, router);
     this.firstName = null
     this.lastName = null
-    this.DEFAULT_ERROR = 'We could not register that account! Please try again later.'
+    this.DEFAULT_ERROR = 'We could not register your account! Please try again.'
     this.errorMessage = this.DEFAULT_ERROR
   }
 
