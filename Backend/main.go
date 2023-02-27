@@ -141,6 +141,39 @@ func main() {
 		ginContext.JSON(http.StatusOK, "Success")
 	})
 	
+	router.POST("/createRecipe", func(ginContext *gin.Context) {
+		var recipe Recipe
+
+		// Bind JSON data to object
+		// This gets the JSON data from the request body
+		err := ginContext.BindJSON(&recipe)
+		if err != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
+		}
+
+		// Make a database connection
+		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		sql, _ := db.DB()
+		if err != nil || sql.Ping() != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
+		}
+
+		// Make a new user when a user registers
+		var recipe = Recipe{ID: Name: recipe.Name, Description: recipe.Description, Ingredients: recipe.Ingredients, Instructions: recipe.Instructions}
+
+		copy := db.FirstOrCreate(&recipe, Recipe{Name: recipe.Name})
+		if copy.Error != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
+		} else if copy.RowsAffected == 1 {
+			ginContext.JSON(http.StatusOK, gin.H{
+				"id":  recipe.ID,
+			})
+		} else {
+			ginContext.JSON(http.StatusInternalServerError, "Recipe already in use.")
+		}
+		// Create a JSON Web Token (JWT) to login
+		// Expiration time is in milliseconds
+	})
 
 	// Runs server
 	router.Run()
