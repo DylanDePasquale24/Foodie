@@ -32,4 +32,6 @@ describe('HomeComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // Add Unit Test for Home Page here
 });
