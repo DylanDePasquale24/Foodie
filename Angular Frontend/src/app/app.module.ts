@@ -2,6 +2,12 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+//Other
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
+// import { AuthGuard } from './auth.guard';
+// import { JwtInterceptor } from './jwt.interceptor';
+
 // ANGULAR MATERIAL MODULES
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { MatInputModule } from '@angular/material/input'
@@ -13,10 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
-// import { AuthGuard } from './auth.guard';
-// import { JwtInterceptor } from './jwt.interceptor';
+// APP SERVICES
 
 // APP COMPONENTS
 import { AppComponent } from './app.component';
@@ -28,7 +31,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { LoginToolbarComponent } from './login-toolbar/login-toolbar.component';
 import { RegisterComponent } from './register/register.component';
 
-// APP SERVICES
 
 
 
