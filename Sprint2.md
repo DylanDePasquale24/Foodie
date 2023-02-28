@@ -33,13 +33,13 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
 ***Front-End***<br>
 
-Landing Component (landing.component.spec.ts)
+Landing Component ([landing.component.spec.ts](Angular%20Frontend/src/app/landing/landing.component.spec.ts))
 * 'should navigate to login page'
   * Tests goToLogin() navigates to login page
 * 'should navigate to register page'
   * Tests goToRegister() navigates to register page
 
-Login Component (login.component.spec.ts)
+Login Component ([login.component.spec.ts](Angular%20Frontend/src/app/login/login.component.spec.ts))
 * 'should throw error message if email is missing'
   * Tests that an email must be submitted
 * 'should throw error message if password is missing'
@@ -51,7 +51,7 @@ Login Component (login.component.spec.ts)
 * 'should navigate to register page'
   * Tests g=GoTo() routes to register page
 
-Register Component (register.component.spec.ts)
+Register Component ([register.component.spec.ts](Angular%20Frontend/src/app/register/register.component.spec.ts))
 * should navigate to login page on click of "Already have an account?" button
   * Tests GoTo() function routes to login page
 * should return true for a valid email
