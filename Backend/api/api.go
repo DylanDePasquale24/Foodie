@@ -3,49 +3,50 @@ package api
 import (
 	"encoding/json"
 	"fmt"
-	"time"
 	"net/http"
+	"time"
 )
 
 	var client *http.Client
 
-	func GetJSON(url string, dst interface{}) bool {
+	func GetJSON(url string, dst interface{}) error {
 		client = &http.Client{Timeout: 10 * time.Second}
 
 		// Gets the JSON
-		response, err := client.Get(url)
+		response, error := client.Get(url)
 
-		if err != nil {
-			return false
+		/* 
+			An error is only thrown if it cannot connect to the API URL,
+			if the API key is invalid or probably if you hit the API limit,
+			the error won't be caught
+		*/
+		if error != nil {
+			return error
 		}
 		
 		defer response.Body.Close()
 
 		// Reads the JSON and puts the data into specified structs
-		err = json.NewDecoder(response.Body).Decode(dst)
+		error = json.NewDecoder(response.Body).Decode(dst)
 
-		if err != nil {
-			fmt.Println("error")
-			return false
-		}
-
-		return true
+		return error
 	}
 
-	func GetNutritionInfo() {
+	func GetNutritionInfo() error {
 		url := "https://api.nal.usda.gov/fdc/v1/food/1750342?format=abridged&nutrients=208&nutrients=203&nutrients=205&nutrients=204&nutrients=269&nutrients=307&api_key=Y9rvUVTZ5oXuqaj4D5tfekVK0uH2b9WuInZxe4xj"
 
 		var foodInfo foodInfo
 
-		err := GetJSON(url, &foodInfo)
+		error := GetJSON(url, &foodInfo)
 
-		if err == false {
-			fmt.Println("Error when calling GetJSON()")
-			return
+		if error != nil {
+			return error
 		} else {
 			fmt.Println(foodInfo.Description)
 			fmt.Println(foodInfo.FoodNutrients)
 		}
+		
+		return error
 	}
 
 	/* 	
