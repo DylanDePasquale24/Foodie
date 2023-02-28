@@ -36,7 +36,7 @@ describe('Test Log in functionality', () => {
     cy.visit('/login');
   });
 
-  it.only('Should login in successfully with a correct account', () => {
+  it('Should login in successfully with a correct account', () => {
 
     //Try logging in with a valid account
     const validEmail = 'mikebrown@gmail.com';
