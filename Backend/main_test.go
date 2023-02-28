@@ -2,11 +2,9 @@ package main
 
 import (
 	"bytes"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -55,7 +53,7 @@ func TestRouterPOSTRegister(t *testing.T) {
 }
 
 /*
-	Test tries to login a user using the info in hte json variable,
+	Test tries to login a user using the info in the json variable,
 	returns code 200 when it passes
 */
 func TestRouterPOSTLogin(t *testing.T) {
@@ -73,7 +71,27 @@ func TestRouterPOSTLogin(t *testing.T) {
 
 	router.ServeHTTP(responseRecorder, request)
 
-	fmt.Println(responseRecorder.Body.String())
+	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
+}
+
+/*
+	Test tries to create a recipe entry in the database using the info in the json variable,
+	returns code 200 when it passes
+*/
+func TestRouterPOSTRecipeCreate(t *testing.T) {
+	
+	RouterPOSTRecipeCreate(router)
+
+	responseRecorder := httptest.NewRecorder()
+
+	json := []byte(`{
+		Not finished yet
+	  }`)
+
+	request, _ := http.NewRequest("POST", "/recipeCreate", bytes.NewBuffer(json))
+
+	router.ServeHTTP(responseRecorder, request)
+
 	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
 }
 
