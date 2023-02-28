@@ -141,39 +141,39 @@ func main() {
 		ginContext.JSON(http.StatusOK, "Success")
 	})
 
-	// router.POST("/createRecipe", func(ginContext *gin.Context) {
-	// 	var recipe Recipe
+	router.POST("/recipeCreate", func(ginContext *gin.Context) {
+		var recipeCreate Recipe
 
-	// 	// Bind JSON data to object
-	// 	// This gets the JSON data from the request body
-	// 	err := ginContext.BindJSON(&recipe)
-	// 	if err != nil {
-	// 		ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
-	// 	}
+		// Bind JSON data to object
+		// This gets the JSON data from the request body
+		err := ginContext.BindJSON(&recipeCreate)
+		if err != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
+		}
 
-	// 	// Make a database connection
-	// 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	// 	sql, _ := db.DB()
-	// 	if err != nil || sql.Ping() != nil {
-	// 		ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
-	// 	}
+		// Make a database connection
+		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		sql, _ := db.DB()
+		if err != nil || sql.Ping() != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
+		}
 
-	// 	// Make a new user when a user registers
-	// 	var recipe = Recipe{Name: recipe.Name, Description: recipe.Description, Ingredients: recipe.Ingredients, Instructions: recipe.Instructions}
+		// Make a new recipe when created
+		var recipe = Recipes{RecipeName: recipeCreate.RecipeName, Description: recipeCreate.Description, Ingredients: recipeCreate.Ingredients, Instructions: recipeCreate.Instructions}
 
-	// 	copy := db.FirstOrCreate(&recipe, Recipe{Name: recipe.Name})
-	// 	if copy.Error != nil {
-	// 		ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
-	// 	} else if copy.RowsAffected == 1 {
-	// 		ginContext.JSON(http.StatusOK, gin.H{
-	// 			"id": recipe.recipeID,
-	// 		})
-	// 	} else {
-	// 		ginContext.JSON(http.StatusInternalServerError, "Recipe already in use.")
-	// 	}
-	// 	// Create a JSON Web Token (JWT) to login
-	// 	// Expiration time is in milliseconds
-	// })
+		copy := db.FirstOrCreate(&recipe, Recipe{RecipeName: recipeCreate.RecipeName})
+		if copy.Error != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
+		} else if copy.RowsAffected == 1 {
+			ginContext.JSON(http.StatusOK, gin.H{
+				"id": recipe.recipeID,
+			})
+		} else {
+			ginContext.JSON(http.StatusInternalServerError, "Recipe already in use.")
+		}
+		// Create a JSON Web Token (JWT) to login
+		// Expiration time is in milliseconds
+	})
 
 	// Runs server
 	router.Run()
@@ -210,12 +210,19 @@ type Users struct {
 }
 
 type Recipe struct {
+	RecipeName   string `json: RecipeName`
+	Description  string `json: Description`
+	Ingredients  string `json: Ingredients`
+	Instructions string `json: Instructions`
+}
+
+type Recipes struct {
 	userID       int64
 	recipeID     int64
-	recipeName   string
-	description  string
-	ingredients  string
-	instructions string
+	RecipeName   string `gorm:"column:RecipeName"`
+	Description  string `gorm:"column:Description"`
+	Ingredients  string
+	Instructions string
 }
 
 type Tabler interface {
