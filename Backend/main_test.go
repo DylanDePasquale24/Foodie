@@ -8,7 +8,7 @@ import (
 
 
 func TestHashPassword(t *testing.T) {
-	password1 := "TestingPasswordHashing"
+	password1 := "SAODIjoJo1@jddqdqw"
 
 	got, error := HashPassword(password1)
 
@@ -19,6 +19,6 @@ func TestHashPassword(t *testing.T) {
 	error = bcrypt.CompareHashAndPassword([]byte(got), []byte(password1))
 
 	if error != nil {
-		t.Errorf("Error in Hashing %d", error)
+		t.Errorf("Error in Hashing, Error Message: %d", error)
 	}
 }
