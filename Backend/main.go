@@ -19,57 +19,26 @@ var dsn = "root:@tcp(127.0.0.1:3306)/websitedatabase?charset=utf8mb4&parseTime=T
 
 func main() {
 	
+	// Starts the router
 	router := setupRouter()
 
+	// POST /register
 	RouterPOSTRegister(router)
 
+	// POST /login
 	RouterPOSTLogin(router)
 	
+	// GET /user-session
+	RouterGETUserSession(router)
 
-	// When the inputted username and password matches the ones stored,
-	// the auth() method verifies the token that is found in the authorization header
-	router.GET("/user-session", auth(), func(ginContext *gin.Context) {
-		ginContext.JSON(http.StatusOK, "Success")
-	})
-
-	router.POST("/recipeCreate", func(ginContext *gin.Context) {
-		var recipeCreate Recipe
-
-		// Bind JSON data to object
-		// This gets the JSON data from the request body
-		err := ginContext.BindJSON(&recipeCreate)
-		if err != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
-		}
-
-		// Make a database connection
-		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-		sql, _ := db.DB()
-		if err != nil || sql.Ping() != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
-		}
-
-		// Make a new recipe when created
-		var recipe = Recipes{RecipeName: recipeCreate.RecipeName, Description: recipeCreate.Description, Ingredients: recipeCreate.Ingredients, Instructions: recipeCreate.Instructions}
-
-		copy := db.FirstOrCreate(&recipe, Recipe{RecipeName: recipeCreate.RecipeName})
-		if copy.Error != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
-		} else if copy.RowsAffected == 1 {
-			ginContext.JSON(http.StatusOK, gin.H{
-				"id": recipe.recipeID,
-			})
-		} else {
-			ginContext.JSON(http.StatusInternalServerError, "Recipe already in use.")
-		}
-		// Create a JSON Web Token (JWT) to login
-		// Expiration time is in milliseconds
-	})
+	// POST /recipeCreate
+	RouterPOSTRecipeCreate(router)
 
 	// Runs server
 	router.Run()
 }
 
+// Starts the router
 func setupRouter() *gin.Engine {
 	router := gin.Default()
 	config := cors.DefaultConfig()
@@ -123,6 +92,7 @@ func RouterPOSTRegister(router *gin.Engine) {
 			},
 			}
 
+			// Create a JSON Web Token (JWT) 
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 			// Creates the JWT string
@@ -138,8 +108,6 @@ func RouterPOSTRegister(router *gin.Engine) {
 		} else {
 			ginContext.JSON(http.StatusInternalServerError, "Email already in use.")
 		}
-		// Create a JSON Web Token (JWT) to login
-		// Expiration time is in milliseconds
 	})
 
 }
@@ -178,6 +146,7 @@ func RouterPOSTLogin(router *gin.Engine) {
 				},
 			}
 
+			// Create a JSON Web Token (JWT) 
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 			// Creates the JWT string
@@ -192,6 +161,49 @@ func RouterPOSTLogin(router *gin.Engine) {
 			})
 		} else {
 			ginContext.JSON(http.StatusInternalServerError, "Incorrect password.")
+		}
+	})
+}
+
+func RouterGETUserSession(router *gin.Engine) {
+	// When the inputted username and password matches the ones stored,
+	// the auth() method verifies the token that is found in the authorization header
+	router.GET("/user-session", auth(), func(ginContext *gin.Context) {
+		ginContext.JSON(http.StatusOK, "Success")
+	})
+}
+
+func RouterPOSTRecipeCreate(router *gin.Engine) {
+	// If there are no errors, this should make a recipe entry in the database
+	router.POST("/recipeCreate", func(ginContext *gin.Context) {
+		var recipeCreate Recipe
+
+		// Bind JSON data to object
+		// This gets the JSON data from the request body
+		err := ginContext.BindJSON(&recipeCreate)
+		if err != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
+		}
+
+		// Make a database connection
+		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		sql, _ := db.DB()
+		if err != nil || sql.Ping() != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
+		}
+
+		// Make a new recipe when created
+		var recipe = Recipes{RecipeName: recipeCreate.RecipeName, Description: recipeCreate.Description, Ingredients: recipeCreate.Ingredients, Instructions: recipeCreate.Instructions}
+
+		copy := db.FirstOrCreate(&recipe, Recipe{RecipeName: recipeCreate.RecipeName})
+		if copy.Error != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
+		} else if copy.RowsAffected == 1 {
+			ginContext.JSON(http.StatusOK, gin.H{
+				"id": recipe.recipeID,
+			})
+		} else {
+			ginContext.JSON(http.StatusInternalServerError, "Recipe already in use.")
 		}
 	})
 }
