@@ -10,19 +10,23 @@
     </div>
 
     <!-- Email -->
-    <mat-form-field>
+    <mat-form-field data-test="email-input">
         <mat-label>Email</mat-label>
         <input [(ngModel)]="email" matInput required placeholder="ex. johndoe@email.com">
     </mat-form-field>
 
     <!-- Password -->
-    <mat-form-field>
+    <mat-form-field data-test="password-input">
         <mat-label>Password</mat-label>
         <input [(ngModel)]="password" matInput required minlength="8" type="password">
     </mat-form-field>
 
     <!-- Login Btn  -->
-    <button (click)="Submit()" mat-raised-button color="accent">
+    <button
+        (click)="Submit()"
+        mat-raised-button color="accent" 
+        data-test="login-button"
+    >
         Login
     </button>
 
