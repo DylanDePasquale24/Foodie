@@ -2,9 +2,11 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -26,11 +28,14 @@ func TestHashPassword(t *testing.T) {
 	}
 }
 
-/* Test tries to register a user using the info in the json variable
-	Returns code 200 when passes
+// Used to start the router
+var router = setupRouter()
+
+/* 
+	Test tries to register a user using the info in the json variable,
+	returns code 200 when it passes
 */
 func TestRouterPOSTRegister(t *testing.T) {
-	router := setupRouter()
 
 	RouterPOSTRegister(router)
 
@@ -39,13 +44,36 @@ func TestRouterPOSTRegister(t *testing.T) {
 	json := []byte(`{
 		"firstName": "testing",
 		"lastName": "testing",
-		"email": "paul@gmail.com",
-		"password": "paul1234"}`)
+		"email": "gmail@gmail.com",
+		"password": "password1234"}`)
 
 	request, _ := http.NewRequest("POST", "/register", bytes.NewBuffer(json))
 
 	router.ServeHTTP(responseRecorder, request)
 
 	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
-	
 }
+
+/*
+	Test tries to login a user using the info in hte json variable,
+	returns code 200 when it passes
+*/
+func TestRouterPOSTLogin(t *testing.T) {
+	
+	RouterPOSTLogin(router)
+
+	responseRecorder := httptest.NewRecorder()
+
+	json := []byte(`{
+		"email": "gmail@gmail.com",
+		"password": "password1234"
+	  }`)
+
+	request, _ := http.NewRequest("POST", "/login", bytes.NewBuffer(json))
+
+	router.ServeHTTP(responseRecorder, request)
+
+	fmt.Println(responseRecorder.Body.String())
+	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
+}
+
