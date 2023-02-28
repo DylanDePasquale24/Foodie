@@ -23,55 +23,8 @@ func main() {
 
 	RouterPOSTRegister(router)
 
-	// This checks that the inputted username and password match the ones
-	// in the database, and if so, it returns a JWT and logs in the user
-	router.POST("/login", func(ginContext *gin.Context) {
-		var loginData Login
-		var user Users
-
-		// Bind JSON data to object
-		// This gets the JSON data from the request body
-		err := ginContext.BindJSON(&loginData)
-		if err != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
-		}
-
-		// Make a database connection
-		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-		sql, _ := db.DB()
-		if err != nil || sql.Ping() != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
-		}
-		db.First(&user, "email = ?", loginData.Email)
-
-		checkPasswordHash := CheckPasswordHash(loginData.Password, user.Password)
-		// If password is correct enter the if statement, otherwise cause an error
-		if checkPasswordHash {
-			expirationTime := time.Now().Add(5 * time.Minute)
-			
-			// Create the JWT claims, that includes the username and expiry time
-			var claims = Claims{Email: loginData.Email, RegisteredClaims: jwt.RegisteredClaims{
-				// Expiration time is in milliseconds
-				ExpiresAt: jwt.NewNumericDate(expirationTime),
-			},
-			}
-
-			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-			// Creates the JWT string
-			tokenString, err := token.SignedString(jwtKey)
-			if err != nil {
-				ginContext.JSON(http.StatusInternalServerError, "Could not create jwt.")
-			}
-
-			ginContext.JSON(http.StatusOK, gin.H{
-				"userName": user.FirstName,
-				"jwt":      tokenString,
-			})
-		} else {
-			ginContext.JSON(http.StatusInternalServerError, "Incorrect password.")
-		}
-	})
+	RouterPOSTLogin(router)
+	
 
 	// When the inputted username and password matches the ones stored,
 	// the auth() method verifies the token that is found in the authorization header
@@ -189,6 +142,58 @@ func RouterPOSTRegister(router *gin.Engine) {
 		// Expiration time is in milliseconds
 	})
 
+}
+
+func RouterPOSTLogin(router *gin.Engine) {
+	// This checks that the inputted username and password match the ones
+	// in the database, and if so, it returns a JWT and logs in the user
+	router.POST("/login", func(ginContext *gin.Context) {
+		var loginData Login
+		var user Users
+
+		// Bind JSON data to object
+		// This gets the JSON data from the request body
+		err := ginContext.BindJSON(&loginData)
+		if err != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
+		}
+
+		// Make a database connection
+		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		sql, _ := db.DB()
+		if err != nil || sql.Ping() != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
+		}
+		db.First(&user, "email = ?", loginData.Email)
+
+		checkPasswordHash := CheckPasswordHash(loginData.Password, user.Password)
+		// If password is correct enter the if statement, otherwise cause an error
+		if checkPasswordHash {
+			expirationTime := time.Now().Add(5 * time.Minute)
+			
+			// Create the JWT claims, that includes the username and expiry time
+			var claims = Claims{Email: loginData.Email, RegisteredClaims: jwt.RegisteredClaims{
+				// Expiration time is in milliseconds
+				ExpiresAt: jwt.NewNumericDate(expirationTime),
+				},
+			}
+
+			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+			// Creates the JWT string
+			tokenString, err := token.SignedString(jwtKey)
+			if err != nil {
+				ginContext.JSON(http.StatusInternalServerError, "Could not create jwt.")
+			}
+
+			ginContext.JSON(http.StatusOK, gin.H{
+				"userName": user.FirstName,
+				"jwt":      tokenString,
+			})
+		} else {
+			ginContext.JSON(http.StatusInternalServerError, "Incorrect password.")
+		}
+	})
 }
 
 type Claims struct {
