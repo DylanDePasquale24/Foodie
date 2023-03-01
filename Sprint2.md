@@ -7,7 +7,7 @@
 ### Sprint 2 Branch:
 
 ## Links to Demos
-- Link to Front-End Demo:
+- Link to Front-End Demo: https://www.youtube.com/watch?v=TSPHUCuxIeI
 - Link to Back-End Demo:
 
 ## User Stories
