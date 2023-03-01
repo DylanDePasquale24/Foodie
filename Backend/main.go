@@ -16,9 +16,8 @@ import (
 // Data Source Name (DSN) user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local
 var dsn = "root:@tcp(127.0.0.1:3306)/websitedatabase?charset=utf8mb4&parseTime=True&loc=Local"
 
-
 func main() {
-	
+
 	// Starts the router
 	router := setupRouter()
 
@@ -27,7 +26,7 @@ func main() {
 
 	// POST /login
 	RouterPOSTLogin(router)
-	
+
 	// GET /user-session
 	RouterGETUserSession(router)
 
@@ -92,7 +91,7 @@ func RouterPOSTRegister(router *gin.Engine) {
 			},
 			}
 
-			// Create a JSON Web Token (JWT) 
+			// Create a JSON Web Token (JWT)
 			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 			// Creates the JWT string
@@ -132,35 +131,40 @@ func RouterPOSTLogin(router *gin.Engine) {
 		if err != nil || sql.Ping() != nil {
 			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
 		}
-		db.First(&user, "email = ?", loginData.Email)
 
-		checkPasswordHash := CheckPasswordHash(loginData.Password, user.Password)
-		// If password is correct enter the if statement, otherwise cause an error
-		if checkPasswordHash {
-			expirationTime := time.Now().Add(5 * time.Minute)
-			
-			// Create the JWT claims, that includes the username and expiry time
-			var claims = Claims{Email: loginData.Email, RegisteredClaims: jwt.RegisteredClaims{
-				// Expiration time is in milliseconds
-				ExpiresAt: jwt.NewNumericDate(expirationTime),
-				},
-			}
-
-			// Create a JSON Web Token (JWT) 
-			token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
-			// Creates the JWT string
-			tokenString, err := token.SignedString(jwtKey)
-			if err != nil {
-				ginContext.JSON(http.StatusInternalServerError, "Could not create jwt.")
-			}
-
-			ginContext.JSON(http.StatusOK, gin.H{
-				"userName": user.FirstName,
-				"jwt":      tokenString,
-			})
+		//check for email in database and check if password matches if email exists.
+		if err := db.Find(&user, "email = ?", loginData.Email).Error; err != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Email doesn't exist.")
 		} else {
-			ginContext.JSON(http.StatusInternalServerError, "Incorrect password.")
+			db.First(&user, "email = ?", loginData.Email)
+			checkPasswordHash := CheckPasswordHash(loginData.Password, user.Password)
+			// If password is correct enter the if statement, otherwise cause an error
+			if checkPasswordHash {
+				expirationTime := time.Now().Add(5 * time.Minute)
+
+				// Create the JWT claims, that includes the username and expiry time
+				var claims = Claims{Email: loginData.Email, RegisteredClaims: jwt.RegisteredClaims{
+					// Expiration time is in milliseconds
+					ExpiresAt: jwt.NewNumericDate(expirationTime),
+				},
+				}
+
+				// Create a JSON Web Token (JWT)
+				token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+				// Creates the JWT string
+				tokenString, err := token.SignedString(jwtKey)
+				if err != nil {
+					ginContext.JSON(http.StatusInternalServerError, "Could not create jwt.")
+				}
+
+				ginContext.JSON(http.StatusOK, gin.H{
+					"userName": user.FirstName,
+					"jwt":      tokenString,
+				})
+			} else {
+				ginContext.JSON(http.StatusInternalServerError, "Incorrect password.")
+			}
 		}
 	})
 }
