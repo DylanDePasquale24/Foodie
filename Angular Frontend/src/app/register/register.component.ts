@@ -3,7 +3,7 @@ import { LoginComponent } from '../login/login.component';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
-//when it's a success, we only need these 2 variables
+
 interface Response {
   id: number
   jwt: string
@@ -65,7 +65,6 @@ export class RegisterComponent extends LoginComponent {
       lastName: this.lastName,
       email: this.email,
       password: this.password,
-  
     })
     .subscribe((response: Response) => {
       
@@ -73,10 +72,9 @@ export class RegisterComponent extends LoginComponent {
       this.loadingSpinner = false
       this.router.navigate(['home'])
 
-      //do stuff with authguard and jwt to ensure security
-      //localStorage.setItem('token', response.jwt)
-      
-  
+      //Stores jwt
+      localStorage.setItem('token', response.jwt)
+
       this.firstName = null
       this.lastName = null
       this.email = null

@@ -296,7 +296,7 @@ func auth() gin.HandlerFunc {
 
 		if err != nil {
 			// Runs this if there is an error
-			c.JSON(http.StatusInternalServerError, "")
+			c.JSON(http.StatusInternalServerError, "jwt not authorized")
 		} else {
 			c.Next()
 		}

@@ -59,8 +59,8 @@ export class LoginComponent {
       this.loadingSpinner = false
       this.router.navigate(['home'])
       
-      //authguard stuff
-      //localStorage.setItem('token', response.jwt)
+      //Store jwt
+      localStorage.setItem('token', response.jwt)
   
       this.email = null
       this.password = null
