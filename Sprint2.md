@@ -46,7 +46,7 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
 * Created wireframe for Home page
   
-  ![Home Page Wireframe](Wireframes/Home%20Page%20Wireframe.png)
+<img src="WireFrames/HomePage.png" alt="Home Page Wireframe" width="400"/>
 
 * Toolbar
   * Created two toolbars that will exist on the top of the web application
