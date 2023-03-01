@@ -43,7 +43,7 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
 * Refactoring
   * Previously had login and register pages in one component, now seperated into their own components to keep their functionality self contained and improve readability. Uses inheritance to adhere to DRY principle.
-
+  
 * Favicon and 'Foodie' Logo
 
 
