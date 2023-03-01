@@ -23,7 +23,29 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
 ## Work Completed in Sprint 2
 
-***Front-End***
+***Front-End***<br>
+* Landing Page
+  * First page user sees when navigating to the website.
+  * "Get started" button navigates user to the register page.
+
+* Login / Register
+  * Loading spinners allow users to know when processes are happening while frontend waits for backend response.
+  * Error checking for blank input fields, valid email, and password  minimum length. Displays an error flag to warn users, not allowing them to submit in these cases.
+  * Error flags for backend internal service errors. Frontend can handle backend error responses without interfering with the user experience.
+  * Routes to home page after recieving backend success response.
+  
+* Routing
+  * Routing module containing all paths, showing titles on the site tab. Properly links components to all website route paths.
+  * 404 page not found if user tries to enter a nonexistent route.
+
+* Favicon and 'Foodie' Logo
+
+* Toolbar
+  * description
+
+* Refactoring
+  * Previously had login and register pages in one component, now seperated into their own components to keep their functionality self contained and improve readability. Uses inheritance to adhere to DRY principle.
+
 
 
 ***Back-End***
