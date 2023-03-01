@@ -44,7 +44,9 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 * Favicon and 'Foodie' Logo
   * Designed a logo for our app
 
-* Created wireframe for Landing and Home page
+* Created wireframe for Home page
+  
+  ![Home Page Wireframe](Wireframes/Home%20Page%20Wireframe.png)
 
 * Toolbar
   * Created two toolbars that will exist on the top of the web application
