@@ -23,7 +23,44 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
 ## Work Completed in Sprint 2
 
-***Front-End***
+***Front-End***<br>
+* Landing Page
+  * First page user sees when navigating to the website.
+  * "Get started" button navigates user to the register page.
+
+* Login / Register
+  * Loading spinners allow users to know when processes are happening while frontend waits for backend response.
+  * Error checking for blank input fields, valid email, and password  minimum length. Displays an error flag to warn users, not allowing them to submit in these cases.
+  * Error flags for backend internal service errors. Frontend can handle backend error responses without interfering with the user experience.
+  * Verifies inputted email and password are in a valid format
+  * Routes to home page after receiving backend success response.
+  
+* Routing
+  * Routing module containing all paths, showing titles on the site tab. Properly links components to all website route paths.
+  * 404 page not found if user tries to enter a nonexistent route.
+  
+* Beginning Implementation of Auth Guard and JSON Web Tokens
+
+* Favicon and 'Foodie' Logo
+  * Designed a logo for our app
+
+* Created wireframe for Home page
+  
+<img src="WireFrames/HomePage.png" alt="Home Page Wireframe" width="800"/>
+
+* Toolbar
+  * Created two toolbars that will exist on the top of the web application
+  * Login toolbar: toolbar for landing, login, and register page
+    * Contains clickable logo that routes back to landing page and a log in button
+  * App toolbar: a toolbar available for users who have logged in
+    * Will contain more buttons and features than the login toolbar
+
+* Refactoring
+  * Previously had login and register pages in one component, now seperated into their own components to keep their functionality self contained and improve readability. Uses inheritance to adhere to DRY principle.
+  
+
+* Created Angular Unit Tests and E2E Cypress Tests
+
 
 
 ***Back-End***
@@ -45,7 +82,7 @@ Login Component ([login.component.spec.ts](Angular%20Frontend/src/app/login/logi
 * 'should throw error message if password is missing'
   * Tests that a password must be submitted
 * 'should make a POST request to the server and navigate to home' 
-  * Expects a POST request when user logs in, should receive a JWT
+  * Expects a POST request when user logs in, should receive a JWT (this test currently fails because JWT functionality is not completed)
 * 'should set error message and clear form fields on error' 
   * should display error if log in fails, should also receive an error message from backend
 * 'should navigate to register page'

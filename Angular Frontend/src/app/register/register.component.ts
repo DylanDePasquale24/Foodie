@@ -41,6 +41,14 @@ export class RegisterComponent extends LoginComponent {
       return;
     }
 
+    //Verify Email
+    if(!this.isValidEmail(this.email)){
+      this.errorMessage = 'Please enter a valid email!'
+      this.showErrorFlag = true
+      this.loadingSpinner = false
+      return;
+    }
+
     //Verify Password
     if(this.password.length < 8){
       this.errorMessage = 'Your password must be a minimum of 8 characters! Please try again.'
@@ -49,17 +57,6 @@ export class RegisterComponent extends LoginComponent {
       return;
     }
     
-    //Verify Email
-    if(!this.isValidEmail(this.email)){
-      this.errorMessage = 'Please enter a valid email!'
-      this.showErrorFlag = true
-      this.loadingSpinner = false
-      return;
-    }
-    
-  
-  
-  
     //post user info to the backend and provide them w these 4 data variables as an object
     this.httpClient
     .post<Response>('http://localhost:8080/register', {
