@@ -38,14 +38,13 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
   * Routing module containing all paths, showing titles on the site tab. Properly links components to all website route paths.
   * 404 page not found if user tries to enter a nonexistent route.
 
-* Favicon and 'Foodie' Logo
-
 * Toolbar
   * description
 
 * Refactoring
   * Previously had login and register pages in one component, now seperated into their own components to keep their functionality self contained and improve readability. Uses inheritance to adhere to DRY principle.
 
+* Favicon and 'Foodie' Logo
 
 
 ***Back-End***
