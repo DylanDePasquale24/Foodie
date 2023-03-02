@@ -65,6 +65,16 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
 ***Back-End***
 
+ * main.go
+	 * Added additional HTTP status codes and HTTP body fields to return to the frontend
+	 * Started to implemement endpoint /recipeCreate that will be used to create a recipe entry in the database
+ * api.go
+	 * Started to implement code that will call the USDA food API and give us nutritional information about the requested food
+
+ * Refactoring
+   * Organized backend code originally in main() into functions to allow unit testing
+   
+ * Created unit tests 
 
 ## Unit Tests
 
@@ -100,6 +110,23 @@ Register Component ([register.component.spec.ts](Angular%20Frontend/src/app/regi
 
 ***Back-End***<br>
 
+TestHashPassword
+ - This test checks that the password hashing function that is part of the bcrypt package works properly
+ -  It hashes a test password and calls bcrypt's compare function to see if the hashed password matches the test password. If the compare function returns nil, then there are no errors and the test passes. Otherwise, the test throws an error message
+
+TestRouterPOSTRegister
+ - This test tries to register a user by sending a POST request to the /register endpoint
+ - If the response is status code 200, then the user was successfully registered and the test passes. Otherwise, a status code of 500 is returned along with an error message
+ - Note: This test will fail if you rerun the test without deleting the user it created in the database
+
+TestRouterPOSTLogin
+ - This test tries to login the user created in the TestRouterPOSTRegister test by sending a POST request to the /login endpoint
+ - If the response is status code 200, then the user was successfully logged in and the test passes. Otherwise, a status code of 500 is returned along with an error message
+
+TestRouterPOSTRecipeCreate
+ - This test tries to create a recipe entry by sending a POST request to the /recipeCreate endpoint.
+ - If the response is status code 200, then the recipe entry was successfuly created and the test passes. Otherwise a status code of 500 is returnd along with an error message
+ - **This test should fail as we haven't finished implementing everything**
 
 ## Cypress Tests (Front-end)
 
@@ -111,4 +138,173 @@ The 'Test Log In Functionality' test group simulates a user logging into Foodie.
 
 ## Backend API Documentation
 
+The Foodie Backend API currently contains four functions, a registration, login, user session, and a create recipe function.
 
+### Register Function:
+
+Description: This function takes user data inputted on the registration site and inputs it into a database full of users. This data can be pulled from in the future for other functions and allows for updates to the account to be made. When a successful user is created their corresponding id is returned along with a JSON web token. When failed, the function will return an error message related to the issue encountered.
+
+Command call: /register
+
+Method Type: POST
+
+Information Requested:
+
+	"FirstName": "John",
+
+	"LastName": "Doe",
+
+	"Email": "johndoe@example.com",
+
+	"Password": "password"
+
+#### Success Response:
+
+StatusOK:
+
+	“id”: <id number of user that was registered to database>
+
+	“jwt”: <Current JSON Web Token >
+
+Status Code: 200
+
+#### Error Responses:
+
+If the user data inputted cannot be parsed, the function will return an Internal Server Error:
+
+	“Could not parse user data.”
+
+If the user password inputted cannot be hashed, the function will return an Internal Server Error:
+
+	“Could not securely hash password.”
+
+If the function cannot create a connection with the database, the function will return an Internal Server Error:
+
+	“Could not connect to database.”
+
+If the user email inputted is already used, the function will return an Internal Server Error:
+
+	“Email already in use.”
+
+Status Code: 500
+
+
+### Login Function:
+
+Description: This function takes user data inputted on the login site and checks whether the user entry exists in the user database. Once checked for accuracy, the function will either respond with a success message or a variety of error messages. When a successful user is logged in their corresponding id is returned along with a JSON web token. When failed, the function will return an error message related to the issue encountered.
+
+Command call: /login
+
+Method Type: POST
+
+Information Requested:
+
+	"Email": "johndoe@example.com",
+
+	"Password": "password"
+
+#### Success Response:
+
+StatusOK:
+
+	“id”: <id number of user that was registered to database>
+
+	“jwt”: <Current JSON Web Token >
+
+Status Code: 200
+
+#### Error Responses:
+
+If the user data inputted cannot be parsed, the function will return an Internal Server Error:
+
+	“Could not parse user data.”
+
+If the database cannot be accessed, the function will return an Internal Server Error:
+
+	"Couldn't connect to database."
+
+If the email does not within the database, the function will return an Internal Server Error:
+
+	"Email doesn't exist."
+
+If the user inputted the wrong password, the function will return an Internal Server Error:
+
+	"Incorrect password."
+
+Status Code: 500
+
+
+### User-session Function:
+
+Description: The function checks if the JSON Web Token (JWT) received from the frontend matches the JWT in backend. This is used to make sure that the user is not accessing parts of the website they aren’t supposed to. When the JWTs match, a 200 code and a success message is returned. If they don't match, a 500 code and an error message is returned.
+
+Command call: /user-session
+
+Method Type: GET
+
+Information Received: JSON Web Token
+
+#### Success Response:
+
+StatusOK: 
+
+	“Success”
+
+Status Code: 200
+
+#### Error Response:
+
+If the JSON Web Token (JWT) supplied from the frontend doesn’t match the expected JWT, the function will return an Internal Server Error:
+
+	“jwt not authorized”
+
+Status Code: 500
+
+
+### Recipe Create Function:
+
+Description: This function takes data inputted by the user about a recipe, including the name, description, ingredients, and the instructions. Eventually, this data will be able to be pulled to show the caloric and macro values associated with the recipe. When a successful recipe is created their corresponding recipe id. When failed, the function will return an error message related to the issue encountered.
+
+Command call: /recipeCreate
+
+Method Type: POST
+
+Information Requested:
+
+	"RecipeName": "Chicken Parmesan",
+
+	"Description": "Pasta and Chicken",
+
+	"Ingredients": "1.Chicken, 2. Pasta, 3. Parmesan Cheese",
+
+	"Instructions": "1. Cook chicken and pasta separately 2. Add parmesan cheese to taste"
+
+#### Success Response:
+
+StatusOK:
+
+	“id”: <id number of user that was registered to database>
+
+	“jwt”: <Current JSON Web Token >
+
+Status Code: 200
+
+#### Error Responses:
+
+If the user data inputted cannot be parsed, the function will return an Internal Server Error:
+
+	“Could not parse recipe data.”
+
+If the function cannot create a connection with the database, the function will return an Internal Server Error:
+
+	“Could not connect to database.”
+
+If the backend has an issue writing the recipe to the database, the function will return an Internal Server Error:
+
+	"Could not create recipe."
+
+If the user has already made the same recipe, the function will return an Internal Server Error:
+
+	"Recipe already in use."
+
+Status Code: 500
