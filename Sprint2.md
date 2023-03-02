@@ -1,7 +1,7 @@
 # Sprint 2
 03-01-2023
 ## Members
-**Front-End**: Dylan DePasquale and Richard Qian <br>
+**Front-End**: Dylan DePasquale and Richard Qian
 **Back-End**: Pranav Venu and Paul Jablonowski
 
 ### Sprint 2 Branch:
@@ -12,18 +12,18 @@
 
 ## User Stories
 
-As a user of Foodie, I would like to create recipes and add their ingredients for my own reference. <br>
+As a user of Foodie, I would like to create recipes and add their ingredients for my own reference.
 
-Foodie should automatically visualize relevant nutritional information about a user-created recipe page to any user viewing it. <br>
+Foodie should automatically visualize relevant nutritional information about a user-created recipe page to any user viewing it.
 
-As a user of Foodie, I want to be able to create an account and login so that I can store my personal data/profile. <br>
+As a user of Foodie, I want to be able to create an account and login so that I can store my personal data/profile.
 
-As a user of Foodie, I would like to save and organize recipes so that I can easily track the important nutritional information of my meals. <br>
+As a user of Foodie, I would like to save and organize recipes so that I can easily track the important nutritional information of my meals.
 
 
 ## Work Completed in Sprint 2
 
-***Front-End***<br>
+***Front-End***
 * Landing Page
   * First page user sees when navigating to the website.
   * "Get started" button navigates user to the register page.
@@ -67,18 +67,19 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
  * main.go
 	 * Added additional HTTP status codes and HTTP body fields to return to the frontend
+	 * Added code to check for email usage in database in both login and register functions
 	 * Started to implemement endpoint /recipeCreate that will be used to create a recipe entry in the database
  * api.go
 	 * Started to implement code that will call the USDA food API and give us nutritional information about the requested food
 
  * Refactoring
-   * Organized backend code originally in main() into functions to allow unit testing
+    * Organized backend code originally in main() into functions to allow unit testing
    
  * Created unit tests 
 
 ## Unit Tests
 
-***Front-End***<br>
+***Front-End***
 
 Landing Component ([landing.component.spec.ts](Angular%20Frontend/src/app/landing/landing.component.spec.ts))
 * 'should navigate to login page'
@@ -108,7 +109,7 @@ Register Component ([register.component.spec.ts](Angular%20Frontend/src/app/regi
 
 
 
-***Back-End***<br>
+***Back-End***
 
 TestHashPassword
  - This test checks that the password hashing function that is part of the bcrypt package works properly
