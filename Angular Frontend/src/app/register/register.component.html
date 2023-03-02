@@ -2,43 +2,52 @@
 
 <div class="loginPage">
 
-    <h1>Login</h1>
+    <h1>Register Account</h1>
 
     <!-- Error Message -->
     <div class="errorTopper" *ngIf="showErrorFlag">
         <p>{{errorMessage}}</p> 
     </div>
 
+    <!-- First Name -->
+    <mat-form-field>
+        <mat-label>First Name</mat-label>
+        <input [(ngModel)]="firstName" matInput required placeholder="ex. John">
+    </mat-form-field>
+
+    <!-- Last Name -->
+    <mat-form-field>
+        <mat-label>Last Name</mat-label>
+        <input [(ngModel)]="lastName" matInput required placeholder="ex. Doe">
+    </mat-form-field>
+
     <!-- Email -->
-    <mat-form-field data-test="email-input">
+    <mat-form-field>
         <mat-label>Email</mat-label>
         <input [(ngModel)]="email" matInput required placeholder="ex. johndoe@email.com">
     </mat-form-field>
 
     <!-- Password -->
-    <mat-form-field data-test="password-input">
+    <mat-form-field>
         <mat-label>Password</mat-label>
         <input [(ngModel)]="password" matInput required minlength="8" type="password">
+        <mat-hint align="end">Min 8 characters</mat-hint>
     </mat-form-field>
 
-    <!-- Login Btn  -->
-    <button
-        (click)="Submit()"
-        mat-raised-button color="accent" 
-        data-test="login-button"
-    >
-        Login
+    <!-- Register Btn -->
+    <button (click)="Submit()" mat-raised-button color="accent">
+        Register
     </button>
 
-    <!-- New Acc Btn -->
+    <!-- Have Acc Btn -->
     <button (click)="GoTo()" mat-raised-button color="primary">
-        New? Create an Account
+        I Already Have an Account 
     </button>
 
     <!-- Progress Spinner -->
     <div class="loadingFooter" *ngIf="loadingSpinner">
         <p>
-            Logging in...
+            Registering...
             <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
         </p>
     </div>

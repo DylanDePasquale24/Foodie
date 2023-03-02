@@ -1,0 +1,11 @@
+mat-toolbar span{
+    flex: 1 1 auto;
+    margin-left: 15px;
+}
+
+img{
+    height: 80px;
+    margin-top: 20px;
+    position: relative;
+    right : 23px;
+}

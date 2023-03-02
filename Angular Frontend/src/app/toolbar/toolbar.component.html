@@ -1,0 +1,14 @@
+<mat-toolbar color="primary">
+    <span><img src="../../assets/images/Foodie_Logo_White.png"></span>
+    <button mat-icon-button 
+        aria-label="Menu icon in the toolbar"
+        [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button (click)="goToLogin()" mat-menu-item>
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
+        </button>
+    </mat-menu>
+</mat-toolbar>
