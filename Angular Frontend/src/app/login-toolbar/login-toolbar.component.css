@@ -1,0 +1,19 @@
+mat-toolbar span{
+    flex: 1 1 auto;
+    margin-left: 15px;
+}
+
+button{
+    font-weight: 550;
+}
+
+img{
+    height: 80px;
+    margin-top: 20px;
+    position: relative;
+    right : 23px;
+}
+
+.clickable{
+    cursor: pointer;
+}

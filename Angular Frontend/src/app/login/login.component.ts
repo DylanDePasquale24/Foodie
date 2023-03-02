@@ -1,66 +1,87 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+
+interface Response {
+  jwt: string
+}
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent {
-  onLoginPage: boolean 
 
-  registerFirstName: string | null
-  registerLastName: string | null 
-  registerEmail: string | null 
-  registerPassword: string | null
+  email: string | null
+  password: string | null
 
-  loginEmail: string | null
-  loginPassword: string | null
+  loadingSpinner: boolean
+  showErrorFlag: boolean
 
-  constructor(
-    private httpClient: HttpClient,
-    // private router: Router
-  ){
-    this.onLoginPage = false
-    this.registerFirstName = null
-    this.registerLastName = null
-    this.registerEmail = null
-    this.registerPassword = null
-    this.loginEmail = null
-    this.loginPassword = null
+  errorMessage: string 
+  DEFAULT_ERROR : string
+  
+
+
+
+  constructor(protected httpClient: HttpClient, protected router: Router){
+    this.email = null
+    this.password = null
+    this.loadingSpinner = false
+    this.showErrorFlag = false
+    this.DEFAULT_ERROR = 'Username or Password is Incorrect! Please try again.'
+    this.errorMessage = this.DEFAULT_ERROR
   }
 
-  register(){
-    console.log(this.registerFirstName, this.registerPassword)
-    this.httpClient.post('http://localhost:8080/register', {
-      firstName: this.registerFirstName,
-      lastName: this.registerLastName,
-      email: this.registerEmail,
-      password: this.registerPassword,
-    }).subscribe((response: any) => {
-      if(response){
-        localStorage.setItem('token', response.jwt)
-        // this.router.navigate(['profile'])
-      }
-      this.registerFirstName = null
-      this.registerLastName = null
-      this.registerEmail = null
-      this.registerPassword = null
+  Submit(): void{
+    this.loadingSpinner = true
+  
+    //Verify All Fields Entered
+    if(!this.email || !this.password){
+      this.errorMessage = 'Please enter a value for all required fields. Please try again.'
+      this.showErrorFlag = true
+      this.loadingSpinner = false
+      return;
+    }
+
+
+    this.httpClient
+    .post<Response>('http://localhost:8080/login', {
+      email: this.email,
+      password: this.password
+
+    })
+    .subscribe((response: Response) => {
+      
+      console.log(response)
+      this.loadingSpinner = false
+      this.router.navigate(['home'])
+      
+      //Store jwt
+      localStorage.setItem('token', response.jwt)
+  
+      this.email = null
+      this.password = null
+
+    }, (err) =>{
+
+      this.loadingSpinner = false
+      this.showErrorFlag = true
+      this.errorMessage = this.DEFAULT_ERROR
+
+      this.email = null
+      this.password = null
+
+      //debug info
+      console.log(err)
     })
   }
 
-  login(){
-    this.httpClient.post('http://localhost:8080/login', {
-      email: this.loginEmail,
-      password: this.loginPassword
-    }).subscribe((response: any) => {
-      if(response){
-        localStorage.setItem('token', response.jwt)
-        // this.router.navigate(['profile'])
-      }
-      this.loginEmail = null
-      this.loginPassword = null
-    })
+
+  
+  GoTo(): void{
+    this.router.navigate(['register'])
   }
 }
