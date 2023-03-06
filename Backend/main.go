@@ -188,7 +188,7 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 		// This gets the JSON data from the request body
 		err := ginContext.BindJSON(&recipeCreate)
 		if err != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse recipe data.")
 		}
 
 		// Make a database connection
