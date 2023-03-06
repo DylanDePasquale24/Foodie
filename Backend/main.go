@@ -179,6 +179,8 @@ func RouterGETUserSession(router *gin.Engine) {
 
 func RouterPOSTRecipeCreate(router *gin.Engine) {
 	// If there are no errors, this should make a recipe entry in the database
+
+	//TODO: add auth function? for jwt interceptor
 	router.POST("/recipeCreate", func(ginContext *gin.Context) {
 		var recipeCreate Recipe
 
