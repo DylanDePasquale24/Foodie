@@ -14,14 +14,20 @@ p{
 
 }
 
+
 .headline-4{
     font-size: 5.5rem;
     font-weight: 500;
-    line-height: 10rem;
+    line-height: 7rem;
     margin: 1.5rem;
     letter-spacing: 0.00938em;
 }
 
 .left-align{
     text-align: left;
+}
+
+.landing-image{
+    max-height: 100%;
+    max-width: 100%;
 }

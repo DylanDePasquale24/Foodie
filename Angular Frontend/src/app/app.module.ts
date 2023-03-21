@@ -18,6 +18,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatGridListModule } from '@angular/material/grid-list';
 
 // APP SERVICES
 
@@ -59,7 +60,8 @@ import { RegisterComponent } from './register/register.component';
     MatToolbarModule,
     MatDialogModule,
     MatMenuModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatGridListModule
   ],
   exports: [],
   providers: [
