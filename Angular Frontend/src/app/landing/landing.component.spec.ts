@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -46,8 +47,8 @@ describe('LandingComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['register']);
   });
 
-  it('should have text elements', () => {
-    const element = fixture.nativeElement;
-    expect(element.querySelector('h1').textContent).toContain('Foodie');
+  it('should display the "Recipe tracking made easy." headline', () => {
+    const element = fixture.debugElement.query(By.css('.headline-4')).nativeElement;
+    expect(element.textContent).toContain('Recipe tracking made easy.');
   });
 });
