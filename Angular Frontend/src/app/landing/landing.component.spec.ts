@@ -45,4 +45,9 @@ describe('LandingComponent', () => {
     component.goToRegister();
     expect(router.navigate).toHaveBeenCalledWith(['register']);
   });
+
+  it('should have text elements', () => {
+    const element = fixture.nativeElement;
+    expect(element.querySelector('h1').textContent).toContain('Foodie');
+  });
 });
