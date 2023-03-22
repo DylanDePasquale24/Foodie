@@ -4,7 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Other
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from '../shared/app-routing.module';
 // import { AuthGuard } from './auth.guard';
 // import { JwtInterceptor } from './jwt.interceptor';
 
@@ -19,8 +19,6 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatGridListModule } from '@angular/material/grid-list';
-
-// APP SERVICES
 
 // APP COMPONENTS
 import { AppComponent } from './app.component';
