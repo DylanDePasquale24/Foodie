@@ -1,12 +1,12 @@
 <app-login-toolbar></app-login-toolbar>
-<div id="mainInfo">
+<div class="landing-page">
     
-    <div style="margin: 100px">
+    <div class="grid-container">
         <mat-grid-list cols="2" rowHeight="7:4">
             <mat-grid-tile>
-                <div class="left-align">
-                    <h1 class="headline-4">Recipe tracking<br> made easy.</h1>
-                    <p class="body-1">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl.</p>
+                <div class="grid-item left-align">
+                    <h1 class="headline-4">Recipe tracking made easy.</h1>
+                    <p class="body-1">Easily create and share custom recipies for all your nutrition needs.</p>
                 </div>
             </mat-grid-tile>
             <mat-grid-tile>
@@ -15,9 +15,7 @@
         </mat-grid-list>
     </div>
 
-    <p>Easily manage recipes and see all their ingredients or whatever</p>
-
-    <button (click)="goToRegister()" mat-raised-button color="primary">Start for Free</button>
+    <button (click)="goToRegister()" mat-raised-button color="accent" class="button-text">Start for Free</button>
 </div>
 
 
