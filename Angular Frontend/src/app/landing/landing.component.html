@@ -1,7 +1,7 @@
 <app-login-toolbar></app-login-toolbar>
 <div class="landing-page">
     
-    <div class="grid-container">
+    <div class="grid-container1">
         <mat-grid-list cols="2" rowHeight="7:4">
             <mat-grid-tile>
                 <div class="grid-item left-align">
@@ -15,7 +15,23 @@
         </mat-grid-list>
     </div>
 
+    <div class="grid-container2">
+        <mat-grid-list cols="2" rowHeight="7:4">
+            <mat-grid-tile>
+                <img src="assets\images\meal-prep.png" alt="Landing Image" class="landing-image">
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="grid-item left-align">
+                    <h1 class="headline-2">Powered by data.</h1>
+                    <p class="body-1">Track calories, macros, and nutritional data by just writing a recipe!</p>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
+
     <button (click)="goToRegister()" mat-raised-button color="accent" class="button-text">Start for Free</button>
+
+    <img src="assets\images\Foodie_Logo_Orange.png" alt="Foodie Logo Orange" class="landing-logo">
 </div>
 
 
