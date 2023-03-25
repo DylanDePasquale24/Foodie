@@ -29,6 +29,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginToolbarComponent } from './login-toolbar/login-toolbar.component';
 import { RegisterComponent } from './register/register.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 
@@ -42,7 +43,8 @@ import { RegisterComponent } from './register/register.component';
     ToolbarComponent,
     PageNotFoundComponent,
     LoginToolbarComponent,
-    RegisterComponent
+    RegisterComponent,
+    FooterComponent
     
   ],
   imports: [
