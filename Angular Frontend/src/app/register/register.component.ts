@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LoginComponent } from '../login/login.component';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/shared/services/auth.service';
 
 
 interface Response {
@@ -22,8 +23,8 @@ export class RegisterComponent extends LoginComponent {
   firstName: string | null
   lastName: string | null
 
-  constructor (httpClient: HttpClient, router: Router){
-    super(httpClient, router);
+  constructor (httpClient: HttpClient, router: Router, authService : AuthService){
+    super(httpClient, router, authService);
     this.firstName = null
     this.lastName = null
     this.DEFAULT_ERROR = 'We could not register your account! Please try again.'
@@ -72,7 +73,7 @@ export class RegisterComponent extends LoginComponent {
       this.loadingSpinner = false
       this.router.navigate(['home'])
 
-      //Stores jwt
+      //Store Jwt
       localStorage.setItem('token', response.jwt)
 
       this.firstName = null
