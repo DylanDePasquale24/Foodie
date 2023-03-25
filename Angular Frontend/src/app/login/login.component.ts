@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/shared/services/auth.service';
+
 
 interface Response {
   jwt: string
@@ -27,7 +27,7 @@ export class LoginComponent {
 
 
 
-  constructor(protected httpClient: HttpClient, protected router: Router, protected authService : AuthService){
+  constructor(protected httpClient: HttpClient, protected router: Router){
     this.email = null
     this.password = null
     this.loadingSpinner = false
@@ -60,7 +60,7 @@ export class LoginComponent {
       this.loadingSpinner = false
       this.router.navigate(['home'])
       
-      //Store
+      //Store jwt
       localStorage.setItem('token', response.jwt)
   
       this.email = null
