@@ -180,7 +180,7 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 	//TODO: add auth function? for jwt interceptor, verifies jwt in authorization header(from interceptor)
 	//not sure how jwt is stored/dealt with on backend
 	router.POST("/recipeCreate", auth(), func(ginContext *gin.Context) {
-		var recipeCreate Recipe
+		var recipeCreate RecipeData
 
 		// Bind JSON data to object
 		// This gets the JSON data from the request body
