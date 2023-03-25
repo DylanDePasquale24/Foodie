@@ -5,7 +5,7 @@ import { HomeComponent } from '../app/home/home.component';
 import { LandingComponent } from '../app/landing/landing.component'
 import { PageNotFoundComponent } from '../app/page-not-found/page-not-found.component';
 import { RegisterComponent } from '../app/register/register.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './services/auth.guard';
 
 
 const routes: Routes = [

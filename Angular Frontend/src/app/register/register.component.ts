@@ -4,6 +4,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
 
+
 interface Response {
   id: number
   jwt: string
@@ -72,7 +73,7 @@ export class RegisterComponent extends LoginComponent {
       this.loadingSpinner = false
       this.router.navigate(['home'])
 
-      //Stores jwt
+      //Store Jwt
       localStorage.setItem('token', response.jwt)
 
       this.firstName = null
