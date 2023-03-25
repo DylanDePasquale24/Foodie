@@ -85,7 +85,11 @@ func TestRouterPOSTRecipeCreate(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
 
 	json := []byte(`{
-		Not finished yet
+		"userID": "30",
+		"recipeName": "Test Recipe Name 2",
+		"description": "Test description",
+		"ingredients": "Test ingredients",
+		"instructions": "Test instructions"
 	  }`)
 
 	request, _ := http.NewRequest("POST", "/recipeCreate", bytes.NewBuffer(json))
