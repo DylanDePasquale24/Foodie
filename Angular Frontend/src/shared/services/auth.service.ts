@@ -11,7 +11,7 @@ export class AuthService {
   IsLoggedIn(){
 
 
-    //Get Request to backend to see if we are authorized?
+    //To get the proper user session based on jwt?
     // this.httpClient.get('http://localhost:8080/user-session')
     // .subscribe((res) => {
     //     console.log(res, 'AuthGuard')

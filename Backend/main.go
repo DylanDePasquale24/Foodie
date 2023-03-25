@@ -180,8 +180,8 @@ func RouterGETUserSession(router *gin.Engine) {
 func RouterPOSTRecipeCreate(router *gin.Engine) {
 	// If there are no errors, this should make a recipe entry in the database
 
-	//TODO: add auth function? for jwt interceptor
-	router.POST("/recipeCreate", func(ginContext *gin.Context) {
+	//TODO: add auth function? for jwt interceptor, verify
+	router.POST("/recipeCreate", auth(), func(ginContext *gin.Context) {
 		var recipeCreate Recipe
 
 		// Bind JSON data to object
@@ -300,7 +300,7 @@ func auth() gin.HandlerFunc {
 			// Runs this if there is an error
 			c.JSON(http.StatusInternalServerError, "jwt not authorized")
 		} else {
-			c.Next()
+			c.Next() //otherwise, it is authorized and the jwt is matched
 		}
 	}
 }
