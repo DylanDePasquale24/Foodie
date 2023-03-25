@@ -1,7 +1,25 @@
 <app-toolbar></app-toolbar>
-<p>banner</p>
-<p>welcome user</p>
-<p>add recipe stuff</p>
 
-<button (click)="AddRecipe()"> CLICK </button>
+<div class="welcomeBanner">
+    <h1> Welcome back {{usersName}}! </h1>
+    <p>All your recipe needs - All in one place</p>
+    <p>Get started by writing a new recipe or pickup right where you left off!</p>
+</div>
+
+
+
+<div class="headline">
+    <h1> My Recipes</h1>
+
+    <!-- make to left and make an "add" icon -->
+    <button (click)="AddRecipe()"> Add Recipe </button>
+</div>
+
+
+
+<div class="recipeGrid">
+    <!-- display current recipe grid -->
+</div>
+
+
 

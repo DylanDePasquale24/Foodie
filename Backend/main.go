@@ -98,8 +98,9 @@ func RouterPOSTRegister(router *gin.Engine) {
 			}
 
 			ginContext.JSON(http.StatusOK, gin.H{
-				"id":  user.ID,
-				"jwt": tokenString,
+				"id":        user.ID,
+				"usersName": user.FirstName,
+				"jwt":       tokenString,
 			})
 		} else {
 			ginContext.JSON(http.StatusInternalServerError, "Email already in use.")
@@ -156,8 +157,9 @@ func RouterPOSTLogin(router *gin.Engine) {
 				}
 
 				ginContext.JSON(http.StatusOK, gin.H{
-					"userName": user.FirstName,
-					"jwt":      tokenString,
+					"id":        user.ID,
+					"usersName": user.FirstName,
+					"jwt":       tokenString,
 				})
 			} else {
 				ginContext.JSON(http.StatusInternalServerError, "Incorrect password.")
@@ -243,7 +245,7 @@ type Users struct {
 }
 
 type RecipeData struct {
-	UserID		 int64  `json:",string"` // Need to put this to convert json string to int
+	UserID       int64  `json:",string"` // Need to put this to convert json string to int
 	RecipeName   string `json: recipeName`
 	Description  string `json: description`
 	Ingredients  string `json: ingredients`
@@ -251,8 +253,8 @@ type RecipeData struct {
 }
 
 type Recipes struct {
-	UserID       int64 `gorm:"column:userID"`
-	RecipeID     int64 `gorm:"column:recipeID"`
+	UserID       int64  `gorm:"column:userID"`
+	RecipeID     int64  `gorm:"column:recipeID"`
 	RecipeName   string `gorm:"column:recipeName"`
 	Description  string `gorm:"column:description"`
 	Ingredients  string `gorm:"column:ingredients"`

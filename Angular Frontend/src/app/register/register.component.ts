@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 
 
 interface Response {
-  id: number
+  id: string
+  usersName: string
   jwt: string
 }
 
@@ -73,8 +74,10 @@ export class RegisterComponent extends LoginComponent {
       this.loadingSpinner = false
       this.router.navigate(['home'])
 
-      //Store Jwt
+      //Store local storage
       localStorage.setItem('token', response.jwt)
+      localStorage.setItem('userId', response.id)
+      localStorage.setItem('usersName', response.usersName)
 
       this.firstName = null
       this.lastName = null

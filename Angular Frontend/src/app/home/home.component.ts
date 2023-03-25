@@ -10,11 +10,14 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
-  //usersName: string | null
+  userId : string | null 
+  usersName : string | null 
+
 
   constructor(private httpClient : HttpClient, private router : Router){
 
-    //this.usersName = backend.getTheUsersNameFromBackend
+    this.userId = localStorage.getItem('userId')
+    this.usersName = localStorage.getItem('usersName')
   }
 
   AddRecipe() {
