@@ -10,14 +10,23 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent {
 
+  //TODO: make an object  -> user info
   userId : string | null 
   usersName : string | null 
+
+  //TODO: make an object -> user headlineInputs
+  search : string | null
+  selectedSortVal : string
+  sortAscending : boolean
 
 
   constructor(private httpClient : HttpClient, private router : Router){
 
     this.userId = localStorage.getItem('userId')
     this.usersName = localStorage.getItem('usersName')
+    this.search = null
+    this.selectedSortVal = 'date'
+    this.sortAscending = true
   }
 
   AddRecipe() {

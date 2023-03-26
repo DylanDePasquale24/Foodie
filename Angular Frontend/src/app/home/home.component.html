@@ -9,10 +9,49 @@
 
 
 <div class="headline">
-    <h1> My Recipes</h1>
+    <h1>My Recipes</h1>
 
-    <!-- make to left and make an "add" icon -->
+
+    <!-- Search -->
+    <mat-form-field appearance="outline">
+
+        <!-- TODO: Add autocomplete -->
+        <mat-label>Search Recipe</mat-label>
+        <input [(ngModel)]="search" matInput  placeholder="ex. Chicken Parmesan">
+    </mat-form-field>
+
+
+    <!-- Sort by -->
+    <mat-form-field appearance="outline">
+
+        <mat-label>Sort By</mat-label>
+
+        <mat-select [(ngModel)]="selectedSortVal">
+            <mat-option value="date" selected>Date</mat-option>
+            <mat-option value="calories">Calories</mat-option>
+            <mat-option value="protein">Protein</mat-option>
+            <mat-option value="carbs">Carbs</mat-option>
+            <mat-option value="fat">Fat</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+
+    <!-- Order -->
+    <mat-form-field appearance="outline">
+
+        <mat-label>Order</mat-label>
+
+        <mat-select [(ngModel)]="sortAscending">
+            <mat-option value="true" selected>Ascending</mat-option>
+            <mat-option value="false">Descending</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+
+    <!-- Add Recipe -->
     <button (click)="AddRecipe()"> Add Recipe </button>
+    
+
 </div>
 
 

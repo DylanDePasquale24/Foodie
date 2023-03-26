@@ -19,6 +19,7 @@ import { MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select'
 
 // APP COMPONENTS
 import { AppComponent } from './app.component';
@@ -62,7 +63,8 @@ import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
     MatDialogModule,
     MatMenuModule,
     MatProgressSpinnerModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSelectModule
   ],
   exports: [],
   providers: [
