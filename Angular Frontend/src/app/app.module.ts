@@ -20,6 +20,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select'
+import {MatTooltipModule } from '@angular/material/tooltip'
+
 
 // APP COMPONENTS
 import { AppComponent } from './app.component';
@@ -64,7 +66,8 @@ import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
     MatMenuModule,
     MatProgressSpinnerModule,
     MatGridListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTooltipModule
   ],
   exports: [],
   providers: [
