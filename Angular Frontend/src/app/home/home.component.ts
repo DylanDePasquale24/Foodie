@@ -11,23 +11,29 @@ import { setupTestingRouter } from '@angular/router/testing';
 })
 export class HomeComponent {
 
-  //TODO: make an object  -> user info
-  userId : string | null 
-  usersName : string | null 
+  user: {
+    id : string | null, 
+    name : string | null
+  }
 
-  //TODO: make an object -> user headlineInputs
-  search : string | null
-  sortBy : string 
-  order : string 
-
-
+  headlineInputs: {
+    search : string | null
+    sortBy : string 
+    order : string 
+  }
+  
   constructor(private httpClient : HttpClient, private router : Router){
 
-    this.userId = localStorage.getItem('userId')
-    this.usersName = localStorage.getItem('usersName')
-    this.search = null
-    this.sortBy = 'date'
-    this.order = 'ascending'
+    this.user = {
+      id: localStorage.getItem('userId'),
+      name: localStorage.getItem('usersName')
+    }
+
+    this.headlineInputs = {
+      search: null,
+      sortBy: 'date',
+      order: 'ascending'
+    }
   }
 
   AddRecipe() {

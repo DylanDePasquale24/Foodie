@@ -1,7 +1,7 @@
 <app-toolbar></app-toolbar>
 
 <div class="welcomeBanner">
-    <h1> Welcome back {{usersName}}! </h1>
+    <h1> Welcome back {{user.name}}! </h1>
     <p>All your recipe needs - All in one place</p>
     <p>Get started by writing a new recipe or pickup right where you left off!</p>
 </div>
@@ -17,7 +17,7 @@
 
         <!-- TODO: Add autocomplete -->
         <mat-label>Search Recipe</mat-label>
-        <input [(ngModel)]="search" matInput  placeholder="ex. Chicken Parmesan">
+        <input [(ngModel)]="headlineInputs.search" matInput  placeholder="ex. Chicken Parmesan">
     </mat-form-field>
 
 
@@ -26,7 +26,7 @@
 
         <mat-label>Sort By</mat-label>
 
-        <mat-select [(ngModel)]="sortBy">
+        <mat-select [(ngModel)]="headlineInputs.sortBy">
             <mat-option value="date" selected>Date</mat-option>
             <mat-option value="calories">Calories</mat-option>
             <mat-option value="protein">Protein</mat-option>
@@ -41,7 +41,7 @@
 
         <mat-label>Order</mat-label>
 
-        <mat-select [(ngModel)]="order">
+        <mat-select [(ngModel)]="headlineInputs.order">
             <mat-option value="ascending" selected>Ascending</mat-option>
             <mat-option value="descending">Descending</mat-option>
         </mat-select>
