@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/shared/services/auth.service'; 
 
 @Component({
   selector: 'app-login-toolbar',
@@ -7,10 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-toolbar.component.css']
 })
 export class LoginToolbarComponent {
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService : AuthService) { }
 
   goToLogin() {
-    this.router.navigate(['login'])
+    if(this.authService.IsLoggedIn()){
+      this.router.navigate(['home'])
+    }else{
+      this.router.navigate(['login'])
+    }
   }
 
   goToLanding() {
