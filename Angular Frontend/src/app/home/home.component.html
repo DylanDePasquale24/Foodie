@@ -26,7 +26,7 @@
 
         <mat-label>Sort By</mat-label>
 
-        <mat-select [(ngModel)]="selectedSortVal">
+        <mat-select [(ngModel)]="sortBy">
             <mat-option value="date" selected>Date</mat-option>
             <mat-option value="calories">Calories</mat-option>
             <mat-option value="protein">Protein</mat-option>
@@ -41,11 +41,13 @@
 
         <mat-label>Order</mat-label>
 
-        <mat-select [(ngModel)]="sortAscending">
-            <mat-option value="true" selected>Ascending</mat-option>
-            <mat-option value="false">Descending</mat-option>
+        <mat-select [(ngModel)]="order">
+            <mat-option value="ascending" selected>Ascending</mat-option>
+            <mat-option value="descending">Descending</mat-option>
         </mat-select>
     </mat-form-field>
+    
+   
 
 
     <!-- Add Recipe -->

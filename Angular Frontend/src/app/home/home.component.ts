@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { setupTestingRouter } from '@angular/router/testing';
 
 
 @Component({
@@ -16,8 +17,8 @@ export class HomeComponent {
 
   //TODO: make an object -> user headlineInputs
   search : string | null
-  selectedSortVal : string
-  sortAscending : boolean
+  sortBy : string 
+  order : string 
 
 
   constructor(private httpClient : HttpClient, private router : Router){
@@ -25,8 +26,8 @@ export class HomeComponent {
     this.userId = localStorage.getItem('userId')
     this.usersName = localStorage.getItem('usersName')
     this.search = null
-    this.selectedSortVal = 'date'
-    this.sortAscending = true
+    this.sortBy = 'date'
+    this.order = 'ascending'
   }
 
   AddRecipe() {
