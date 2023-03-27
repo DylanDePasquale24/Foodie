@@ -42,7 +42,11 @@ export class HomeComponent {
     .post<Response>('http://localhost:8080/recipeCreate', {
      
       //sends body to backend
-      test : 'test string'
+      userID : "30",
+      recipeName : "Test Recipe Name 3",
+      description : "Test description",
+      ingredients : "Test ingredients",
+      instructions : "Test instructions"
 
     })
     .subscribe((response: Response) => {
