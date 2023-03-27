@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"strings"
 	"time"
-
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
@@ -32,6 +31,9 @@ func main() {
 
 	// POST /recipeCreate
 	RouterPOSTRecipeCreate(router)
+
+	// GET /recipeGet
+	RouterGETRecipe(router)
 
 	// Runs server
 	router.Run()
@@ -211,6 +213,46 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 		} else {
 			ginContext.JSON(http.StatusInternalServerError, "Recipe already in use.")
 		}
+	})
+}
+	
+func RouterGETRecipe(router *gin.Engine) {
+
+	router.GET("/recipeGet/:userid", func(c *gin.Context) {
+
+		// Try to send the userID in the response body
+		
+		userID := c.Param("userid")
+
+		// TODO: put back auth()
+
+		// userID, error := strconv.Atoi(c.Param("userID"))
+
+		// fmt.Println("userID ", userID)
+
+		// if error != nil {
+		// 	c.JSON(http.StatusInternalServerError, "userID is not a valid integer")
+		// }
+
+		// Make a database connection
+		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		sql, _ := db.DB()
+		if err != nil || sql.Ping() != nil {
+			c.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
+		}
+
+		var recipeInfo []Recipes
+
+		/* Queries the database to find all the recipes that were made by the specified userID 
+		   and stores them in recipeInfo
+		*/
+		result := db.Table("recipes").Find(&recipeInfo, "userID <> ?", userID)
+		
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, result.Error)
+		}
+
+		c.JSON(http.StatusOK, recipeInfo)
 	})
 }
 
