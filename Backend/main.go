@@ -2,8 +2,10 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
+
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
@@ -218,21 +220,11 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 	
 func RouterGETRecipe(router *gin.Engine) {
 
-	router.GET("/recipeGet/:userid", func(c *gin.Context) {
-
-		// Try to send the userID in the response body
+	router.GET("/recipeGet/:userid", auth(), func(c *gin.Context) {
 		
 		userID := c.Param("userid")
 
-		// TODO: put back auth()
-
-		// userID, error := strconv.Atoi(c.Param("userID"))
-
-		// fmt.Println("userID ", userID)
-
-		// if error != nil {
-		// 	c.JSON(http.StatusInternalServerError, "userID is not a valid integer")
-		// }
+		userIDint, _ := strconv.Atoi(userID)
 
 		// Make a database connection
 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
@@ -246,13 +238,16 @@ func RouterGETRecipe(router *gin.Engine) {
 		/* Queries the database to find all the recipes that were made by the specified userID 
 		   and stores them in recipeInfo
 		*/
-		result := db.Table("recipes").Find(&recipeInfo, "userID <> ?", userID)
-		
-		if result.Error != nil {
-			c.JSON(http.StatusInternalServerError, result.Error)
-		}
+		result := db.Table("recipes").Where(&Recipes{UserID: int64(userIDint)}).Find(&recipeInfo) 
 
-		c.JSON(http.StatusOK, recipeInfo)
+		if result.Error != nil  {
+			c.JSON(http.StatusInternalServerError, result.Error)
+		} else if result.RowsAffected == 0 {
+			c.JSON(http.StatusInternalServerError, "No recipes linked to that userID were found")
+		} else {
+			c.JSON(http.StatusOK, recipeInfo)
+		}
+	
 	})
 }
 
