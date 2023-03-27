@@ -69,3 +69,21 @@ describe('Test Log in functionality', () => {
   });
 
 })
+
+describe('Test Routing and Auth Guard', () => {
+
+  beforeEach(() => {
+    cy.visit('/');
+  });
+
+  it('Should not route to home page if user is not logged in', () => {
+
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('You do not have permission to access this page. Please login first.')
+    })
+
+    cy.visit('/home');
+    cy.url().should('include', '/login');
+  });
+
+})
