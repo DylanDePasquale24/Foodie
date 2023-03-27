@@ -14,7 +14,6 @@
 
     <!-- Search -->
     <mat-form-field appearance="outline">
-
         <!-- TODO: Add autocomplete -->
         <mat-label>Search Recipe</mat-label>
         <input [(ngModel)]="headlineInputs.search" matInput  placeholder="ex. Chicken Parmesan">
@@ -23,7 +22,6 @@
 
     <!-- Sort by -->
     <mat-form-field appearance="outline">
-
         <mat-label>Sort By</mat-label>
 
         <mat-select [(ngModel)]="headlineInputs.sortBy">
@@ -36,9 +34,8 @@
     </mat-form-field>
     
 
-    <!-- Order -->
+    <!-- Order (Ascending / Descending) -->
     <mat-form-field appearance="outline">
-
         <mat-label>Order</mat-label>
 
         <mat-select [(ngModel)]="headlineInputs.order">
@@ -47,11 +44,9 @@
         </mat-select>
     </mat-form-field>
     
-   
-
 
     <!-- Add Recipe -->
-    <button mat-fab color="primary" (click)="AddRecipe()" matTooltip="New Recipe"> 
+    <button mat-fab color="primary"  matTooltip="New Recipe"> 
         <mat-icon>add</mat-icon>
     </button>
     
@@ -59,6 +54,8 @@
 
 
 
+
+<!-- TODO: make paginator in case too many recipes -->
 <div class="recipeGrid">
     <!-- display current recipe grid -->
 </div>

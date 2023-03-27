@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { HomeComponent } from './home.component';
-import { ToolbarComponent } from '../toolbar/toolbar.component';
+import { ToolbarComponent } from '../../toolbar/toolbar.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

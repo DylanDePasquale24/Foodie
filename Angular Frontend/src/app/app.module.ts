@@ -15,17 +15,17 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select'
 import {MatTooltipModule } from '@angular/material/tooltip'
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 // APP COMPONENTS
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './home-page/home/home.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
@@ -34,6 +34,7 @@ import { LoginToolbarComponent } from './login-toolbar/login-toolbar.component';
 import { RegisterComponent } from './register/register.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
+import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-recipe-dialog.component';
 
 
 
@@ -48,7 +49,8 @@ import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
     PageNotFoundComponent,
     LoginToolbarComponent,
     RegisterComponent,
-    FooterComponent
+    FooterComponent,
+    AddRecipeDialogComponent,
     
   ],
   imports: [
