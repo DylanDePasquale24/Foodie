@@ -86,4 +86,26 @@ describe('Test Routing and Auth Guard', () => {
     cy.url().should('include', '/login');
   });
 
+  it('Should be able to route to home page if user is logged in', () => {
+
+    //Login
+    cy.visit('/login');
+    const validEmail = 'mikebrown@gmail.com';
+    const validPassword = '12345678';
+    cy.get('[data-test="email-input"]').type(validEmail);
+    cy.get('[data-test="password-input"]').type(validPassword);
+    cy.get('[data-test="login-button"]').click();
+    cy.url().should('include', '/home');
+
+    //Route back to landing page
+    cy.visit('/');
+    
+    //click login button
+    cy.get('app-login-toolbar').get('button').contains(/log in/i).click();
+    cy.url().should('include', '/home');
+    cy.contains(/welcome/i)
+
+
+  });
+
 })
