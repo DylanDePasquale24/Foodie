@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { setupTestingRouter } from '@angular/router/testing';
+import { MatDialog } from '@angular/material/dialog'  //service
+import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component';
 
 
 @Component({
@@ -15,26 +16,45 @@ export class HomeComponent {
     id : string | null, 
     name : string | null
   }
-
   headlineInputs: {
-    search : string | null
-    sortBy : string 
+    search : string | null,
+    sortBy : string,
     order : string 
   }
+  dialogConfig: {
+    height : string,
+    width : string
+  }
   
-  constructor(private httpClient : HttpClient, private router : Router){
+  constructor(private httpClient : HttpClient, private router : Router, private dialogService: MatDialog){
 
     this.user = {
       id: localStorage.getItem('userId'),
       name: localStorage.getItem('usersName')
     }
-
     this.headlineInputs = {
       search: null,
       sortBy: 'date',
       order: 'ascending'
     }
+    this.dialogConfig = {
+      height : "600px",
+      width : "900px"
+    }
   }
+
+  OpenDialog(){
+    let dialogReference = this.dialogService.open(AddRecipeDialogComponent, this.dialogConfig)  //takes a component and configuration as parameters
+  
+
+    dialogReference.afterClosed().subscribe(result => {
+      
+      //result after closed... as a string... can take this string and do whatever we want
+
+      console.log(result)
+    })
+  }
+
 
   AddRecipe() {
 

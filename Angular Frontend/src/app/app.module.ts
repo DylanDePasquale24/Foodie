@@ -21,6 +21,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select'
 import {MatTooltipModule } from '@angular/material/tooltip'
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatStepperModule } from '@angular/material/stepper'
 
 
 // APP COMPONENTS
@@ -50,9 +51,9 @@ import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-reci
     LoginToolbarComponent,
     RegisterComponent,
     FooterComponent,
-    AddRecipeDialogComponent,
-    
+    AddRecipeDialogComponent
   ],
+  entryComponents: [AddRecipeDialogComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -69,7 +70,8 @@ import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-reci
     MatProgressSpinnerModule,
     MatGridListModule,
     MatSelectModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatStepperModule
   ],
   exports: [],
   providers: [

@@ -1,1 +1,39 @@
-<p>add-recipe-dialog works!</p>
+<h2 mat-dialog-title>Create Your Recipe</h2>
+
+
+<mat-dialog-content>
+    <mat-stepper orientation="vertical">
+
+        <!-- STEP 1 -->
+        <mat-step label="Recipe Name">
+
+        </mat-step>
+
+
+        <!-- STEP 2 -->
+        <mat-step label="Description">
+
+
+        </mat-step>
+
+        <!-- STEP 3 -->
+        <mat-step label="Ingredients">
+
+        </mat-step>
+
+
+        <!-- STEP 4 -->
+        <mat-step label="Instructions">
+
+        </mat-step>
+    </mat-stepper>
+</mat-dialog-content>
+
+
+
+
+<!-- TODO: make a class to align properly -->
+<mat-dialog-actions align="end">
+    <button mat-raised-button>Save</button>
+    <button mat-button mat-dialog-close mat-dialog-close="this is the close response">Cancel</button>
+</mat-dialog-actions>
