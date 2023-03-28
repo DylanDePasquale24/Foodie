@@ -1,39 +1,66 @@
 <h2 mat-dialog-title>Create Your Recipe</h2>
 
-
 <mat-dialog-content>
-    <mat-stepper orientation="vertical">
+    <mat-vertical-stepper>
 
-        <!-- STEP 1 -->
-        <mat-step label="Recipe Name">
+        <!-- About -->
+        <mat-step label="About">
+            
+            <mat-form-field>
+                <mat-label>Recipe Name</mat-label>
+                <input [(ngModel)]="recipe.name" matInput>
+            </mat-form-field>
 
+            <mat-form-field>
+                <mat-label>Description</mat-label>
+                <textarea [(ngModel)]="recipe.description" matInput placeholder="Describe stuff"></textarea>
+            </mat-form-field>
+
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
         </mat-step>
 
 
-        <!-- STEP 2 -->
-        <mat-step label="Description">
-
-
-        </mat-step>
-
-        <!-- STEP 3 -->
+        <!-- Ingredients -->
+        <!-- TODO: Send ingredients to backend and have them verify before you can move on
+        Have some sort of dropdown, multi add method of adding ingredients
+        -->
         <mat-step label="Ingredients">
-
+            
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
         </mat-step>
 
 
-        <!-- STEP 4 -->
+        <!-- Instructions -->
         <mat-step label="Instructions">
-
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
         </mat-step>
-    </mat-stepper>
-</mat-dialog-content>
 
+
+        <!-- Review -->
+        <mat-step label="Review">
+            <div>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </mat-step>
+
+    </mat-vertical-stepper>
+</mat-dialog-content>
 
 
 
 <!-- TODO: make a class to align properly -->
 <mat-dialog-actions align="end">
+
+    <!-- do an ng if everything is completed can save.. -->
     <button mat-raised-button>Save</button>
     <button mat-button mat-dialog-close mat-dialog-close="this is the close response">Cancel</button>
 </mat-dialog-actions>

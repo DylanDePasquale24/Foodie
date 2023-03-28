@@ -7,4 +7,22 @@ import { Component } from '@angular/core';
 })
 export class AddRecipeDialogComponent {
 
+  //TODO: change ingredients to an array/object
+  recipe : {
+    name: string | null,
+    description: string | null,
+    ingredients: string | null,
+    instructions: string | null
+  }
+
+  constructor(){
+    this.recipe = {
+      name: null,
+      description: null,
+      ingredients: null,
+      instructions: null
+    }
+  }
+
+  //Function
 }

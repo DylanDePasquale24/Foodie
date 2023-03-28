@@ -39,7 +39,7 @@ export class HomeComponent {
     }
     this.dialogConfig = {
       height : "600px",
-      width : "900px"
+      width : "600px"
     }
   }
 
