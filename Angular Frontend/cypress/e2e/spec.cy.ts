@@ -4,10 +4,13 @@ describe('Goes to Landing Page', () => {
   });
   
   it('Visits landing page and checks main elements', () => {
-    cy.contains(/foodie/i)
     cy.contains('button', /log in/i)
     cy.contains('button', /start for free/i)
     cy.contains(/recipe tracking made easy/i)
+    cy.contains(/Easily create and share custom recipies for all your nutrition needs./i)
+    cy.contains(/Powered by data./i)
+    cy.contains(/Track calories, macros, and nutritional data by just writing a recipe!/i)
+
   })
 
   it('Should have the login toolbar', () => {
@@ -16,7 +19,7 @@ describe('Goes to Landing Page', () => {
   });
 
   it('Should navigate to register page when clicking Start for Free button', () => {
-    cy.get('#mainInfo button').click();
+    cy.get('#get-started-button').click();
     cy.url().should('include', '/register');
   });
 
@@ -26,7 +29,7 @@ describe('Goes to Landing Page', () => {
   });
 
   it('Clicking logo in toolbar directs to landing page', () => {
-    cy.get('app-login-toolbar').get('img').click();
+    cy.get('#logo').click();
     cy.url().should('eq', 'http://localhost:4200/');
   });
 })
@@ -63,6 +66,24 @@ describe('Test Log in functionality', () => {
 
     cy.get('.errorTopper')
     .should('be.visible').contains(/username or password is incorrect/i)
+  });
+
+})
+
+describe('Test Routing and Auth Guard', () => {
+
+  beforeEach(() => {
+    cy.visit('/');
+  });
+
+  it('Should not route to home page if user is not logged in', () => {
+
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('You do not have permission to access this page. Please login first.')
+    })
+
+    cy.visit('/home');
+    cy.url().should('include', '/login');
   });
 
 })
