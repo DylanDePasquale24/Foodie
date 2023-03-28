@@ -10,32 +10,32 @@
     </div>
 
     <!-- First Name -->
-    <mat-form-field>
+    <mat-form-field id="register-first-name">
         <mat-label>First Name</mat-label>
         <input [(ngModel)]="firstName" matInput required placeholder="ex. John" (keyup.enter)="Submit()">
     </mat-form-field>
 
     <!-- Last Name -->
-    <mat-form-field>
+    <mat-form-field id="register-last-name">
         <mat-label>Last Name</mat-label>
         <input [(ngModel)]="lastName" matInput required placeholder="ex. Doe" (keyup.enter)="Submit()">
     </mat-form-field>
 
     <!-- Email -->
-    <mat-form-field>
+    <mat-form-field id="register-email">
         <mat-label>Email</mat-label>
         <input [(ngModel)]="email" matInput required placeholder="ex. johndoe@email.com" (keyup.enter)="Submit()">
     </mat-form-field>
 
     <!-- Password -->
-    <mat-form-field>
+    <mat-form-field id="register-password">
         <mat-label>Password</mat-label>
         <input [(ngModel)]="password" matInput required minlength="8" type="password" (keyup.enter)="Submit()">
         <mat-hint align="end">Min 8 characters</mat-hint>
     </mat-form-field>
 
     <!-- Register Btn -->
-    <button (click)="Submit()" mat-raised-button color="accent">
+    <button (click)="Submit()" mat-raised-button color="accent" id="register-button">
         Register
     </button>
 

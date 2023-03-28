@@ -1,3 +1,4 @@
+// LANDING PAGE TESTS
 describe('Goes to Landing Page', () => {
   beforeEach(() => {
     cy.visit('/');
@@ -34,6 +35,9 @@ describe('Goes to Landing Page', () => {
   });
 })
 
+
+
+// LOG IN PAGE TESTS
 describe('Test Log in functionality', () => {
   beforeEach(() => {
     cy.visit('/login');
@@ -68,8 +72,50 @@ describe('Test Log in functionality', () => {
     .should('be.visible').contains(/username or password is incorrect/i)
   });
 
+  it('Should login with enter key', () => {
+
+    //Try logging in with a valid account
+    const validEmail = 'mikebrown@gmail.com';
+    const validPassword = '12345678';
+
+    cy.get('[data-test="email-input"]').type(validEmail);
+    cy.get('[data-test="password-input"]').type(validPassword);
+
+    cy.get('[data-test="password-input"]').type('{enter}');
+
+    cy.url().should('include', '/home');
+  });
 })
 
+
+//REGISTER PAGE TESTS
+
+describe('Test Register', () => {
+
+  beforeEach(() => {
+    cy.visit('/register');
+  });
+
+  it('Should not register if email is already in use', () => {
+    const firstName = 'Bill';
+    const lastName = 'Bob';
+    const password = 'password';
+    const invalidEmail = 'mikebrown@gmail.com'
+
+    cy.get('#register-first-name').type(firstName);
+    cy.get('#register-last-name').type(lastName);
+    cy.get('#register-email').type(invalidEmail);
+    cy.get('#register-password').type(password);
+
+    cy.get('#register-button').click();
+
+    cy.get('.errorTopper')
+    .should('be.visible').contains(/We could not register your account! Please try again./i)
+  });
+
+})
+
+//AUTH GUARD TESTS
 describe('Test Routing and Auth Guard', () => {
 
   beforeEach(() => {
@@ -105,6 +151,33 @@ describe('Test Routing and Auth Guard', () => {
     cy.url().should('include', '/home');
     cy.contains(/welcome/i)
 
+
+  });
+
+})
+
+//HOME PAGE TESTS
+describe('Test Home Page', () => {
+
+  beforeEach(() => {
+    cy.visit('/login');
+    const validEmail = 'mikebrown@gmail.com';
+    const validPassword = '12345678';
+    cy.get('[data-test="email-input"]').type(validEmail);
+    cy.get('[data-test="password-input"]').type(validPassword + '{enter}');
+  });
+
+  it('Should log out when log out button is pressed', () => {
+
+    cy.get('app-toolbar').get('#menu-button').click();
+    cy.get('app-toolbar').get('button').contains(/logout/i).click();
+    cy.url().should('include', '/login');
+    
+    cy.on('window:alert', (str) => {
+      expect(str).to.equal('You do not have permission to access this page. Please login first.')
+    })
+
+    cy.visit('/home');
 
   });
 
