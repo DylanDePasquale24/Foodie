@@ -87,7 +87,7 @@ func TestRouterPOSTRecipeCreate(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
 
 	json := []byte(`{
-		"userID": "30",
+		"userID": "2",
 		"recipeName": "Test Recipe Name 2",
 		"description": "Test description",
 		"ingredients": "Test ingredients",
@@ -106,22 +106,19 @@ func TestRouterGetRecipe(t *testing.T) {
 	RouterGETRecipe(router)
 
 	responseRecorder := httptest.NewRecorder()
-
 	json := []byte(`{}`)
-
 	request, _ := http.NewRequest("GET", "/recipeGet/30", bytes.NewBuffer(json))
 
 	router.ServeHTTP(responseRecorder, request)
 
 	var jsonTest bytes.Buffer
-
 	error := encodingJSON.Indent(&jsonTest, responseRecorder.Body.Bytes(), "", "\t")
 
 	if error != nil {
 		fmt.Println(error)
 	}
 
-	fmt.Println(string(jsonTest.Bytes()))
+	// fmt.Println(string(jsonTest.Bytes()))
 
 	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
 }
