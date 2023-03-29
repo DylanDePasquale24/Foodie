@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatGridListModule } from '@angular/material/grid-list';
+
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -16,7 +18,8 @@ describe('LandingComponent', () => {
     await TestBed.configureTestingModule({
       imports : [
         MatToolbarModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatGridListModule
       ],
       declarations: [ 
         LandingComponent,
