@@ -33,10 +33,13 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
  * Home Page
     * Welcome Banner
-      * details
+      * Created banner that welcomes the user by name back into the application once logged in. 
 
     * Headline
-      * details
+      * Added a search input field for users to more easily navigate their saved recipes.
+      * Created a "Sort by" selector where users can sort their saved recipes by one of 5 criteria: Date, Calories, Protein, Carbs, & Fat. 
+      * Can sort the above criteria in ascending or descending order with the "Order" selector.
+      * Created "Add Recipe" icon that brings up a dialog box. Button also has a tooltip to eliminate any confusion.
 
     * Add Recipe Dialog/Stepper
       * Name & Description
