@@ -31,11 +31,28 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
   * Organize elements with Angular Material Grid
   * Fixed errors with grid blowout, elements not aligning properly, and elements not resizing properly
 
-* Auth Guard and Handling JWT
+ * Home Page
+    * Welcome Banner
+      * details
 
-* Home Page and Displaying User Info
+    * Headline
+      * details
 
-* Logout Function
+    * Add Recipe Dialog/Stepper
+      * Name & Description
+      * Ingredients
+      * Instructions
+      * Review
+
+
+* Route Guard
+  * talk abt immediate login too
+
+* JWT Interceptor
+  * details
+
+
+* Logout Function &
 
 * E2E Cypress Tests
   
