@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-add-recipe-dialog',
   templateUrl: './add-recipe-dialog.component.html',
-  styleUrls: ['./add-recipe-dialog.component.css']
+  styleUrls: ['./add-recipe-dialog.component.css'],
 })
 export class AddRecipeDialogComponent {
 
-  //TODO: change ingredients to an array/object
   recipe : {
     name: string | null,
     description: string | null,
@@ -19,9 +20,11 @@ export class AddRecipeDialogComponent {
     amount : any
   }
 
+  val: boolean = false
+
   addedFirstIngredient : boolean
 
-  constructor(){
+  constructor(private httpClient: HttpClient){
     this.recipe = {
       name: null,
       description: null,
@@ -61,5 +64,32 @@ export class AddRecipeDialogComponent {
   }
   DeletePrevIngredient(): void{
     this.recipe.ingredients.pop()
+  }
+  SendRecipeToBackend(): void{
+    
+
+    this.httpClient
+    .post<Response>('http://localhost:8080/login', {
+      
+      //post stuff
+      //make a response interface
+
+    })
+    .subscribe((response: Response) => {
+      
+      //response
+
+    }, (err) =>{
+
+      //to do if error
+    })
+  
+    
+
+    //if desc = null, set to something
+    //if instructions = null, set to something
+
+
+    //SNACKBAR ONCE COMPLETE!
   }
 }
