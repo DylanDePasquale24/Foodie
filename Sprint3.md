@@ -8,7 +8,7 @@
 https://github.com/DylanDePasquale24/Foodie/tree/sprint-3
 
 ## Links to Demos
-- Link to Front-End Demo:
+- Link to Front-End Demo: https://youtu.be/e3WHdauw2Mo
 - Link to Back-End Demo:
 
 ## User Stories
