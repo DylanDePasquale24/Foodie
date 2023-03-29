@@ -107,7 +107,7 @@ func TestRouterGetRecipe(t *testing.T) {
 
 	responseRecorder := httptest.NewRecorder()
 	json := []byte(`{}`)
-	request, _ := http.NewRequest("GET", "/recipeGet/30", bytes.NewBuffer(json))
+	request, _ := http.NewRequest("GET", "/recipeGet/2", bytes.NewBuffer(json))
 
 	router.ServeHTTP(responseRecorder, request)
 
