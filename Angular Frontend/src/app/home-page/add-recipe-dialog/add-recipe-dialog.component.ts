@@ -1,17 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators} from '@angular/forms';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
+import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-add-recipe-dialog',
   templateUrl: './add-recipe-dialog.component.html',
   styleUrls: ['./add-recipe-dialog.component.css'],
-  providers: [
-    { 
-      provide: STEPPER_GLOBAL_OPTIONS, 
-      useValue: {showError: true}
-    },
-  ],
 })
 export class AddRecipeDialogComponent {
 
@@ -29,16 +23,8 @@ export class AddRecipeDialogComponent {
   val: boolean = false
 
   addedFirstIngredient : boolean
-  completedRecipe : boolean
 
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
-
-  constructor(private _formBuilder: FormBuilder){
+  constructor(private httpClient: HttpClient){
     this.recipe = {
       name: null,
       description: null,
@@ -50,7 +36,6 @@ export class AddRecipeDialogComponent {
       amount: null
     }
     this.addedFirstIngredient = false
-    this.completedRecipe = false
   }
 
   AddIngredient(): void{
@@ -81,22 +66,30 @@ export class AddRecipeDialogComponent {
     this.recipe.ingredients.pop()
   }
   SendRecipeToBackend(): void{
-    console.log("complete recipe function called")
-
-    //if couldnt add recipe bc of an error like a field wasn't entered, then 
-    //once complete recipe,, you can change the end from cancel to close (or just always have close and just add snackbar)
-    
     
 
-    //before you mark as completed, check if recipe.name != null and ingredients length is 1 or more
-    //then have an ngIf directive to display on review screen
+    this.httpClient
+    .post<Response>('http://localhost:8080/login', {
+      
+      //post stuff
+      //make a response interface
+
+    })
+    .subscribe((response: Response) => {
+      
+      //response
+
+    }, (err) =>{
+
+      //to do if error
+    })
+  
     
 
-
-
-
-    //Send Recipe to Bakcend
     //if desc = null, set to something
     //if instructions = null, set to something
+
+
+    //SNACKBAR ONCE COMPLETE!
   }
 }
