@@ -46,13 +46,15 @@ describe('Test Log in functionality', () => {
   it('Should login in successfully with a correct account', () => {
 
     //Try logging in with a valid account
-    const validEmail = 'mikebrown@gmail.com';
-    const validPassword = '12345678';
+    const validEmail = 'rqian@ufl.edu';
+    const validPassword = 'richardqian';
 
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
 
     cy.get('[data-test="login-button"]').click();
+
+    cy.wait(10000);
 
     cy.url().should('include', '/home');
   });
@@ -68,6 +70,8 @@ describe('Test Log in functionality', () => {
 
     cy.get('[data-test="login-button"]').click();
 
+    cy.wait(10000);
+
     cy.get('.errorTopper')
     .should('be.visible').contains(/username or password is incorrect/i)
   });
@@ -75,13 +79,15 @@ describe('Test Log in functionality', () => {
   it('Should login with enter key', () => {
 
     //Try logging in with a valid account
-    const validEmail = 'mikebrown@gmail.com';
-    const validPassword = '12345678';
+    const validEmail = 'rqian@ufl.edu';
+    const validPassword = 'richardqian';
 
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
 
     cy.get('[data-test="password-input"]').type('{enter}');
+
+    cy.wait(10000);
 
     cy.url().should('include', '/home');
   });
@@ -100,7 +106,7 @@ describe('Test Register', () => {
     const firstName = 'Bill';
     const lastName = 'Bob';
     const password = 'password';
-    const invalidEmail = 'mikebrown@gmail.com'
+    const invalidEmail = 'rqian@ufl.edu'
 
     cy.get('#register-first-name').type(firstName);
     cy.get('#register-last-name').type(lastName);
@@ -136,11 +142,12 @@ describe('Test Routing and Auth Guard', () => {
 
     //Login
     cy.visit('/login');
-    const validEmail = 'mikebrown@gmail.com';
-    const validPassword = '12345678';
+    const validEmail = 'rqian@ufl.edu';
+    const validPassword = 'richardqian';
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
     cy.get('[data-test="login-button"]').click();
+    cy.wait(10000);
     cy.url().should('include', '/home');
 
     //Route back to landing page
@@ -161,10 +168,11 @@ describe('Test Home Page', () => {
 
   beforeEach(() => {
     cy.visit('/login');
-    const validEmail = 'mikebrown@gmail.com';
-    const validPassword = '12345678';
+    const validEmail = 'rqian@ufl.edu';
+    const validPassword = 'richardqian';
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword + '{enter}');
+    cy.wait(10000);
   });
 
   it('Should log out when log out button is pressed', () => {
