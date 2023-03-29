@@ -15,7 +15,7 @@ import (
 )
 
 // Data Source Name (DSN) user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local
-var dsn = "root:@tcp(127.0.0.1:3306)/websitedatabase?charset=utf8mb4&parseTime=True&loc=Local"
+var dsn = "foodieuser:foodiepass@tcp(db4free.net:3306)/websitedatabase?charset=utf8mb4&parseTime=True&loc=Local"
 
 func main() {
 
@@ -217,11 +217,11 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 		}
 	})
 }
-	
+
 func RouterGETRecipe(router *gin.Engine) {
 
 	router.GET("/recipeGet/:userid", auth(), func(c *gin.Context) {
-		
+
 		userID := c.Param("userid")
 
 		userIDint, _ := strconv.Atoi(userID)
@@ -235,19 +235,19 @@ func RouterGETRecipe(router *gin.Engine) {
 
 		var recipeInfo []Recipes
 
-		/* Queries the database to find all the recipes that were made by the specified userID 
+		/* Queries the database to find all the recipes that were made by the specified userID
 		   and stores them in recipeInfo
 		*/
-		result := db.Table("recipes").Where(&Recipes{UserID: int64(userIDint)}).Find(&recipeInfo) 
+		result := db.Table("recipes").Where(&Recipes{UserID: int64(userIDint)}).Find(&recipeInfo)
 
-		if result.Error != nil  {
+		if result.Error != nil {
 			c.JSON(http.StatusInternalServerError, result.Error)
 		} else if result.RowsAffected == 0 {
 			c.JSON(http.StatusInternalServerError, "No recipes linked to that userID were found")
 		} else {
 			c.JSON(http.StatusOK, recipeInfo)
 		}
-	
+
 	})
 }
 
