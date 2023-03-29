@@ -53,10 +53,10 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
 
 * Route Guard
-  * talk abt immediate login too
+  * Implemented auth service and authguard using the canActivate method to prevent users who are not logged in from accessing the home page. If a user does not have an authorized jwt and tries to route to "home" they will be rerouted to login. 
 
 * JWT Interceptor
-  * details
+  * Intercepts all http requests. If there is a jwt stored in local storage (which should happen upon login or register), every request to backend will have the jwt in the "authorization" header of the request. Backend can then check if the jwt is authorized before carrying out said request.
 
 
 * Logout Function &
