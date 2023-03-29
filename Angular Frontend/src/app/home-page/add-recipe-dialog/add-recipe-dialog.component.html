@@ -5,46 +5,90 @@
 
         <!-- About -->
         <mat-step label="About">
-            
-            <mat-form-field>
-                <mat-label>Recipe Name</mat-label>
-                <input [(ngModel)]="recipe.name" matInput>
-            </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Description</mat-label>
-                <textarea [(ngModel)]="recipe.description" matInput placeholder="Describe stuff"></textarea>
-            </mat-form-field>
+            <div class="stepContent">
+                <h1>What is it? </h1>
 
-            <div>
-                <button mat-button matStepperNext>Next</button>
+                <mat-form-field style="width: 375px" appearance="outline">
+                    <mat-label>Recipe Name</mat-label>
+                    <input [(ngModel)]="recipe.name" placeholder="Chicken Parmesan" matInput>
+                </mat-form-field>
+                
+                <!-- Optional -->
+                <mat-form-field style="width: 375px" appearance="outline">
+                    <mat-label>Description (optional)</mat-label>
+                    <textarea [(ngModel)]="recipe.description" matInput placeholder="Breaded chicken covered in tomato sauce and parmesan cheese!"></textarea>
+                </mat-form-field>
             </div>
+
+            <button mat-button matStepperNext>Next</button>
+        
         </mat-step>
 
 
         <!-- Ingredients -->
-        <!-- TODO: Send ingredients to backend and have them verify before you can move on
-        Have some sort of dropdown, multi add method of adding ingredients
-        -->
         <mat-step label="Ingredients">
-            
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+
+            <div class="stepContent">
+                
+                <!-- TODO: different header for if ingredients are shown vs not
+                "ingredients will show here when entered"
+                -other ngIf is : Added Ingredients, then next to header have a button to remove previous -->
+                
+                <!-- If ingredient in list, display list -->
+                <div *ngIf="addedFirstIngredient">
+                    <h1>Added Ingredients: </h1>
+                  
+                    <p *ngFor="let ingredient of recipe.ingredients; let i = index;">
+                        {{i + 1}}. {{ingredient}}g
+                    </p>
+
+                    <button class="removeIngredientBtn" mat-raised-button color="warn" (click)="DeletePrevIngredient()">-</button>
+                </div>
+
+                <!-- else -->
+                <div *ngIf="!addedFirstIngredient">
+                    <h1>Try adding an ingredient...</h1>
+                </div>
+                
+                <mat-form-field style="width: 150px" appearance="outline">
+                    <mat-label>Ingredient</mat-label>
+                    <input [(ngModel)]="temp.ingredient" placeholder="Chicken" matInput>
+                </mat-form-field>
+
+                <mat-form-field style="width: 150px" appearance="outline">
+                    <mat-label>Amount (grams)</mat-label>
+                    <input [(ngModel)]="temp.amount" placeholder="250" matInput>
+                </mat-form-field>
+                
+                <button mat-raised-button color="primary" (click)="AddIngredient()">Add</button>
+        
             </div>
+
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
         </mat-step>
 
 
         <!-- Instructions -->
         <mat-step label="Instructions">
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+            <div class="stepContent">
+                <h1>How do you make it? </h1>
+
+                <mat-form-field style="width: 375px" appearance="outline">
+                    <mat-label>Instructions (optional)</mat-label>
+                    <textarea [(ngModel)]="recipe.instructions" matInput placeholder="1. Preheat oven to 400°F ..."></textarea>
+                </mat-form-field>
             </div>
+
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
         </mat-step>
 
 
         <!-- Review -->
+        <!-- TODO: 
+        Show the recipe and all the data the backend calculates... protein-->
         <mat-step label="Review">
             <div>
                 <button mat-button matStepperPrevious>Back</button>
@@ -57,10 +101,11 @@
 
 
 
-<!-- TODO: make a class to align properly -->
+<!-- TODO: make a class to align properly 
+CLEAR FORM BTN-->
 <mat-dialog-actions align="end">
 
-    <!-- do an ng if everything is completed can save.. -->
+    <!-- TODO an ng if everything is completed can save.. -->
     <button mat-raised-button>Save</button>
     <button mat-button mat-dialog-close mat-dialog-close="this is the close response">Cancel</button>
 </mat-dialog-actions>

@@ -22,8 +22,9 @@ export class HomeComponent {
     order : string 
   }
   dialogConfig: {
-    height : string,
-    width : string
+    minWidth : string,
+    maxHeight : string,
+    maxWidth : string
   }
   
   constructor(private httpClient : HttpClient, private router : Router, private dialogService: MatDialog){
@@ -38,8 +39,9 @@ export class HomeComponent {
       order: 'ascending'
     }
     this.dialogConfig = {
-      height : "600px",
-      width : "600px"
+      minWidth : "485px",
+      maxHeight : "600px",
+      maxWidth : "600px"
     }
   }
 
