@@ -1,13 +1,20 @@
 import { Component } from '@angular/core';
+import { FormBuilder, Validators} from '@angular/forms';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 @Component({
   selector: 'app-add-recipe-dialog',
   templateUrl: './add-recipe-dialog.component.html',
-  styleUrls: ['./add-recipe-dialog.component.css']
+  styleUrls: ['./add-recipe-dialog.component.css'],
+  providers: [
+    { 
+      provide: STEPPER_GLOBAL_OPTIONS, 
+      useValue: {showError: true}
+    },
+  ],
 })
 export class AddRecipeDialogComponent {
 
-  //TODO: change ingredients to an array/object
   recipe : {
     name: string | null,
     description: string | null,
@@ -19,9 +26,19 @@ export class AddRecipeDialogComponent {
     amount : any
   }
 
-  addedFirstIngredient : boolean
+  val: boolean = false
 
-  constructor(){
+  addedFirstIngredient : boolean
+  completedRecipe : boolean
+
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
+
+  constructor(private _formBuilder: FormBuilder){
     this.recipe = {
       name: null,
       description: null,
@@ -33,6 +50,7 @@ export class AddRecipeDialogComponent {
       amount: null
     }
     this.addedFirstIngredient = false
+    this.completedRecipe = false
   }
 
   AddIngredient(): void{
@@ -61,5 +79,24 @@ export class AddRecipeDialogComponent {
   }
   DeletePrevIngredient(): void{
     this.recipe.ingredients.pop()
+  }
+  SendRecipeToBackend(): void{
+    console.log("complete recipe function called")
+
+    //if couldnt add recipe bc of an error like a field wasn't entered, then 
+    //once complete recipe,, you can change the end from cancel to close (or just always have close and just add snackbar)
+    
+    
+
+    //before you mark as completed, check if recipe.name != null and ingredients length is 1 or more
+    //then have an ngIf directive to display on review screen
+    
+
+
+
+
+    //Send Recipe to Bakcend
+    //if desc = null, set to something
+    //if instructions = null, set to something
   }
 }

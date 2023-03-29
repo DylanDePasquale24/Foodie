@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 //Other
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from '../shared/app-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 // import { AuthGuard } from './auth.guard';
 // import { JwtInterceptor } from './jwt.interceptor';
 
@@ -37,6 +38,7 @@ import { RegisterComponent } from './register/register.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
 import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-recipe-dialog.component';
+import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 
 
 
@@ -72,7 +74,8 @@ import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-reci
     MatGridListModule,
     MatSelectModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    ReactiveFormsModule
   ],
   exports: [],
   providers: [
