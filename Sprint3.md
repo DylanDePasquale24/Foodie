@@ -42,10 +42,14 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
       * Created "Add Recipe" icon that brings up a dialog box. Button also has a tooltip to eliminate any confusion.
 
     * Add Recipe Dialog/Stepper
-      * Name & Description
-      * Ingredients
-      * Instructions
-      * Review
+      * Brings up a dialog box with an angular material form stepper to allow users easily navigate the process of creating a recipe. 
+      * Step 1: User enters the recipe name and description (name is required, description is optional).
+      * Step 2: User can add ingredients one by one by entering the ingredient and the amount in grams. Added ingredients show above the "add bar" as a list. Users can also remove the last entered ingredient by clicking the "del" button at the bottom of the list that appears. This button also has a tooltip to eliminate confusion.
+      * Step 3: User can enter any recipe instructions in a text field. This step is optional.
+      * Step 4: Review section
+        * Error checking: if any of the required fields are left blank, the page asks you to first complete these items.
+        * Once all required fields are complete, it shows a summary of everything you entered, allowing you to go back or "Save & Close"
+        * "Save & Close" sends the newly created recipe to the backend where it will be stored. The dialog box then closes.
 
 
 * Route Guard
