@@ -87,7 +87,7 @@ func TestRouterPOSTRecipeCreate(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
 
 	json := []byte(`{
-		"userID": "2",
+		"userID": "1",
 		"recipeName": "Test Recipe Name 2",
 		"description": "Test description",
 		"ingredients": "Test ingredients",
@@ -107,7 +107,7 @@ func TestRouterGetRecipe(t *testing.T) {
 
 	responseRecorder := httptest.NewRecorder()
 	json := []byte(`{}`)
-	request, _ := http.NewRequest("GET", "/recipeGet/2", bytes.NewBuffer(json))
+	request, _ := http.NewRequest("GET", "/recipeGet/1", bytes.NewBuffer(json))
 
 	router.ServeHTTP(responseRecorder, request)
 
