@@ -2,9 +2,11 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	encodingJSON "encoding/json"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -85,12 +87,38 @@ func TestRouterPOSTRecipeCreate(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
 
 	json := []byte(`{
-		Not finished yet
+		"userID": "1",
+		"recipeName": "Test Recipe Name 2",
+		"description": "Test description",
+		"ingredients": "Test ingredients",
+		"instructions": "Test instructions"
 	  }`)
 
 	request, _ := http.NewRequest("POST", "/recipeCreate", bytes.NewBuffer(json))
 
 	router.ServeHTTP(responseRecorder, request)
+
+	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
+}
+
+func TestRouterGetRecipe(t *testing.T) {
+
+	RouterGETRecipe(router)
+
+	responseRecorder := httptest.NewRecorder()
+	json := []byte(`{}`)
+	request, _ := http.NewRequest("GET", "/recipeGet/1", bytes.NewBuffer(json))
+
+	router.ServeHTTP(responseRecorder, request)
+
+	var jsonTest bytes.Buffer
+	error := encodingJSON.Indent(&jsonTest, responseRecorder.Body.Bytes(), "", "\t")
+
+	if error != nil {
+		fmt.Println(error)
+	}
+
+	// fmt.Println(string(jsonTest.Bytes()))
 
 	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
 }

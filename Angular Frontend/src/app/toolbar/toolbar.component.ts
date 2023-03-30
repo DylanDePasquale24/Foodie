@@ -11,7 +11,8 @@ export class ToolbarComponent {
 
   constructor(private router: Router) { }
 
-  goToLogin() {
+  LogOut() {
+    localStorage.clear()
     this.router.navigate(['login'])
   }
 

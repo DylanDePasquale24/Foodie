@@ -1,0 +1,142 @@
+<h2 mat-dialog-title>Create Your Recipe</h2>
+
+<mat-dialog-content>
+    <mat-vertical-stepper>
+
+        <!-- About -->
+        <mat-step label="About">
+            
+            <div class="stepContent">
+                <h1>What is it? </h1>
+
+                <mat-form-field style="width: 375px" appearance="outline">
+                    <mat-label>Recipe Name</mat-label>
+                    <input [(ngModel)]="recipe.name" placeholder="Chicken Parmesan" matInput required>
+                </mat-form-field>
+                
+                <!-- Optional -->
+                <mat-form-field style="width: 375px" appearance="outline">
+                    <mat-label>Description (optional)</mat-label>
+                    <textarea [(ngModel)]="recipe.description" matInput placeholder="Breaded chicken covered in tomato sauce and parmesan cheese!"></textarea>
+                </mat-form-field>
+            </div>
+
+            <button mat-button matStepperNext>Next</button>
+        </mat-step>
+
+
+        <!-- Ingredients -->
+        <mat-step label="Ingredients">
+            <div class="stepContent">
+            
+                <!-- If ingredient in list, display list -->
+                <div *ngIf="addedFirstIngredient">
+                    <h1>Added Ingredients: </h1>
+                    
+                    <p *ngFor="let ingredient of recipe.ingredients; let i = index;">
+                        {{i + 1}}. {{ingredient}}g
+                    </p>
+
+                    <button class="removeIngredientBtn" mat-raised-button color="warn" (click)="DeletePrevIngredient()" matTooltip="Remove last ingredient">del</button>
+                </div>
+
+                <!-- else -->
+                <div *ngIf="!addedFirstIngredient">
+                    <h1>Try adding an ingredient...</h1>
+                </div>
+                
+                <mat-form-field style="width: 150px" appearance="outline">
+                    <mat-label>Ingredient</mat-label>
+                    <input [(ngModel)]="temp.ingredient" placeholder="Chicken" matInput>
+                </mat-form-field>
+
+                <mat-form-field style="width: 150px" appearance="outline">
+                    <mat-label>Amount (grams)</mat-label>
+                    <input [(ngModel)]="temp.amount" placeholder="250" matInput>
+                </mat-form-field>
+                
+                <button mat-raised-button color="primary" (click)="AddIngredient()">Add</button>
+        
+            </div>
+
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+           
+            
+        </mat-step>
+
+
+        <!-- Instructions -->
+        <mat-step label="Instructions">
+            <div class="stepContent">
+                <h1>How do you make it? </h1>
+
+                <mat-form-field style="width: 375px" appearance="outline">
+                    <mat-label>Instructions (optional)</mat-label>
+                    <textarea [(ngModel)]="recipe.instructions" matInput placeholder="1. Preheat oven to 400°F ..."></textarea>
+                </mat-form-field>
+            </div>
+
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+        </mat-step>
+
+
+        <!-- Review -->
+        <!-- TODO: 
+        Show the recipe and all the data the backend calculates... protein
+        //show these buttons actually only in review section?
+        -->
+        <mat-step label="Review">
+
+            <!-- Error Mssg -->
+            <div *ngIf="recipe.name == null || recipe.ingredients.length == 0">
+                <h1>Please complete the following steps:</h1>
+                <span *ngIf="recipe.name == null">
+                    - Give your recipe a name
+                    <br>
+                </span>
+                <span *ngIf="recipe.ingredients.length == 0">
+                    - Add at least 1 ingredient
+                    <br>
+                </span>
+                <button mat-button matStepperPrevious>Back</button>
+            </div>
+            
+            <!-- Review Recipe -->
+            <div *ngIf="recipe.name != null && recipe.ingredients.length >= 1">
+                <h1>Your Recipe:</h1>
+
+                <h2>Name:</h2>
+                <p>{{recipe.name}}</p>
+                <br>
+
+                <h2>Description:</h2>
+                <p>{{recipe.description}}</p>
+                <br>
+
+                <h2>Ingredients: </h2>
+                <p *ngFor="let ingredient of recipe.ingredients; let i = index;">
+                    {{i + 1}}. {{ingredient}}g
+                </p>
+                <br>
+
+                <h2>Instructions: </h2>
+                <p>{{recipe.instructions}}</p>
+                <br>
+                <br>
+
+                <p>*Once saved, our algorithm will automatically calculate total calories, protein, carbs, & fat! </p>
+                <button mat-button matStepperPrevious>Back</button>
+                <button mat-button mat-dialog-close mat-dialog-close="Clicked Save & Close Btn" (click)="SendRecipeToBackend()">Save & Close</button>
+            </div>
+        </mat-step>
+
+    </mat-vertical-stepper>
+</mat-dialog-content>
+
+
+<!--Cancel-->
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close mat-dialog-close="Clicked Cancel Btn">Cancel</button>
+</mat-dialog-actions>

@@ -1,0 +1,64 @@
+<app-toolbar></app-toolbar>
+
+<div class="welcomeBanner">
+    <h1 class="headline-2"> Welcome back, {{user.name}}! </h1>
+    <p class="body-1">All your recipe needs - All in one place</p>
+    <p class="body-1">Get started by writing a new recipe or pickup right where you left off!</p>
+</div>
+
+
+
+<div class="headline">
+    <h1>My Recipes</h1>
+
+
+    <!-- Search -->
+    <mat-form-field appearance="outline">
+        <!-- TODO: Add autocomplete -->
+        <mat-label>Search Recipe</mat-label>
+        <input [(ngModel)]="headlineInputs.search" matInput  placeholder="ex. Chicken Parmesan">
+    </mat-form-field>
+
+
+    <!-- Sort by -->
+    <mat-form-field appearance="outline">
+        <mat-label>Sort By</mat-label>
+
+        <mat-select [(ngModel)]="headlineInputs.sortBy">
+            <mat-option value="date" selected>Date</mat-option>
+            <mat-option value="calories">Calories</mat-option>
+            <mat-option value="protein">Protein</mat-option>
+            <mat-option value="carbs">Carbs</mat-option>
+            <mat-option value="fat">Fat</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+
+    <!-- Order (Ascending / Descending) -->
+    <mat-form-field appearance="outline">
+        <mat-label>Order</mat-label>
+
+        <mat-select [(ngModel)]="headlineInputs.order">
+            <mat-option value="ascending" selected>Ascending</mat-option>
+            <mat-option value="descending">Descending</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+
+    <!-- Add Recipe -->
+    <button mat-fab color="primary" (click)="OpenDialog()" matTooltip="New Recipe"> 
+        <mat-icon>add</mat-icon>
+    </button>
+    
+</div>
+
+
+
+
+<!-- TODO: make paginator in case too many recipes -->
+<div class="recipeGrid">
+    <!-- display current recipe grid -->
+</div>
+
+
+

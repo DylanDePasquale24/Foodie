@@ -1,12 +1,10 @@
+//Other
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AppRoutingModule } from '../shared/app-routing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-//Other
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppRoutingModule } from './app-routing.module';
-// import { AuthGuard } from './auth.guard';
-// import { JwtInterceptor } from './jwt.interceptor';
 
 // ANGULAR MATERIAL MODULES
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -15,21 +13,29 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDialogModule } from '@angular/material/dialog'
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSelectModule } from '@angular/material/select'
+import {MatTooltipModule } from '@angular/material/tooltip'
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatStepperModule } from '@angular/material/stepper'
 
-// APP SERVICES
+
 
 // APP COMPONENTS
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './home-page/home/home.component';
 import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { LoginToolbarComponent } from './login-toolbar/login-toolbar.component';
 import { RegisterComponent } from './register/register.component';
+import { FooterComponent } from './footer/footer.component';
+import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
+import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-recipe-dialog.component';
+
 
 
 
@@ -43,9 +49,11 @@ import { RegisterComponent } from './register/register.component';
     ToolbarComponent,
     PageNotFoundComponent,
     LoginToolbarComponent,
-    RegisterComponent
-    
+    RegisterComponent,
+    FooterComponent,
+    AddRecipeDialogComponent
   ],
+  entryComponents: [AddRecipeDialogComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -59,11 +67,15 @@ import { RegisterComponent } from './register/register.component';
     MatToolbarModule,
     MatDialogModule,
     MatMenuModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatGridListModule,
+    MatSelectModule,
+    MatTooltipModule,
+    MatStepperModule
   ],
   exports: [],
   providers: [
-    // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

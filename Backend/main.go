@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -14,7 +16,7 @@ import (
 )
 
 // Data Source Name (DSN) user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local
-var dsn = "root:@tcp(127.0.0.1:3306)/websitedatabase?charset=utf8mb4&parseTime=True&loc=Local"
+var dsn = "foodieuser:foodiepass@tcp(db4free.net:3306)/websitedatabase?charset=utf8mb4&parseTime=True&loc=Local"
 
 func main() {
 
@@ -32,6 +34,9 @@ func main() {
 
 	// POST /recipeCreate
 	RouterPOSTRecipeCreate(router)
+
+	// GET /recipeGet
+	RouterGETRecipe(router)
 
 	// Runs server
 	router.Run()
@@ -59,14 +64,12 @@ func RouterPOSTRegister(router *gin.Engine) {
 		err := ginContext.BindJSON(&registerData)
 		if err != nil {
 			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
-			return
 		}
 
 		// Hash the password
 		hashPass, err := HashPassword(registerData.Password)
 		if err != nil {
 			ginContext.JSON(http.StatusInternalServerError, "Could not securely hash password.")
-			return
 		}
 
 		// Make a database connection
@@ -74,7 +77,6 @@ func RouterPOSTRegister(router *gin.Engine) {
 		sql, _ := db.DB()
 		if err != nil || sql.Ping() != nil {
 			ginContext.JSON(http.StatusInternalServerError, "Could not connect to database.")
-			return
 		}
 
 		// Make a new user when a user registers
@@ -101,8 +103,9 @@ func RouterPOSTRegister(router *gin.Engine) {
 			}
 
 			ginContext.JSON(http.StatusOK, gin.H{
-				"id":  user.ID,
-				"jwt": tokenString,
+				"id":        user.ID,
+				"usersName": user.FirstName,
+				"jwt":       tokenString,
 			})
 		} else {
 			ginContext.JSON(http.StatusInternalServerError, "Email already in use.")
@@ -159,8 +162,9 @@ func RouterPOSTLogin(router *gin.Engine) {
 				}
 
 				ginContext.JSON(http.StatusOK, gin.H{
-					"userName": user.FirstName,
-					"jwt":      tokenString,
+					"id":        user.ID,
+					"usersName": user.FirstName,
+					"jwt":       tokenString,
 				})
 			} else {
 				ginContext.JSON(http.StatusInternalServerError, "Incorrect password.")
@@ -180,9 +184,10 @@ func RouterGETUserSession(router *gin.Engine) {
 func RouterPOSTRecipeCreate(router *gin.Engine) {
 	// If there are no errors, this should make a recipe entry in the database
 
-	//TODO: add auth function? for jwt interceptor
-	router.POST("/recipeCreate", func(ginContext *gin.Context) {
-		var recipeCreate Recipe
+	//TODO: add auth function? for jwt interceptor, verifies jwt in authorization header(from interceptor)
+	//not sure how jwt is stored/dealt with on backend
+	router.POST("/recipeCreate", auth(), func(ginContext *gin.Context) {
+		var recipeCreate RecipeInData
 
 		// Bind JSON data to object
 		// This gets the JSON data from the request body
@@ -198,19 +203,60 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
 		}
 
-		// Make a new recipe when created
-		var recipe = Recipes{RecipeName: recipeCreate.RecipeName, Description: recipeCreate.Description, Ingredients: recipeCreate.Ingredients, Instructions: recipeCreate.Instructions}
+		ins := fmt.Sprint(recipeCreate.Ingredients)
+		IngredientStr := strings.Split(ins, ",")
+		Ingreds := strings.Join(IngredientStr, " ")
 
-		copy := db.FirstOrCreate(&recipe, Recipe{RecipeName: recipeCreate.RecipeName})
+		// Make a new recipe when created
+		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
+
+		copy := db.FirstOrCreate(&recipe, Recipes{RecipeName: recipeCreate.RecipeName})
 		if copy.Error != nil {
+			
 			ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
 		} else if copy.RowsAffected == 1 {
 			ginContext.JSON(http.StatusOK, gin.H{
-				"id": recipe.recipeID,
+				"id": recipe.RecipeID,
 			})
 		} else {
+			ginContext.JSON(http.StatusOK, gin.H{
+				"id": recipe.RecipeID,
+			})
 			ginContext.JSON(http.StatusInternalServerError, "Recipe already in use.")
 		}
+	})
+}
+
+func RouterGETRecipe(router *gin.Engine) {
+
+	router.GET("/recipeGet/:userid", auth(), func(c *gin.Context) {
+
+		userID := c.Param("userid")
+
+		userIDint, _ := strconv.Atoi(userID)
+
+		// Make a database connection
+		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		sql, _ := db.DB()
+		if err != nil || sql.Ping() != nil {
+			c.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
+		}
+
+		var recipeInfo []Recipes
+
+		/* Queries the database to find all the recipes that were made by the specified userID
+		   and stores them in recipeInfo
+		*/
+		result := db.Table("recipes").Where(&Recipes{UserID: int64(userIDint)}).Find(&recipeInfo)
+
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, result.Error)
+		} else if result.RowsAffected == 0 {
+			c.JSON(http.StatusInternalServerError, "No recipes linked to that userID were found")
+		} else {
+			c.JSON(http.StatusOK, recipeInfo)
+		}
+
 	})
 }
 
@@ -244,20 +290,29 @@ type Users struct {
 	Password  string
 }
 
-type Recipe struct {
-	RecipeName   string `json: RecipeName`
-	Description  string `json: Description`
-	Ingredients  string `json: Ingredients`
-	Instructions string `json: Instructions`
+type RecipeData struct {
+	UserID       int64  `json:",string"` // Need to put this to convert json string to int
+	RecipeName   string `json: recipeName`
+	Description  string `json: description`
+	Ingredients  string `json: ingredients`
+	Instructions string `json: instructions`
+}
+
+type RecipeInData struct {
+	UserID       int64    `json:",string"` // Need to put this to convert json string to int
+	RecipeName   string   `json: recipeName`
+	Description  string   `json: description`
+	Ingredients  []string `json: ingredients`
+	Instructions string   `json: instructions`
 }
 
 type Recipes struct {
-	userID       int64
-	recipeID     int64
-	RecipeName   string `gorm:"column:RecipeName"`
-	Description  string `gorm:"column:Description"`
-	Ingredients  string
-	Instructions string
+	UserID       int64  `gorm:"column:userID"`
+	RecipeID     int64  `gorm:"column:recipeID"`
+	RecipeName   string `gorm:"column:recipeName"`
+	Description  string `gorm:"column:description"`
+	Ingredients  string `gorm:"column:ingredients"`
+	Instructions string `gorm:"column:instructions"`
 }
 
 type Tabler interface {
@@ -300,7 +355,7 @@ func auth() gin.HandlerFunc {
 			// Runs this if there is an error
 			c.JSON(http.StatusInternalServerError, "jwt not authorized")
 		} else {
-			c.Next()
+			c.Next() //otherwise, it is authorized and the jwt is matched
 		}
 	}
 }
