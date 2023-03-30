@@ -1,12 +1,36 @@
 <app-login-toolbar></app-login-toolbar>
-<div id="mainInfo">
-    
-    <h1>Foodie</h1>
-    <h2>Recipe tracking made easy</h2>
+<div class="landing-page">
+    <div class="grid-container1">
+        <mat-grid-list cols="2" rowHeight="5.5:4">
+            <mat-grid-tile>
+                <div class="grid-item left-align">
+                    <h1 class="headline-4">Recipe tracking made easy.</h1>
+                    <p class="body-1">Easily create and share custom recipies for all your nutrition needs.</p>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <img src="assets\images\Food_Bowl.png" alt="Landing Image" class="landing-image">
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
 
-    <p>Easily manage recipes and see all their ingredients or whatever</p>
+    <div class="grid-container2">
+        <mat-grid-list cols="2" rowHeight="7:4">
+            <mat-grid-tile>
+                <img src="assets\images\meal-prep.png" alt="Landing Image" class="landing-image">
+            </mat-grid-tile>
+            <mat-grid-tile>
+                <div class="grid-item left-align">
+                    <h1 class="headline-2">Powered by data.</h1>
+                    <p class="body-1">Track calories, macros, and nutritional data by just writing a recipe!</p>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </div>
 
-    <button (click)="goToRegister()" mat-raised-button color="primary">Start for Free</button>
+    <button (click)="goToRegister()" mat-raised-button color="primary" class="button-text" id="get-started-button">Start for Free</button>
+
+    <img src="assets\images\Foodie_Logo_Orange.png" alt="Foodie Logo Orange" class="landing-logo">
 </div>
 
 

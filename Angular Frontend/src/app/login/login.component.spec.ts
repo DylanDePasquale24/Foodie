@@ -66,7 +66,7 @@ describe('LoginComponent', () => {
     expect(component.errorMessage).toBe('Please enter a value for all required fields. Please try again.');
   });
 
-  xit('should make a POST request to the server and navigate to home', () => {
+  it('should make a POST request to the server and navigate to home', () => {
     const testResponse: any = { jwt: 'testToken' };
     component.email = 'testEmail@email.com';
     component.password = 'testPassword';

@@ -12,13 +12,13 @@
     <!-- Email -->
     <mat-form-field data-test="email-input">
         <mat-label>Email</mat-label>
-        <input [(ngModel)]="email" matInput required placeholder="ex. johndoe@email.com">
+        <input [(ngModel)]="email" matInput required placeholder="ex. johndoe@email.com" (keyup.enter)="Submit()">
     </mat-form-field>
 
     <!-- Password -->
     <mat-form-field data-test="password-input">
         <mat-label>Password</mat-label>
-        <input [(ngModel)]="password" matInput required minlength="8" type="password">
+        <input [(ngModel)]="password" matInput required minlength="8" type="password" (keyup.enter)="Submit()">
     </mat-form-field>
 
     <!-- Login Btn  -->

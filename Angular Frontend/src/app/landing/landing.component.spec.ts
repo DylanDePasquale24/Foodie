@@ -1,5 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatGridListModule } from '@angular/material/grid-list';
+
+import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
@@ -15,7 +18,8 @@ describe('LandingComponent', () => {
     await TestBed.configureTestingModule({
       imports : [
         MatToolbarModule,
-        RouterTestingModule
+        RouterTestingModule,
+        MatGridListModule
       ],
       declarations: [ 
         LandingComponent,
@@ -44,5 +48,10 @@ describe('LandingComponent', () => {
     spyOn(router, 'navigate');
     component.goToRegister();
     expect(router.navigate).toHaveBeenCalledWith(['register']);
+  });
+
+  it('should display the "Recipe tracking made easy." headline', () => {
+    const element = fixture.debugElement.query(By.css('.headline-4')).nativeElement;
+    expect(element.textContent).toContain('Recipe tracking made easy.');
   });
 });
