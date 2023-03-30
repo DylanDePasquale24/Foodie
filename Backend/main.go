@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -186,7 +187,7 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 	//TODO: add auth function? for jwt interceptor, verifies jwt in authorization header(from interceptor)
 	//not sure how jwt is stored/dealt with on backend
 	router.POST("/recipeCreate", auth(), func(ginContext *gin.Context) {
-		var recipeCreate RecipeData
+		var recipeCreate RecipeInData
 
 		// Bind JSON data to object
 		// This gets the JSON data from the request body
@@ -202,17 +203,25 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
 		}
 
+		ins := fmt.Sprint(recipeCreate.Ingredients)
+		IngredientStr := strings.Split(ins, ",")
+		Ingreds := strings.Join(IngredientStr, " ")
+
 		// Make a new recipe when created
-		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Description: recipeCreate.Description, Ingredients: recipeCreate.Ingredients, Instructions: recipeCreate.Instructions}
+		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
 
 		copy := db.FirstOrCreate(&recipe, Recipes{RecipeName: recipeCreate.RecipeName})
 		if copy.Error != nil {
+			
 			ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
 		} else if copy.RowsAffected == 1 {
 			ginContext.JSON(http.StatusOK, gin.H{
 				"id": recipe.RecipeID,
 			})
 		} else {
+			ginContext.JSON(http.StatusOK, gin.H{
+				"id": recipe.RecipeID,
+			})
 			ginContext.JSON(http.StatusInternalServerError, "Recipe already in use.")
 		}
 	})
@@ -287,6 +296,14 @@ type RecipeData struct {
 	Description  string `json: description`
 	Ingredients  string `json: ingredients`
 	Instructions string `json: instructions`
+}
+
+type RecipeInData struct {
+	UserID       int64    `json:",string"` // Need to put this to convert json string to int
+	RecipeName   string   `json: recipeName`
+	Description  string   `json: description`
+	Ingredients  []string `json: ingredients`
+	Instructions string   `json: instructions`
 }
 
 type Recipes struct {
