@@ -64,7 +64,7 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
   * User may logout with a new button in the toolbar. This will delete the JWT from local storage and route the user back to the login page.
 
 * E2E Cypress Tests
-  New Cypress tests to test routing with auth guard and JWT interceptor were added.
+  * New Cypress tests to test routing with auth guard and JWT interceptor were added.
 
 
 ***Back-End***
