@@ -9,7 +9,8 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-3
 
 ## Links to Demos
 - Link to Front-End Demo: https://youtu.be/e3WHdauw2Mo
-- Link to Back-End Demo:
+- Link to Back-End Demo: https://www.youtube.com/watch?v=src6pS4P0w0
+
 
 ## User Stories
 
@@ -59,10 +60,11 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
   * Intercepts all http requests. If there is a jwt stored in local storage (which should happen upon login or register), every request to backend will have the jwt in the "authorization" header of the request. Backend can then check if the jwt is authorized before carrying out said request.
 
 
-* Logout Function &
+* Logout Function
+  * User may logout with a new button in the toolbar. This will delete the JWT from local storage and route the user back to the login page.
 
 * E2E Cypress Tests
-  
+  New Cypress tests to test routing with auth guard and JWT interceptor were added.
 
 
 ***Back-End***
@@ -72,7 +74,23 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 ## Unit Tests
 
 ***Front-End***
+* New unit test run is the 'should make a POST request to the server and navigate to home'
+  * This unit test now **passes** since the jwt interceptor was implemented, and the communication between the front and back end has been hashed out.
 
+* Previous Unit Tests still pass with new changes:
+  * 'should navigate to login page'
+  * 'should navigate to register page'
+  * 'should throw error message if email is missing' 
+  * 'should throw error message if password is missing'
+  * 'should make a POST request to the server and navigate to home' 
+  * 'should set error message and clear form fields on error' 
+  * should display error if log in fails, should also receive an error message from backend
+  * 'should navigate to register page'
+  * 'should navigate to login page on click of "Already have an account?" button'
+  * 'should return true for a valid email'
+  * 'should return false for an invalid email'
+
+Note that more cypress tests were added to properly test auth guard and jwt interceptor functionality.
 
 ***Back-End***
 
@@ -101,5 +119,29 @@ TestRouterGetRecipe
 Note: To be able to run the tests TestRouterPOSTRecipeCreate and TestRouterGetRecipe, we had to temporarily remove the auth() function that we have in the routes' handlers because it tries to authenticate the user when this is not necessary.
 
 ## Cypress Tests (Front-end)
+
+New end-to-end cypress tests were added to test protected routes, jwt interceptor, and the new landing and home pages.
+
+* 'Visits landing page and checks main elements'
+  * Test updated to check for new elements on landing page
+
+* New persistent shared database
+  * We have a new shared database in the backend. This however involves a slower response time so the e2e tests have wait() functions to allow the backend to respond to the requests.
+
+* 'Should login with enter key'
+  * The {enter} key stroke can now trigger login and register requests.
+
+* 'Should not register if email is already in use'
+  * We test that a user who attempts to register with an email that is already in use will receive an error message.
+
+* 'Should not route to home page if user is not logged in'
+  * We test that the /home route is protected and that a user who is not logged in will be redirected to the login page.
+  
+* 'Should be able to route to home page if user is logged in'
+  * The /home route should be accessible to a user who is logged in.
+
+* 'Should log out when log out button is pressed'
+  * Test the logout() function and checks that the user is unable to access the /home route after logging out.
+
 
 ## Backend API Documentation
