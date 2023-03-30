@@ -76,6 +76,29 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 
 ***Back-End***
 
+TestHashPassword
+ - This tests that the password hashing package that we have imported works
+ - (Completed in a previous sprint)
+
+TestRouterPOSTRegister
+- This tests the /register endpoint by trying to register a new user
+- (Completed in a previous sprint)
+
+TestRouterPOSTLogin
+- This tests the /login endpoint by trying to log in the user created in the TestRouterPOSTRegister test
+- (Completed in a previous sprint)
+
+TestRouterPOSTRecipeCreate
+ - This tests the /recipeCreate endpoint by sending a POST request to the backend in order to create a recipe entry in the database. The request also holds the recipe information that will be stored.
+ - The test passes when a status code of 200 is in the response, meaning that the recipe was successfully stored. If the test fails, a status code of 500 is returned along with an error message.
+ - (This test was started last sprint but was completed during this sprint)
+
+TestRouterGetRecipe
+ - This tests the /recipeGet/:id endpoint by sending a GET request to the backend in order to get all the recipe entries connected to the specified user id. The user id is passed through the route where it says ":id".
+ - The test passes when a status code of 200 is in the response, meaning that there are recipes connected to that user id, and all the recipes are returned in the response as well. If the test fails, a status code of 500 is returned along with an error message.
+ - (This test was completed during this sprint)
+
+Note: To be able to run the tests TestRouterPOSTRecipeCreate and TestRouterGetRecipe, we had to temporarily remove the auth() function that we have in the routes' handlers because it tries to authenticate the user when this is not necessary.
 
 ## Cypress Tests (Front-end)
 
