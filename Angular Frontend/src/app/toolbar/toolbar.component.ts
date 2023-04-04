@@ -16,4 +16,11 @@ export class ToolbarComponent {
     this.router.navigate(['login'])
   }
 
+  DisplayProfile() {
+
+  }
+
+  CreateRecipe() {
+  }
+
 }
