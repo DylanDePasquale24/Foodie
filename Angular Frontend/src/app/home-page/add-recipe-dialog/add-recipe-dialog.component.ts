@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class AddRecipeDialogComponent {
 
   addedFirstIngredient : boolean
 
-  constructor(private httpClient: HttpClient){
+  constructor(private httpClient: HttpClient, @Inject(MAT_DIALOG_DATA) private passedInData: any){
     this.recipe = {
       name: null,
       description: null,
@@ -39,9 +40,6 @@ export class AddRecipeDialogComponent {
   }
 
   AddIngredient(): void{
-
-    //TODO: VERIFY INGREDIENT WITH BACKEND BEFORE YOU ADD IT
-
 
     //Empty Inputs
     if(this.temp.ingredient == null || this.temp.amount == null){
@@ -66,30 +64,36 @@ export class AddRecipeDialogComponent {
     this.recipe.ingredients.pop()
   }
   SendRecipeToBackend(): void{
-    
 
     this.httpClient
-    .post<Response>('http://localhost:8080/login', {
+    .post('http://localhost:8080/recipeCreate', {
       
-      //post stuff
-      //make a response interface
-
+      UserID: this.passedInData.userID,
+      RecipeName: this.recipe.name,
+      Description: this.recipe.description,
+      Ingredients: this.recipe.ingredients,
+      Instructions: this.recipe.instructions
     })
-    .subscribe((response: Response) => {
+    .subscribe((response: any) => {
       
-      //response
+      //What to do if success
+      //responds with recipeID
+
+
+
+      console.log(response)
+      //send success snack bar and close?
+
+
 
     }, (err) =>{
 
-      //to do if error
+      //What to do if error
+      console.log(err)
+
+
+      //send failure snack bar and close
     })
-  
-    
 
-    //if desc = null, set to something
-    //if instructions = null, set to something
-
-
-    //SNACKBAR ONCE COMPLETE!
   }
 }

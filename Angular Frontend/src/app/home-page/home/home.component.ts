@@ -1,6 +1,4 @@
-import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog'  //service
 import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component';
 
@@ -24,10 +22,11 @@ export class HomeComponent {
   dialogConfig: {
     minWidth : string,
     maxHeight : string,
-    maxWidth : string
+    maxWidth : string,
+    data : {userID: string | null}
   }
   
-  constructor(private httpClient : HttpClient, private router : Router, private dialogService: MatDialog){
+  constructor(private dialogService: MatDialog){
 
     this.user = {
       id: localStorage.getItem('userId'),
@@ -39,46 +38,21 @@ export class HomeComponent {
       order: 'ascending'
     }
     this.dialogConfig = {
-      minWidth : "485px",
-      maxHeight : "600px",
-      maxWidth : "600px"
+      minWidth: "800px",
+      maxHeight: "800px",
+      maxWidth: "800px",
+      data: { userID: this.user.id} 
     }
   }
 
   OpenDialog(){
+
     let dialogReference = this.dialogService.open(AddRecipeDialogComponent, this.dialogConfig)  //takes a component and configuration as parameters
   
-
     dialogReference.afterClosed().subscribe(result => {
       
       //result after closed... as a string... can take this string and do whatever we want
-
       console.log(result)
     })
   }
-
-
-  AddRecipe() {
-
-    this.httpClient
-    .post<Response>('http://localhost:8080/recipeCreate', {
-     
-      //sends body to backend
-      userID : "30",
-      recipeName : "Test Recipe Name 3",
-      description : "Test description",
-      ingredients : "Test ingredients",
-      instructions : "Test instructions"
-
-    })
-    .subscribe((response: Response) => {
-      
-      //handles what to do with backend response
-
-    }, (err) =>{
-      //if response from backend is an error
-    })
-
-  }
-
 }

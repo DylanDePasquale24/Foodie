@@ -184,8 +184,8 @@ func RouterGETUserSession(router *gin.Engine) {
 func RouterPOSTRecipeCreate(router *gin.Engine) {
 	// If there are no errors, this should make a recipe entry in the database
 
-	//TODO: add auth function? for jwt interceptor, verifies jwt in authorization header(from interceptor)
-	//not sure how jwt is stored/dealt with on backend
+	//TODO: Auth isn't working properly
+	//when unauthorized jwt, it says unauthorized, but still continues to next function and posts.
 	router.POST("/recipeCreate", auth(), func(ginContext *gin.Context) {
 		var recipeCreate RecipeInData
 
@@ -212,7 +212,7 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 
 		copy := db.FirstOrCreate(&recipe, Recipes{RecipeName: recipeCreate.RecipeName})
 		if copy.Error != nil {
-			
+
 			ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
 		} else if copy.RowsAffected == 1 {
 			ginContext.JSON(http.StatusOK, gin.H{
