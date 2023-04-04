@@ -184,9 +184,9 @@ func RouterGETUserSession(router *gin.Engine) {
 func RouterPOSTRecipeCreate(router *gin.Engine) {
 	// If there are no errors, this should make a recipe entry in the database
 
-	//TODO: Auth isn't working properly
+	//TODO: Auth isn't working properly (add it)
 	//when unauthorized jwt, it says unauthorized, but still continues to next function and posts.
-	router.POST("/recipeCreate", auth(), func(ginContext *gin.Context) {
+	router.POST("/recipeCreate", func(ginContext *gin.Context) {
 		var recipeCreate RecipeInData
 
 		// Bind JSON data to object
@@ -229,7 +229,8 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 
 func RouterGETRecipe(router *gin.Engine) {
 
-	router.GET("/recipeGet/:userid", auth(), func(c *gin.Context) {
+	//TODO: add auth back! wasnt working properly
+	router.GET("/recipeGet/:userid", func(c *gin.Context) {
 
 		userID := c.Param("userid")
 

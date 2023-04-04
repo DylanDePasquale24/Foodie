@@ -1,6 +1,8 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 
 @Component({
@@ -21,11 +23,10 @@ export class AddRecipeDialogComponent {
     amount : any
   }
 
-  val: boolean = false
-
   addedFirstIngredient : boolean
+  savingSpinner : boolean
 
-  constructor(private httpClient: HttpClient, @Inject(MAT_DIALOG_DATA) private passedInData: any){
+  constructor(private httpClient: HttpClient, @Inject(MAT_DIALOG_DATA) private passedInData: any, private dialogRef: MatDialogRef<AddRecipeDialogComponent>, private snackBar: MatSnackBar){
     this.recipe = {
       name: null,
       description: null,
@@ -37,6 +38,7 @@ export class AddRecipeDialogComponent {
       amount: null
     }
     this.addedFirstIngredient = false
+    this.savingSpinner = false
   }
 
   AddIngredient(): void{
@@ -65,6 +67,8 @@ export class AddRecipeDialogComponent {
   }
   SendRecipeToBackend(): void{
 
+    this.savingSpinner = true
+
     this.httpClient
     .post('http://localhost:8080/recipeCreate', {
       
@@ -77,23 +81,29 @@ export class AddRecipeDialogComponent {
     .subscribe((response: any) => {
       
       //What to do if success
-      //responds with recipeID
-
-
-
+      
       console.log(response)
-      //send success snack bar and close?
+      this.savingSpinner = false
+      this.dialogRef.close()
 
-
-
+      //snack bar
+      this.snackBar.open("Recipe created successfully!", "Dismiss")
+      
     }, (err) =>{
 
       //What to do if error
       console.log(err)
+      this.savingSpinner = false
 
-
-      //send failure snack bar and close
+      //Snack bar
+      this.snackBar.open("Recipe could NOT be created!", "Dismiss")
     })
 
   }
 }
+
+
+//while saving recipe, do loading bar
+//if saves, change cancel btn to finish, or automatically close window with ngIf "savedRecipe=true"
+//if fails. leave as is 
+

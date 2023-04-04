@@ -20,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select'
 import {MatTooltipModule } from '@angular/material/tooltip'
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
 
 
 
@@ -71,7 +72,8 @@ import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-reci
     MatGridListModule,
     MatSelectModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSnackBarModule
   ],
   exports: [],
   providers: [

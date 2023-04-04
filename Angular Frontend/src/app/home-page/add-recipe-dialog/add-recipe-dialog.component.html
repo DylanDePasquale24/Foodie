@@ -122,9 +122,17 @@
                 <br>
                 <br>
 
-                <p>*Once saved, our algorithm will automatically calculate total calories, protein, carbs, & fat! </p>
+                <div class="savingFooter" *ngIf="savingSpinner">
+                    <p>Saving Recipe...</p>
+                    <p>(This should only take a few moments)</p>
+                    <p>
+                        <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+                    </p>
+                </div>
+
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button mat-dialog-close mat-dialog-close="Clicked Save & Close Btn" (click)="SendRecipeToBackend()">Save & Close</button>
+                <button mat-button (click)="SendRecipeToBackend()">Save</button>
+
             </div>
         </mat-step>
 
