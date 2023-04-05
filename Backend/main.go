@@ -261,7 +261,7 @@ func RouterGETRecipe(router *gin.Engine) {
 	})
 }
 
-func RouterGETMacros(router *gin.Engine){
+func RouterGETMacros(router *gin.Engine) {
 	router.GET(":recipeID/macros", func(c *gin.Context) {
 
 		recipeID := c.Param("recipeID")
@@ -280,7 +280,7 @@ func RouterGETMacros(router *gin.Engine){
 		/* Queries the database to find all the recipes that were made by the specified userID
 		   and stores them in recipeInfo
 		*/
-		result := db.Table("recipes").Where(&Recipes{UserID: int64(userIDint)}).Find(&recipeInfo)
+		result := db.Table("recipes").Where(&Recipes{UserID: int64(recIDint)}).Find(&recipeInfo)
 
 		if result.Error != nil {
 			c.JSON(http.StatusInternalServerError, result.Error)
@@ -340,13 +340,13 @@ type RecipeInData struct {
 }
 
 type Recipes struct {
-	UserID       int64  `gorm:"column:userID"`
-	RecipeID     int64  `gorm:"column:recipeID"`
-	RecipeName   string `gorm:"column:recipeName"`
-	Description  string `gorm:"column:description"`
-	Ingredients  []string `gorm:"column:ingredients"`
-	Macros []Macros `gorm:"column:macros"`
-	Instructions string `gorm:"column:instructions"`
+	UserID       int64    `gorm:"column:userID"`
+	RecipeID     int64    `gorm:"column:recipeID"`
+	RecipeName   string   `gorm:"column:recipeName"`
+	Description  string   `gorm:"column:description"`
+	Ingredients  string   `gorm:"column:ingredients"`
+	Macros       []Macros `gorm:"column:macros"`
+	Instructions string   `gorm:"column:instructions"`
 }
 
 type Macros struct {
