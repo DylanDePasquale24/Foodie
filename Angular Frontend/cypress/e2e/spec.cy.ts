@@ -46,8 +46,8 @@ describe('Test Log in functionality', () => {
   it('Should login in successfully with a correct account', () => {
 
     //Try logging in with a valid account
-    const validEmail = 'rqian@ufl.edu';
-    const validPassword = 'richardqian';
+    const validEmail = 'testUser@email.com';
+    const validPassword = '12345678';
 
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
@@ -79,8 +79,8 @@ describe('Test Log in functionality', () => {
   it('Should login with enter key', () => {
 
     //Try logging in with a valid account
-    const validEmail = 'rqian@ufl.edu';
-    const validPassword = 'richardqian';
+    const validEmail = 'testUser@email.com';
+    const validPassword = '12345678';
 
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
@@ -106,7 +106,7 @@ describe('Test Register', () => {
     const firstName = 'Bill';
     const lastName = 'Bob';
     const password = 'password';
-    const invalidEmail = 'rqian@ufl.edu'
+    const invalidEmail = 'testUser@email.com'
 
     cy.get('#register-first-name').type(firstName);
     cy.get('#register-last-name').type(lastName);
@@ -142,8 +142,8 @@ describe('Test Routing and Auth Guard', () => {
 
     //Login
     cy.visit('/login');
-    const validEmail = 'rqian@ufl.edu';
-    const validPassword = 'richardqian';
+    const validEmail = 'testUser@email.com';
+    const validPassword = '12345678';
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
     cy.get('[data-test="login-button"]').click();
@@ -168,8 +168,8 @@ describe('Test Home Page', () => {
 
   beforeEach(() => {
     cy.visit('/login');
-    const validEmail = 'rqian@ufl.edu';
-    const validPassword = 'richardqian';
+    const validEmail = 'testUser@email.com';
+    const validPassword = '12345678';
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword + '{enter}');
     cy.wait(10000);
