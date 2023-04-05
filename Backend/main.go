@@ -261,6 +261,38 @@ func RouterGETRecipe(router *gin.Engine) {
 	})
 }
 
+func RouterGETMacros(router *gin.Engine){
+	router.GET(":recipeID/macros", func(c *gin.Context) {
+
+		recipeID := c.Param("recipeID")
+
+		recIDint, _ := strconv.Atoi(recipeID)
+
+		// Make a database connection
+		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+		sql, _ := db.DB()
+		if err != nil || sql.Ping() != nil {
+			c.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
+		}
+
+		var recipeInfo []Recipes
+
+		/* Queries the database to find all the recipes that were made by the specified userID
+		   and stores them in recipeInfo
+		*/
+		result := db.Table("recipes").Where(&Recipes{UserID: int64(userIDint)}).Find(&recipeInfo)
+
+		if result.Error != nil {
+			c.JSON(http.StatusInternalServerError, result.Error)
+		} else if result.RowsAffected == 0 {
+			c.JSON(http.StatusInternalServerError, "No recipes linked to that userID were found")
+		} else {
+			c.JSON(http.StatusOK, recipeInfo)
+		}
+
+	})
+}
+
 type Claims struct {
 	Email string `json:"email"`
 	jwt.RegisteredClaims
@@ -312,8 +344,16 @@ type Recipes struct {
 	RecipeID     int64  `gorm:"column:recipeID"`
 	RecipeName   string `gorm:"column:recipeName"`
 	Description  string `gorm:"column:description"`
-	Ingredients  string `gorm:"column:ingredients"`
+	Ingredients  []string `gorm:"column:ingredients"`
+	Macros []Macros `gorm:"column:macros"`
 	Instructions string `gorm:"column:instructions"`
+}
+
+type Macros struct {
+	Calories int64 `gorm:"column:calories"`
+	Carbs    int64 `gorm:"column:carbs"`
+	Protein  int64 `gorm:"column:protein"`
+	Fat      int64 `gorm:"column:fat"`
 }
 
 type Tabler interface {
