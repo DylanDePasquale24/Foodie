@@ -103,7 +103,3 @@ export class AddRecipeDialogComponent {
 }
 
 
-//while saving recipe, do loading bar
-//if saves, change cancel btn to finish, or automatically close window with ngIf "savedRecipe=true"
-//if fails. leave as is 
-

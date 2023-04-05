@@ -43,6 +43,10 @@ export class HomeComponent {
       maxWidth: "800px",
       data: { userID: this.user.id} 
     }
+
+    //in the constructor do a call to the http to fetch recipes and store in the recipes array
+    //or maybe theres a way to constantly refresh... (websocket i think?)
+    //or cud just do in constructor, and everytime the user adds a new recipe
   }
 
   OpenDialog(){
@@ -56,3 +60,15 @@ export class HomeComponent {
     })
   }
 }
+
+/*==== PLANNING ====*/
+
+//Recipe Object  -> should be an interface instead
+  //name - string
+  //description - string
+  //ingredients - string[] with ingredient and amt seperated by delimiter  "chicken | 250"
+  //instructions - string
+  //ingredientMacros - macroObj[]   (where each nutrient object has calories, fat, protein, carbs)
+    //or null
+
+//Macros
