@@ -57,7 +57,7 @@ export class HomeComponent {
 
     this.user = {
       id: localStorage.getItem('userId'),
-      name: localStorage.getItem('usersName'),
+      name: localStorage.getItem('usersFName'),
       lastName: localStorage.getItem('usersLName'),
       email: localStorage.getItem('usersEmail')
     }
