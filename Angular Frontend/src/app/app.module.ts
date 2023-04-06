@@ -37,6 +37,7 @@ import { RegisterComponent } from './register/register.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
 import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-recipe-dialog.component';
+import { ProfileDialogComponent } from './home-page/profile-dialog/profile-dialog.component';
 
 
 
@@ -53,7 +54,8 @@ import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-reci
     LoginToolbarComponent,
     RegisterComponent,
     FooterComponent,
-    AddRecipeDialogComponent
+    AddRecipeDialogComponent,
+    ProfileDialogComponent
   ],
   entryComponents: [AddRecipeDialogComponent],
   imports: [
