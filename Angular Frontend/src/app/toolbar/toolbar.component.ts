@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog'  //service
+import { ProfileDialogComponent } from '../home-page/profile-dialog/profile-dialog.component';
 
 
 @Component({
@@ -9,7 +11,22 @@ import { Router } from '@angular/router';
 })
 export class ToolbarComponent {
 
-  constructor(private router: Router) { }
+
+  dialogConfig: {
+    minWidth : string,
+    maxHeight : string,
+    maxWidth : string,
+  }
+
+  constructor(private router: Router, private dialogService: MatDialog) { 
+
+    this.dialogConfig = {
+      minWidth: "500px",
+      maxHeight: "800px",
+      maxWidth: "800px",
+    }
+
+  }
 
   LogOut() {
     localStorage.clear()
@@ -18,9 +35,13 @@ export class ToolbarComponent {
 
   DisplayProfile() {
 
-    let name = localStorage.getItem('usersName')
-    let email = localStorage.getItem('usersEmail')
-    
+    let dialogReference = this.dialogService.open(ProfileDialogComponent, this.dialogConfig)  //takes a component and configuration as parameters
+  
+    dialogReference.afterClosed().subscribe(result => {
+      
+      //result after closed... as a string... can take this string and do whatever we want
+      console.log(result)
+    })
 
   }
 
