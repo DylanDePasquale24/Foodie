@@ -103,9 +103,10 @@ func RouterPOSTRegister(router *gin.Engine) {
 			}
 
 			ginContext.JSON(http.StatusOK, gin.H{
-				"id":        user.ID,
-				"usersName": user.FirstName,
-				"jwt":       tokenString,
+				"id":         user.ID,
+				"usersName":  user.FirstName,
+				"usersLName": user.LastName,
+				"jwt":        tokenString,
 			})
 		} else {
 			ginContext.JSON(http.StatusInternalServerError, "Email already in use.")
@@ -162,9 +163,10 @@ func RouterPOSTLogin(router *gin.Engine) {
 				}
 
 				ginContext.JSON(http.StatusOK, gin.H{
-					"id":        user.ID,
-					"usersName": user.FirstName,
-					"jwt":       tokenString,
+					"id":         user.ID,
+					"usersFName": user.FirstName,
+					"usersLName": user.LastName,
+					"jwt":        tokenString,
 				})
 			} else {
 				ginContext.JSON(http.StatusInternalServerError, "Incorrect password.")
