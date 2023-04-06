@@ -34,7 +34,8 @@ export class HomeComponent {
 
   user: {
     id : string | null, 
-    name : string | null
+    name : string | null,
+    email : string | null
   }
   headlineInputs: {
     search : string | null,
@@ -55,7 +56,8 @@ export class HomeComponent {
 
     this.user = {
       id: localStorage.getItem('userId'),
-      name: localStorage.getItem('usersName')
+      name: localStorage.getItem('usersName'),
+      email: localStorage.getItem('usersEmail')
     }
     this.headlineInputs = {
       search: null,

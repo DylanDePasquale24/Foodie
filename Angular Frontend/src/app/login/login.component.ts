@@ -66,6 +66,10 @@ export class LoginComponent {
       localStorage.setItem('token', response.jwt)
       localStorage.setItem('userId', response.id)
       localStorage.setItem('usersName', response.usersName)
+
+      if (this.email !== undefined && this.email !== null) {
+        localStorage.setItem('usersEmail', this.email);
+      }
   
       this.email = null
       this.password = null
