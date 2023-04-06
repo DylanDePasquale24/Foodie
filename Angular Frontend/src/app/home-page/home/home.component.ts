@@ -35,6 +35,7 @@ export class HomeComponent {
   user: {
     id : string | null, 
     name : string | null,
+    lastName: string | null,
     email : string | null
   }
   headlineInputs: {
@@ -57,6 +58,7 @@ export class HomeComponent {
     this.user = {
       id: localStorage.getItem('userId'),
       name: localStorage.getItem('usersName'),
+      lastName: localStorage.getItem('usersLName'),
       email: localStorage.getItem('usersEmail')
     }
     this.headlineInputs = {

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 interface Response {
   id: string
   usersName: string
+  usersLName: string
   jwt: string
 }
 
@@ -78,6 +79,7 @@ export class RegisterComponent extends LoginComponent {
       localStorage.setItem('token', response.jwt)
       localStorage.setItem('userId', response.id)
       localStorage.setItem('usersName', response.usersName)
+      localStorage.setItem('usersLName', response.usersLName)
 
       this.firstName = null
       this.lastName = null
