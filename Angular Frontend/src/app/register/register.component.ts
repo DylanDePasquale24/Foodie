@@ -81,6 +81,11 @@ export class RegisterComponent extends LoginComponent {
       localStorage.setItem('usersFName', response.usersFName)
       localStorage.setItem('usersLName', response.usersLName)
 
+      if (this.email !== undefined && this.email !== null) {
+        localStorage.setItem('usersEmail', this.email);
+      }
+
+
       this.firstName = null
       this.lastName = null
       this.email = null
