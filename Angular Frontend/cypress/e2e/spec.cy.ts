@@ -1,3 +1,5 @@
+const responseTimeOut = 10000;
+
 // LANDING PAGE TESTS
 describe('Goes to Landing Page', () => {
   beforeEach(() => {
@@ -54,9 +56,8 @@ describe('Test Log in functionality', () => {
 
     cy.get('[data-test="login-button"]').click();
 
-    cy.wait(10000);
+    cy.url({ timeout: responseTimeOut}).should('include', '/home');
 
-    cy.url().should('include', '/home');
   });
 
   it('Should not login with a invalid account', () => {
@@ -70,10 +71,8 @@ describe('Test Log in functionality', () => {
 
     cy.get('[data-test="login-button"]').click();
 
-    cy.wait(10000);
-
-    cy.get('.errorTopper')
-    .should('be.visible').contains(/username or password is incorrect/i)
+    cy.get('.errorTopper', { timeout: responseTimeOut})
+    .should('be.visible').contains(/username or password is incorrect/i);
   });
 
   it('Should login with enter key', () => {
@@ -87,9 +86,7 @@ describe('Test Log in functionality', () => {
 
     cy.get('[data-test="password-input"]').type('{enter}');
 
-    cy.wait(10000);
-
-    cy.url().should('include', '/home');
+    cy.url({ timeout: responseTimeOut}).should('include', '/home');
   });
 })
 
@@ -115,7 +112,7 @@ describe('Test Register', () => {
 
     cy.get('#register-button').click();
 
-    cy.get('.errorTopper')
+    cy.get('.errorTopper', { timeout: responseTimeOut})
     .should('be.visible').contains(/We could not register your account! Please try again./i)
   });
 
@@ -147,8 +144,7 @@ describe('Test Routing and Auth Guard', () => {
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
     cy.get('[data-test="login-button"]').click();
-    cy.wait(10000);
-    cy.url().should('include', '/home');
+    cy.url({ timeout: responseTimeOut}).should('include', '/home');
 
     //Route back to landing page
     cy.visit('/');
@@ -172,7 +168,7 @@ describe('Test Home Page', () => {
     const validPassword = '12345678';
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword + '{enter}');
-    cy.wait(10000);
+    cy.url({ timeout: responseTimeOut}).should('include', '/home');
   });
 
   it('Should log out when log out button is pressed', () => {
