@@ -104,7 +104,7 @@ func RouterPOSTRegister(router *gin.Engine) {
 
 			ginContext.JSON(http.StatusOK, gin.H{
 				"id":         user.ID,
-				"usersName":  user.FirstName,
+				"usersFName": user.FirstName,
 				"usersLName": user.LastName,
 				"jwt":        tokenString,
 			})

@@ -78,7 +78,7 @@ export class RegisterComponent extends LoginComponent {
       //Store local storage
       localStorage.setItem('token', response.jwt)
       localStorage.setItem('userId', response.id)
-      localStorage.setItem('usersName', response.usersFName)
+      localStorage.setItem('usersFName', response.usersFName)
       localStorage.setItem('usersLName', response.usersLName)
 
       this.firstName = null
