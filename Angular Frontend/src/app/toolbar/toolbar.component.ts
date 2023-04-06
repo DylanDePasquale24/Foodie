@@ -18,6 +18,10 @@ export class ToolbarComponent {
 
   DisplayProfile() {
 
+    let name = localStorage.getItem('usersName')
+    let email = localStorage.getItem('usersEmail')
+    
+
   }
 
   CreateRecipe() {
