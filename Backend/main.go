@@ -340,13 +340,13 @@ type RecipeInData struct {
 }
 
 type Recipes struct {
-	UserID       int64    `gorm:"column:userID"`
-	RecipeID     int64    `gorm:"column:recipeID"`
-	RecipeName   string   `gorm:"column:recipeName"`
-	Description  string   `gorm:"column:description"`
-	Ingredients  string   `gorm:"column:ingredients"`
-	Macros       []Macros `gorm:"column:macros"`
-	Instructions string   `gorm:"column:instructions"`
+	UserID      int64  `gorm:"column:userID"`
+	RecipeID    int64  `gorm:"column:recipeID"`
+	RecipeName  string `gorm:"column:recipeName"`
+	Description string `gorm:"column:description"`
+	Ingredients string `gorm:"column:ingredients"`
+	//Macros       []Macros `gorm:"column:macros"`
+	Instructions string `gorm:"column:instructions"`
 }
 
 type Macros struct {
