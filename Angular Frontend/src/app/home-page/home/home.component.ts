@@ -89,11 +89,10 @@ export class HomeComponent {
   GetRecipes(){
 
     this.httpClient
-    .get<Array<Recipe>>('/recipeGet/:' + this.user.id)
+    .get<Array<Recipe>>('/recipeGet/' + this.user.id)
     .subscribe((recipeListResponse : Array<Recipe>) => {
 
       //What to do with response 
-
 
     }, (err) =>{
 

@@ -7,8 +7,22 @@
     text-align: center;
     padding: 2vw;
 }
-.recipeGrid{
-
+.recipeCards {
+    margin: auto;
+    max-width: 1000px;
+}
+.recipeCard {
+    max-width: 1000px;
+    background-color:  #edf2f4;
+}
+.cardMacros {
+    /* 
+        pink: #FF4081
+        blue: #3F51B5 
+    */
+    position: relative;
+    bottom: 50px;       /* up 50px */
+    text-align: center; 
 }
 
 .grid-container2 {
