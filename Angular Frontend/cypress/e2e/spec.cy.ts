@@ -112,7 +112,7 @@ describe('Test Register', () => {
 
     cy.get('#register-button').click();
 
-    cy.get('.errorTopper')
+    cy.get('.errorTopper', { timeout: responseTimeOut})
     .should('be.visible').contains(/We could not register your account! Please try again./i)
   });
 
