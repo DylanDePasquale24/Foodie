@@ -65,32 +65,29 @@
     <mat-card class="recipeCard">
 
         <!-- Make all these seperate divs and then position inside the card  -->
-        <mat-card-title style="border: groove; max-width: 450px; min-width: 100px;">
-            Chicken Parm
-            (Other filllerr that takes up a lot of space)
-        </mat-card-title>
 
-        <mat-card-subtitle>
-            Calories: 1500
-            <br>
-            Date: 5/17/2020
-        </mat-card-subtitle>
+        <div class="cardTitle">
+            <mat-card-title style="font-size: 25px;">
+                Spaghetti and Meatballs
+            </mat-card-title>
+    
+            <mat-card-subtitle style="font-size: 16px; ">
+                Calories: 1500
+                <br>
+                Date: 5/17/2020
+            </mat-card-subtitle>
+        </div>
+    
 
         <div class="cardMacros">
-            <mat-card-subtitle style="color: #3F51B5; line-height: .75;">
+            <mat-card-subtitle style="color: black; line-height: .75;">
                 <p>Protein: 250g</p>
                 <p>Fat: 15g</p>
                 <p>Carbs: 100g</p>
             </mat-card-subtitle>
         </div>
-        
-        <!-- have button on horizontal line too -->
-        <!-- <mat-card-actions align="end" style="position: stat; bottom: 50px;"> -->
-            <!-- <button mat-button color="accent">View</button> -->
-            <!-- click to bring popup with the graph -->
-        <!-- </mat-card-actions> -->
 
-        <button mat-stroked-button color="accent">View Recipe</button>
+        <button mat-stroked-button color="accent">More</button>
 
     </mat-card>
 
