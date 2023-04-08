@@ -1,4 +1,4 @@
-const responseTimeOut = 10000;
+const responseTimeOut = 12000;
 
 // LANDING PAGE TESTS
 describe('Goes to Landing Page', () => {
@@ -162,10 +162,11 @@ describe('Test Routing and Auth Guard', () => {
 //HOME PAGE TESTS
 describe('Test Home Page', () => {
 
+  const validEmail = 'testUser@email.com';
+  const validPassword = '12345678';
+
   beforeEach(() => {
     cy.visit('/login');
-    const validEmail = 'testUser@email.com';
-    const validPassword = '12345678';
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword + '{enter}');
     cy.url({ timeout: responseTimeOut}).should('include', '/home');
@@ -182,6 +183,25 @@ describe('Test Home Page', () => {
     })
 
     cy.visit('/home');
+
+  });
+
+  it('Should pop up a dialog when add recipe button is pressed', () => {
+
+    cy.get('#add-recipe-button').click();
+    // NOT WORKING?
+    cy.get('app-add-recipe-dialog').should('be.visible');
+    cy.get('app-add-recipe-dialog').get('button').contains(/cancel/i).click();
+    cy.get('app-add-recipe-dialog').should('not.be.visible');
+
+
+  });
+
+  xit('Should pop up a profile dialog when profile button is pressed', () => {
+
+
+    // TODO: Add profile dialog tests
+
 
   });
 

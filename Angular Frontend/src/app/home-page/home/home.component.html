@@ -46,7 +46,7 @@
     
 
     <!-- Add Recipe -->
-    <button mat-fab color="primary" (click)="OpenDialog()" matTooltip="New Recipe" style="padding: 0.5vw;"> 
+    <button mat-fab color="primary" (click)="OpenDialog()" matTooltip="New Recipe" style="margin: 0.5vw" id="add-recipe-button"> 
         <mat-icon>add</mat-icon>
     </button>
     
@@ -74,6 +74,7 @@
             <mat-card-subtitle style="font-size: 16px; ">
                 Calories: 1500
                 <br>
+            <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
                 Date: 5/17/2020
             </mat-card-subtitle>
         </div>
