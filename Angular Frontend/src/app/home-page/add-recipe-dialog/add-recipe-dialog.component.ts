@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 
@@ -26,7 +26,7 @@ export class AddRecipeDialogComponent {
   addedFirstIngredient : boolean
   savingSpinner : boolean
 
-  constructor(private httpClient: HttpClient, @Inject(MAT_DIALOG_DATA) private passedInData: any, private dialogRef: MatDialogRef<AddRecipeDialogComponent>, private snackBar: MatSnackBar){
+  constructor(private httpClient: HttpClient, private dialogRef: MatDialogRef<AddRecipeDialogComponent>, private snackBar: MatSnackBar){
     this.recipe = {
       name: null,
       description: null,
@@ -72,7 +72,7 @@ export class AddRecipeDialogComponent {
     this.httpClient
     .post('http://localhost:8080/recipeCreate', {
       
-      UserID: this.passedInData.userID,
+      UserID: localStorage.getItem('userId'),
       RecipeName: this.recipe.name,
       Description: this.recipe.description,
       Ingredients: this.recipe.ingredients,

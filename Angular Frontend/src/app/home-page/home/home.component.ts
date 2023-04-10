@@ -50,8 +50,7 @@ export class HomeComponent {
   dialogConfig: {
     minWidth : string,
     maxHeight : string,
-    maxWidth : string,
-    data : {userID: string | null}
+    maxWidth : string
   }
 
   
@@ -77,8 +76,7 @@ export class HomeComponent {
     this.dialogConfig = {
       minWidth: "800px",
       maxHeight: "800px",
-      maxWidth: "800px",
-      data: { userID: this.user.id} 
+      maxWidth: "800px"
     }
 
     this.recipes = []  //for now... may need to populate it with the GetRecipes() function somehow
@@ -90,14 +88,7 @@ export class HomeComponent {
   }
 
   OpenDialog(){
-
-    let dialogReference = this.dialogService.open(AddRecipeDialogComponent, this.dialogConfig)  //takes a component and configuration as parameters
-  
-    dialogReference.afterClosed().subscribe(result => {
-      
-      //result after closed... as a string... can take this string and do whatever we want
-      console.log(result)
-    })
+    this.dialogService.open(AddRecipeDialogComponent, this.dialogConfig)  //takes a component and configuration as parameters
   }
   GetRecipes(){
 

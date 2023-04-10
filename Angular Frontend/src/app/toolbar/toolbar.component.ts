@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog'  //service
 import { ProfileDialogComponent } from '../home-page/profile-dialog/profile-dialog.component';
-
+import { AddRecipeDialogComponent } from '../home-page/add-recipe-dialog/add-recipe-dialog.component';
 
 @Component({
   selector: 'app-toolbar',
@@ -12,18 +12,29 @@ import { ProfileDialogComponent } from '../home-page/profile-dialog/profile-dial
 export class ToolbarComponent {
 
 
-  dialogConfig: {
+  profileDialogConfig: {
     minWidth : string,
     maxHeight : string,
-    maxWidth : string,
+    maxWidth : string
+  }
+
+  addRecipeDialogConfig: {
+    minWidth : string,
+    maxHeight : string,
+    maxWidth : string
   }
 
   constructor(private router: Router, private dialogService: MatDialog) { 
 
-    this.dialogConfig = {
+    this.profileDialogConfig = {
       minWidth: "500px",
       maxHeight: "800px",
-      maxWidth: "800px",
+      maxWidth: "800px"
+    }
+    this.addRecipeDialogConfig = {
+      minWidth: "800px",
+      maxHeight: "800px",
+      maxWidth: "800px"
     }
 
   }
@@ -35,7 +46,7 @@ export class ToolbarComponent {
 
   DisplayProfile() {
 
-    let dialogReference = this.dialogService.open(ProfileDialogComponent, this.dialogConfig)  //takes a component and configuration as parameters
+    let dialogReference = this.dialogService.open(ProfileDialogComponent, this.profileDialogConfig)  //takes a component and configuration as parameters
   
     dialogReference.afterClosed().subscribe(result => {
       
@@ -46,6 +57,7 @@ export class ToolbarComponent {
   }
 
   CreateRecipe() {
+    this.dialogService.open(AddRecipeDialogComponent, this.addRecipeDialogConfig)
   }
 
 }
