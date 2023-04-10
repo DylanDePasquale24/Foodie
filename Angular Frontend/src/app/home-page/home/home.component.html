@@ -1,7 +1,7 @@
 <app-toolbar></app-toolbar>
 
 <div class="welcomeBanner">
-    <h1 class="headline-2"> Welcome back, {{user.name}}! </h1>
+    <h1 class="headline-2"> Welcome back {{user.name}}! </h1>
     <p class="body-1">All your recipe needs - All in one place</p>
     <p class="body-1">Get started by writing a new recipe or pickup right where you left off!</p>
 </div>
@@ -54,37 +54,31 @@
 
 
 
+<div class="recipeCards" *ngIf="isDisplayingRecipes">
 
-<!-- TODO: make paginator in case too many recipes -->
-<div class="recipeCards">
-    <!-- 
-        do *ngFor to iterate through each of the recipes
-        do a mat-card for each one
-    -->
-
-    <mat-card class="recipeCard">
+    <mat-card *ngFor="let currentRecipe of recipes" class="recipeCard">
 
         <!-- Make all these seperate divs and then position inside the card  -->
 
         <div class="cardTitle">
             <mat-card-title style="font-size: 25px;">
-                Spaghetti and Meatballs
+                {{currentRecipe.RecipeName}}
             </mat-card-title>
     
             <mat-card-subtitle style="font-size: 16px; ">
-                Calories: 1500
+                Calories: (STILL NEED)
                 <br>
             <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
-                Date: 5/17/2020
+                Date: (STILL NEED)
             </mat-card-subtitle>
         </div>
     
 
         <div class="cardMacros">
             <mat-card-subtitle style="color: black; line-height: .75;">
-                <p>Protein: 250g</p>
-                <p>Fat: 15g</p>
-                <p>Carbs: 100g</p>
+                <p>Protein: (STILL NEED)g</p>
+                <p>Fat: (STILL NEED)g</p>
+                <p>Carbs: (STILL NEED)g</p>
             </mat-card-subtitle>
         </div>
 
@@ -92,6 +86,18 @@
 
     </mat-card>
 
+</div>
+
+<div *ngIf="!isDisplayingRecipes" style="text-align: center;">
+    <h2>
+        {{this.noRecipeMessg}}
+    </h2>
+    <span *ngIf="!hasNoRecipes">
+        <p>This should only take a few moments</p>
+        <p>
+            <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+        </p>
+    </span>
 </div>
 
 
