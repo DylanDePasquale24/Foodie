@@ -59,11 +59,11 @@
     <mat-card *ngFor="let currentRecipe of recipes" class="recipeCard">
 
         <div class="cardTitle">
-            <mat-card-title class="recipeTitle">
+            <mat-card-title class="recipeTitleText">
                 {{currentRecipe.RecipeName}}
             </mat-card-title>
     
-            <mat-card-subtitle class="recipeOverview">
+            <mat-card-subtitle class="recipeOverviewText">
                 Calories: (STILL NEED)
                 <br>
             <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
@@ -72,7 +72,7 @@
         </div>
 
         <div class="cardMacros">
-            <mat-card-subtitle style="color: black; line-height: .75;">
+            <mat-card-subtitle class="macrosText">
                 <p>Protein: (STILL NEED)g</p>
                 <p>Fat: (STILL NEED)g</p>
                 <p>Carbs: (STILL NEED)g</p>

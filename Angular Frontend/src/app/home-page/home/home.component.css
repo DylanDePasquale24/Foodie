@@ -9,6 +9,8 @@
     padding: 2vw;
 }
 
+/* ----------------- RECIPE CARD STYLES ----------------- */
+
 .recipeCards {
     margin: auto;
     max-width: 1000px;
@@ -32,7 +34,7 @@
     overflow-wrap: break-word;
 }
 
-.recipeTitle {
+.recipeTitleText {
     font-size: 2vw;
     font-weight: 500;
     line-height: 1;
@@ -42,7 +44,7 @@
     margin-bottom: 5px;
 }
 
-.recipeOverview {
+.recipeOverviewText {
     font-size: 1vw;
     font-weight: 400;
     line-height: 1.5;
@@ -63,6 +65,20 @@
     right: 15px;
     top: 12px;
 }
+
+.macrosText {
+    color: black;
+    font-size: 0.9vw;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.00938em;
+    margin: 0;
+    padding: 0.25vw;
+    margin-bottom: 5px;
+}
+
+/* ----------------- ----------------- ----------------- */
+
 
 
 .grid-container2 {
