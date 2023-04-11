@@ -54,7 +54,7 @@
 
 
 
-<div class="recipeCards" *ngIf="isDisplayingRecipes">
+<div class="recipeCardWrapper" *ngIf="isDisplayingRecipes">
 
     <mat-card *ngFor="let currentRecipe of recipes" class="recipeCard">
 
@@ -79,7 +79,7 @@
             </mat-card-subtitle>
         </div>
 
-        <button mat-stroked-button color="accent">More</button>
+        <button mat-stroked-button class="recipeCardMoreButton">More</button>
 
     </mat-card>
 
