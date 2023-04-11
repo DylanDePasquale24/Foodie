@@ -53,37 +53,38 @@
 </div>
 
 
+<ng-container *ngFor="let currentRecipe of recipes">
+    <div class="recipeCardWrapper" *ngIf="isDisplayingRecipes">
 
-<div class="recipeCardWrapper" *ngIf="isDisplayingRecipes">
+        <mat-card class="recipeCard">
 
-    <mat-card *ngFor="let currentRecipe of recipes" class="recipeCard">
+            <div class="cardTitle">
+                <mat-card-title class="recipeTitleText">
+                    {{currentRecipe.RecipeName}}
+                </mat-card-title>
+        
+                <mat-card-subtitle class="recipeOverviewText">
+                    Calories: (STILL NEED)
+                    <br>
+                <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
+                    Date: (STILL NEED)
+                </mat-card-subtitle>
+            </div>
 
-        <div class="cardTitle">
-            <mat-card-title class="recipeTitleText">
-                {{currentRecipe.RecipeName}}
-            </mat-card-title>
-    
-            <mat-card-subtitle class="recipeOverviewText">
-                Calories: (STILL NEED)
-                <br>
-            <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
-                Date: (STILL NEED)
-            </mat-card-subtitle>
-        </div>
+            <div class="cardMacros">
+                <mat-card-subtitle class="macrosText">
+                    <p>Protein: (STILL NEED)g</p>
+                    <p>Fat: (STILL NEED)g</p>
+                    <p>Carbs: (STILL NEED)g</p>
+                </mat-card-subtitle>
+            </div>
 
-        <div class="cardMacros">
-            <mat-card-subtitle class="macrosText">
-                <p>Protein: (STILL NEED)g</p>
-                <p>Fat: (STILL NEED)g</p>
-                <p>Carbs: (STILL NEED)g</p>
-            </mat-card-subtitle>
-        </div>
+            <button mat-stroked-button class="recipeCardMoreButton">More</button>
 
-        <button mat-stroked-button class="recipeCardMoreButton">More</button>
+        </mat-card>
 
-    </mat-card>
-
-</div>
+    </div>
+</ng-container>
 
 <div *ngIf="!isDisplayingRecipes" style="text-align: center;">
     <h2>

@@ -12,12 +12,12 @@
 /* ----------------- RECIPE CARD STYLES ----------------- */
 
 .recipeCardWrapper {
-    margin: auto;
-    max-width: 1000px;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-}
+    max-width: 1000px;
+    margin: auto;
+  }
 
 .recipeCard {
     width: 60vw;
