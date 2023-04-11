@@ -18,6 +18,13 @@ import (
 // Data Source Name (DSN) user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local
 var dsn = "foodieuser:foodiepass@tcp(db4free.net:3306)/websitedatabase?charset=utf8mb4&parseTime=True&loc=Local"
 
+// Make a database connection
+var db, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+// var sql, _ = db.DB()
+// if err != nil || sql.Ping() != nil {
+// 	ginContext.JSON(http.StatusInternalServerError, "Could not connect to database.")
+// }
+
 func main() {
 
 	// Starts the router
@@ -72,13 +79,6 @@ func RouterPOSTRegister(router *gin.Engine) {
 			ginContext.JSON(http.StatusInternalServerError, "Could not securely hash password.")
 		}
 
-		// Make a database connection
-		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-		sql, _ := db.DB()
-		if err != nil || sql.Ping() != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Could not connect to database.")
-		}
-
 		// Make a new user when a user registers
 		var user = Users{FirstName: registerData.FirstName, LastName: registerData.LastName, Email: registerData.Email, Password: hashPass}
 
@@ -127,13 +127,6 @@ func RouterPOSTLogin(router *gin.Engine) {
 		err := ginContext.BindJSON(&loginData)
 		if err != nil {
 			ginContext.JSON(http.StatusInternalServerError, "Could not parse user data.")
-		}
-
-		// Make a database connection
-		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-		sql, _ := db.DB()
-		if err != nil || sql.Ping() != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
 		}
 
 		//check for email in database and check if password matches if email exists.
@@ -198,13 +191,6 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 			ginContext.JSON(http.StatusInternalServerError, "Could not parse recipe data.")
 		}
 
-		// Make a database connection
-		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-		sql, _ := db.DB()
-		if err != nil || sql.Ping() != nil {
-			ginContext.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
-		}
-
 		ins := fmt.Sprint(recipeCreate.Ingredients)
 		IngredientStr := strings.Split(ins, ",")
 		Ingreds := strings.Join(IngredientStr, " ")
@@ -238,13 +224,6 @@ func RouterGETRecipe(router *gin.Engine) {
 
 		userIDint, _ := strconv.Atoi(userID)
 
-		// Make a database connection
-		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-		sql, _ := db.DB()
-		if err != nil || sql.Ping() != nil {
-			c.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
-		}
-
 		var recipeInfo []Recipes
 
 		/* Queries the database to find all the recipes that were made by the specified userID
@@ -269,13 +248,6 @@ func RouterGETMacros(router *gin.Engine) {
 		recipeID := c.Param("recipeID")
 
 		recIDint, _ := strconv.Atoi(recipeID)
-
-		// Make a database connection
-		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-		sql, _ := db.DB()
-		if err != nil || sql.Ping() != nil {
-			c.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
-		}
 
 		var recipeInfo []Recipes
 
