@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card'
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 
@@ -38,6 +39,7 @@ import { FooterComponent } from './footer/footer.component';
 import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
 import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-recipe-dialog.component';
 import { ProfileDialogComponent } from './home-page/profile-dialog/profile-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -77,7 +79,9 @@ import { ProfileDialogComponent } from './home-page/profile-dialog/profile-dialo
     MatTooltipModule,
     MatStepperModule,
     MatSnackBarModule,
-    MatCardModule
+    MatCardModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule
   ],
   exports: [],
   providers: [

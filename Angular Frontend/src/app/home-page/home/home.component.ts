@@ -1,8 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog'  //service
 import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component';
 import { HttpClient } from '@angular/common/http';
 import { uniq } from 'cypress/types/lodash';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 
 interface Macros {
@@ -35,6 +38,10 @@ interface dbRecipe {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
+
+  searchControl = new FormControl();
+  filteredOptions: Observable<string[]> = new Observable();
+  autocompleteOptions: string[] = [];
 
   user: {
     id : string | null, 
@@ -87,6 +94,12 @@ export class HomeComponent {
     this.GetRecipes()
   }
 
+  // Needed for autocomplete
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.autocompleteOptions.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
   OpenDialog(){
     this.dialogService.open(AddRecipeDialogComponent, this.dialogConfig)  //takes a component and configuration as parameters
   }
@@ -99,6 +112,14 @@ export class HomeComponent {
       console.log(recipeListResponse)
       this.isDisplayingRecipes = true
       this.recipes = recipeListResponse
+
+      // Update the options array here, for autocomplete
+      this.autocompleteOptions = this.recipes.map(recipe => recipe.RecipeName);
+      this.filteredOptions = this.searchControl.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        );
 
     }, (err) =>{
 
