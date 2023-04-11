@@ -15,10 +15,13 @@
 }
 
 .recipeCard {
-    
     width: 1000px;
-    background-color:  #edf2f4;
+    background-color: rgba(230, 230, 250, 0.5);
     margin-bottom: 20px;
+    border: 5px;
+    border-style: outset;
+    /* hardcoded the indigo color of the material theme, it's not the best but a temp fix */
+    border-color: #3f51b5;
 }
 
 .cardTitle {
@@ -27,6 +30,26 @@
     left: 10px;
     width: 350px;
     overflow-wrap: break-word;
+}
+
+.recipeTitle {
+    font-size: 2vw;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.0075em;
+    margin: 0;
+    padding: 0.25vw;
+    margin-bottom: 5px;
+}
+
+.recipeOverview {
+    font-size: 1vw;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.00938em;
+    margin: 0;
+    padding: 0.25vw;
+    margin-bottom: 5px;
 }
 
 .cardMacros {

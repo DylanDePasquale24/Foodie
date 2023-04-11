@@ -59,11 +59,11 @@
     <mat-card *ngFor="let currentRecipe of recipes" class="recipeCard">
 
         <div class="cardTitle">
-            <mat-card-title style="font-size: 25px;">
+            <mat-card-title class="recipeTitle">
                 {{currentRecipe.RecipeName}}
             </mat-card-title>
     
-            <mat-card-subtitle style="font-size: 16px; ">
+            <mat-card-subtitle class="recipeOverview">
                 Calories: (STILL NEED)
                 <br>
             <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
