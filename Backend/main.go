@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
+    "gorm.io/datatypes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
@@ -196,7 +196,7 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 		Ingreds := strings.Join(IngredientStr, " ")
 
 		// Make a new recipe when created
-		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
+		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Date: datatypes.Date(time.Now()), Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
 
 		copy := db.FirstOrCreate(&recipe, Recipes{RecipeName: recipeCreate.RecipeName})
 		if copy.Error != nil {
@@ -321,6 +321,7 @@ type Recipes struct {
 	Ingredients string `gorm:"column:ingredients"`
 	//Macros       []Macros `gorm:"column:macros"`
 	Instructions string `gorm:"column:instructions"`
+	Date 	   datatypes.Date `gorm:"column:dateCreated"`
 }
 
 type Macros struct {
