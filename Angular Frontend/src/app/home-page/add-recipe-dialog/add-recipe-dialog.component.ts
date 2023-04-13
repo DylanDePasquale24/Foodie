@@ -25,6 +25,7 @@ export class AddRecipeDialogComponent {
 
   addedFirstIngredient : boolean
   savingSpinner : boolean
+  test = new Date()
 
   constructor(private httpClient: HttpClient, private dialogRef: MatDialogRef<AddRecipeDialogComponent>, private snackBar: MatSnackBar){
     this.recipe = {
@@ -68,6 +69,9 @@ export class AddRecipeDialogComponent {
   SendRecipeToBackend(): void{
 
     this.savingSpinner = true
+
+    let date = new Date()
+    console.log(date)
 
     this.httpClient
     .post('http://localhost:8080/recipeCreate', {

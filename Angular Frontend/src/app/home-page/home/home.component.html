@@ -21,7 +21,7 @@
                placeholder="ex. Chicken Parmesan"
                [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+          <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 3" [value]="option">
             {{option}}
           </mat-option>
         </mat-autocomplete>
@@ -54,14 +54,14 @@
     
 
     <!-- Add Recipe -->
-    <button mat-fab color="primary" (click)="OpenDialog()" matTooltip="New Recipe" style="margin: 0.5vw" id="add-recipe-button"> 
+    <button mat-fab color="primary" (click)="AddRecipeDialog()" matTooltip="New Recipe" style="margin: 0.5vw" id="add-recipe-button"> 
         <mat-icon>add</mat-icon>
     </button>
     
 </div>
 
 
-<ng-container *ngFor="let currentRecipe of recipes">
+<ng-container *ngFor="let currentRecipe of recipes; let i = index;">
     <div class="recipeCardWrapper" *ngIf="isDisplayingRecipes">
 
         <mat-card class="recipeCard">
@@ -87,7 +87,7 @@
                 </mat-card-subtitle>
             </div>
 
-            <button mat-stroked-button class="recipeCardMoreButton">More</button>
+            <button mat-stroked-button class="recipeCardMoreButton" (click)="ViewRecipeDialog(i)">More</button>
 
         </mat-card>
 

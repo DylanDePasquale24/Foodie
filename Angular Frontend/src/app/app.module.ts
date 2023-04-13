@@ -40,6 +40,7 @@ import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
 import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-recipe-dialog.component';
 import { ProfileDialogComponent } from './home-page/profile-dialog/profile-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ViewRecipeDialogComponent } from './home-page/view-recipe-dialog/view-recipe-dialog.component';
 
 
 
@@ -57,7 +58,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     RegisterComponent,
     FooterComponent,
     AddRecipeDialogComponent,
-    ProfileDialogComponent
+    ProfileDialogComponent,
+    ViewRecipeDialogComponent
   ],
   entryComponents: [AddRecipeDialogComponent],
   imports: [
