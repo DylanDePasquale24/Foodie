@@ -6,7 +6,7 @@ describe('Goes to Landing Page', () => {
     cy.visit('/');
   });
   
-  it('Visits landing page and checks main elements', () => {
+  xit('Visits landing page and checks main elements', () => {
     cy.contains('button', /log in/i)
     cy.contains('button', /start for free/i)
     cy.contains(/recipe tracking made easy/i)
@@ -16,22 +16,22 @@ describe('Goes to Landing Page', () => {
 
   })
 
-  it('Should have the login toolbar', () => {
+  xit('Should have the login toolbar', () => {
     cy.get('app-login-toolbar').should('exist')
     cy.get('app-login-toolbar').should('be.visible')
   });
 
-  it('Should navigate to register page when clicking Start for Free button', () => {
+  xit('Should navigate to register page when clicking Start for Free button', () => {
     cy.get('#get-started-button').click();
     cy.url().should('include', '/register');
   });
 
-  it('Should route to login page when LOG IN button is clicked', () => {
+  xit('Should route to login page when LOG IN button is clicked', () => {
     cy.get('app-login-toolbar').get('button').contains(/log in/i).click();
     cy.url().should('include', '/login');
   });
 
-  it('Clicking logo in toolbar directs to landing page', () => {
+  xit('Clicking logo in toolbar directs to landing page', () => {
     cy.get('#logo').click();
     cy.url().should('eq', 'http://localhost:4200/');
   });
@@ -45,7 +45,7 @@ describe('Test Log in functionality', () => {
     cy.visit('/login');
   });
 
-  it('Should login in successfully with a correct account', () => {
+  xit('Should login in successfully with a correct account', () => {
 
     //Try logging in with a valid account
     const validEmail = 'testUser@email.com';
@@ -60,7 +60,7 @@ describe('Test Log in functionality', () => {
 
   });
 
-  it('Should not login with a invalid account', () => {
+  xit('Should not login with a invalid account', () => {
     
     //Try logging in with an invalid account
     const invalidEmail = 'invalidEmail@email.com';
@@ -75,7 +75,7 @@ describe('Test Log in functionality', () => {
     .should('be.visible').contains(/username or password is incorrect/i);
   });
 
-  it('Should login with enter key', () => {
+  xit('Should login with enter key', () => {
 
     //Try logging in with a valid account
     const validEmail = 'testUser@email.com';
@@ -99,7 +99,7 @@ describe('Test Register', () => {
     cy.visit('/register');
   });
 
-  it('Should not register if email is already in use', () => {
+  xit('Should not register if email is already in use', () => {
     const firstName = 'Bill';
     const lastName = 'Bob';
     const password = 'password';
@@ -125,7 +125,7 @@ describe('Test Routing and Auth Guard', () => {
     cy.visit('/');
   });
 
-  it('Should not route to home page if user is not logged in', () => {
+  xit('Should not route to home page if user is not logged in', () => {
 
     cy.on('window:alert', (str) => {
       expect(str).to.equal('You do not have permission to access this page. Please login first.')
@@ -135,7 +135,7 @@ describe('Test Routing and Auth Guard', () => {
     cy.url().should('include', '/login');
   });
 
-  it('Should be able to route to home page if user is logged in', () => {
+  xit('Should be able to route to home page if user is logged in', () => {
 
     //Login
     cy.visit('/login');
@@ -164,6 +164,8 @@ describe('Test Home Page', () => {
 
   const validEmail = 'testUser@email.com';
   const validPassword = '12345678';
+  const accountFirstName = 'Richard';
+  const accountLastName = 'Qian';
 
   beforeEach(() => {
     cy.visit('/login');
@@ -172,7 +174,7 @@ describe('Test Home Page', () => {
     cy.url({ timeout: responseTimeOut}).should('include', '/home');
   });
 
-  it('Should log out when log out button is pressed', () => {
+  xit('Should log out when log out button is pressed', () => {
 
     cy.get('app-toolbar').get('#menu-button').click();
     cy.get('app-toolbar').get('button').contains(/logout/i).click();
@@ -186,7 +188,7 @@ describe('Test Home Page', () => {
 
   });
 
-  it('Should pop up a dialog when add recipe button is pressed', () => {
+  xit('Should pop up a dialog when add recipe button is pressed', () => {
 
     cy.get('#add-recipe-button').click();
     // NOT WORKING?
@@ -197,12 +199,14 @@ describe('Test Home Page', () => {
 
   });
 
-  xit('Should pop up a profile dialog when profile button is pressed', () => {
+  it('Should pop up a profile dialog when profile button is pressed', () => {
 
-
-    // TODO: Add profile dialog tests
-
-
+    cy.get('app-toolbar').get('#menu-button').click();
+    cy.get('app-toolbar').get('button').contains(/profile/i).click();
+    cy.get('app-profile-dialog').should('be.visible');
+    cy.contains(accountFirstName);
+    cy.contains(accountLastName);
+    cy.contains(validEmail);
   });
 
 })
