@@ -209,4 +209,33 @@ describe('Test Home Page', () => {
     cy.contains(validEmail);
   });
 
+  it('Should not create recipe if ingredient is not given', () => {
+
+    cy.get('#add-recipe-button').click();
+    cy.get('app-add-recipe-dialog').get('#recipe-name-input-field').type('Test Recipe');
+    cy.get('app-add-recipe-dialog').get('#next-button-1').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#next-button-2').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#next-button-3').contains(/next/i).click();
+    cy.contains(/add at least 1 ingredient/i)
+
+  });
+
+  it('Should not create recipe if name is not given', () => {
+
+    cy.get('#add-recipe-button').click();
+    cy.get('app-add-recipe-dialog').get('#next-button-1').contains(/next/i).click();
+    cy.wait(500);
+    //ADD INGREIDENT
+    cy.get('app-add-recipe-dialog').get('#ingredient-input-field').type('Chicken');
+    cy.get('app-add-recipe-dialog').get('#amount-input-field').type('100');
+    cy.get('app-add-recipe-dialog').get('#add-ingredient-button').click();
+    cy.get('app-add-recipe-dialog').get('#next-button-2').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#next-button-3').contains(/next/i).click();
+    cy.contains(/give your recipe a name/i)
+
+  });
+
 })
