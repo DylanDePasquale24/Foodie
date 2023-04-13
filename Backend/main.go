@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-    "gorm.io/datatypes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v4"
@@ -196,8 +195,7 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 		IngredientStr := strings.Split(ins, ",")
 		Ingreds := strings.Join(IngredientStr, " ")
 
-		// Make a new recipe when created
-		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Date: datatypes.Date(time.Now()), Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
+		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Date: time.Now().Format("2006-01-02"), Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
 
 		copy := db.FirstOrCreate(&recipe, Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName})
 		if copy.Error != nil {
@@ -231,6 +229,8 @@ func RouterGETRecipe(router *gin.Engine) {
 		   and stores them in recipeInfo
 		*/
 		result := db.Table("recipes").Where(&Recipes{UserID: int64(userIDint)}).Find(&recipeInfo)
+
+			
 
 		if result.Error != nil {
 			c.JSON(http.StatusInternalServerError, result.Error)
@@ -337,7 +337,7 @@ type Recipes struct {
 	Description  string `gorm:"column:description"`
 	Ingredients  string `gorm:"column:ingredients"`
 	Instructions string `gorm:"column:instructions"`
-	Date 	   datatypes.Date `gorm:"column:dateCreated"`
+	Date 	   	 string `gorm:"column:dateCreated"`
 }
 
 type Macros struct {
