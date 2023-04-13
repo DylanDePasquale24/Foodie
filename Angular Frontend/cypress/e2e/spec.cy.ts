@@ -192,7 +192,7 @@ describe('Test Home Page', () => {
     // NOT WORKING?
     cy.get('app-add-recipe-dialog').should('be.visible');
     cy.get('app-add-recipe-dialog').get('button').contains(/cancel/i).click();
-    cy.get('app-add-recipe-dialog').should('not.be.visible');
+    cy.get('app-add-recipe-dialog').should('not.exist');
 
 
   });
