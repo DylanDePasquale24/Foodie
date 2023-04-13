@@ -20,6 +20,7 @@ var dsn = "foodieuser:foodiepass@tcp(db4free.net:3306)/websitedatabase?charset=u
 
 // Make a database connection
 var db, _ = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+
 // var sql, _ = db.DB()
 // if err != nil || sql.Ping() != nil {
 // 	ginContext.JSON(http.StatusInternalServerError, "Could not connect to database.")
@@ -198,7 +199,7 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 		// Make a new recipe when created
 		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
 
-		copy := db.FirstOrCreate(&recipe, Recipes{RecipeName: recipeCreate.RecipeName})
+		copy := db.FirstOrCreate(&recipe, Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName})
 		if copy.Error != nil {
 
 			ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
@@ -242,30 +243,44 @@ func RouterGETRecipe(router *gin.Engine) {
 	})
 }
 
-func RouterGETMacros(router *gin.Engine) {
-	router.GET(":recipeID/macros", func(c *gin.Context) {
+// func RouterGETMacros(router *gin.Engine) {
+// 	router.GET(":recipeID/macros", func(c *gin.Context) {
 
-		recipeID := c.Param("recipeID")
+// 		recipeID := c.Param("recipeID")
 
-		recIDint, _ := strconv.Atoi(recipeID)
+// 		recIDint, _ := strconv.Atoi(recipeID)
 
-		var recipeInfo []Recipes
+// 		// Make a database connection
+// 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
+// 		sql, _ := db.DB()
+// 		if err != nil || sql.Ping() != nil {
+// 			c.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
+// 		}
 
-		/* Queries the database to find all the recipes that were made by the specified userID
-		   and stores them in recipeInfo
-		*/
-		result := db.Table("recipes").Where(&Recipes{UserID: int64(recIDint)}).Find(&recipeInfo)
+// 		var recipeInfo []Recipes
 
-		if result.Error != nil {
-			c.JSON(http.StatusInternalServerError, result.Error)
-		} else if result.RowsAffected == 0 {
-			c.JSON(http.StatusInternalServerError, "No recipes linked to that userID were found")
-		} else {
-			c.JSON(http.StatusOK, recipeInfo)
-		}
+// 		/* Queries the database to find all the recipes that were made by the specified userID
+// 		   and stores them in recipeInfo
+// 		*/
+// 		recipes := db.Table("recipes").Where(&Recipes{RecipeID: int64(recIDint)}).Find(&recipeInfo)
 
-	})
-}
+// 		var macroInfo []Macros
+
+// 		for i := 0; i < recipes.Ingredients.size(); i++ {
+
+// 			macroInfo.add(db.Table("nutrition").Where(&Macros{Name: recipes.Ingredients[i]}).Find(&recipeInfo))
+// 		}
+
+// 		if result.Error != nil {
+// 			c.JSON(http.StatusInternalServerError, result.Error)
+// 		} else if result.RowsAffected == 0 {
+// 			c.JSON(http.StatusInternalServerError, "No recipes linked to that userID were found")
+// 		} else {
+// 			c.JSON(http.StatusOK, recipeInfo)
+// 		}
+
+// 	})
+// }
 
 type Claims struct {
 	Email string `json:"email"`
@@ -298,11 +313,13 @@ type Users struct {
 }
 
 type RecipeData struct {
-	UserID       int64  `json:",string"` // Need to put this to convert json string to int
-	RecipeName   string `json: recipeName`
-	Description  string `json: description`
-	Ingredients  string `json: ingredients`
-	Instructions string `json: instructions`
+	UserID      int64  `gorm:"column:userID"`
+	RecipeID    int64  `gorm:"column:recipeID"`
+	RecipeName  string `gorm:"column:recipeName"`
+	Description string `gorm:"column:description"`
+	Ingredients string `gorm:"column:ingredients"`
+	//Macros       []Macros `gorm:"column:macros"`
+	Instructions string `gorm:"column:instructions"`
 }
 
 type RecipeInData struct {
@@ -314,12 +331,11 @@ type RecipeInData struct {
 }
 
 type Recipes struct {
-	UserID      int64  `gorm:"column:userID"`
-	RecipeID    int64  `gorm:"column:recipeID"`
-	RecipeName  string `gorm:"column:recipeName"`
-	Description string `gorm:"column:description"`
-	Ingredients string `gorm:"column:ingredients"`
-	//Macros       []Macros `gorm:"column:macros"`
+	UserID       int64  `gorm:"column:userID"`
+	RecipeID     int64  `gorm:"column:recipeID"`
+	RecipeName   string `gorm:"column:recipeName"`
+	Description  string `gorm:"column:description"`
+	Ingredients  string `gorm:"column:ingredients"`
 	Instructions string `gorm:"column:instructions"`
 }
 
