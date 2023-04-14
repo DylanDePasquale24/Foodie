@@ -195,7 +195,7 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 		IngredientStr := strings.Split(ins, ",")
 		Ingreds := strings.Join(IngredientStr, " ")
 
-		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Date: time.Now().Format("2006-01-02"), Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
+		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Date: time.Now().Format("01-02-2006"), Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
 
 		copy := db.FirstOrCreate(&recipe, Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName})
 		if copy.Error != nil {
