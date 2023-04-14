@@ -238,4 +238,22 @@ describe('Test Home Page', () => {
 
   });
 
+  //NEW RECIPE TESTS FOR A VALID RECIPE
+  it('Should create a valid recipe if a name and ingredient is inputted', () => {
+
+    cy.get('#add-recipe-button').click();
+    cy.get('app-add-recipe-dialog').get('#recipe-name-input-field').type('Test Recipe');
+    cy.get('app-add-recipe-dialog').get('#next-button-1').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#ingredient-input-field').type('Chicken');
+    cy.get('app-add-recipe-dialog').get('#amount-input-field').type('100');
+    cy.get('app-add-recipe-dialog').get('#add-ingredient-button').click();
+    cy.get('app-add-recipe-dialog').get('#next-button-2').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#next-button-3').contains(/next/i).click();
+    cy.contains
+  });
+
+  //ADD TESTS WHEN MORE BUTTON IS PRESSED
+
 })
