@@ -245,6 +245,37 @@ func RouterGETRecipe(router *gin.Engine) {
 	})
 }
 
+
+func RouterPOSTRecipeDelete(router *gin.Engine) {
+	// If there are no errors, this should make a recipe entry in the database
+
+	//TODO: Auth isn't working properly (add it)
+	//when unauthorized jwt, it says unauthorized, but still continues to next function and posts.
+	router.POST("/recipeDelete:recipeID", func(ginContext *gin.Context) {
+		
+		recID := c.Param("recipeID")
+
+		recIDint, _ := strconv.Atoi(recID)
+
+		// Bind JSON data to object
+		// This gets the JSON data from the request body
+		err := ginContext.BindJSON(&recipe)
+		if err != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Could not parse recipe data.")
+		}
+
+		delres := db.Delete(&recipe, recIDint)
+
+		if delres.Error != nil {
+			ginContext.JSON(http.StatusInternalServerError, "Could not delete recipe.")
+		} else if delres.RowsAffected == 1 {
+			ginContext.JSON(http.StatusOK, "Recipe deleted.")
+		} else {
+			ginContext.JSON(http.StatusInternalServerError, "Recipe not found.")
+		}
+	})
+}
+
 // func RouterGETMacros(router *gin.Engine) {
 // 	router.GET(":recipeID/macros", func(c *gin.Context) {
 
@@ -349,6 +380,38 @@ type Macros struct {
 	Protein  int64 `gorm:"column:protein"`
 	Fat      int64 `gorm:"column:fat"`
 }
+type MacroDB struct {
+	Name     string `gorm:"column:name"`
+	Calories int64  `gorm:"column:calories"`
+	TotalFat	int64  `gorm:"column:totalFat"`
+	SaturatedFat int64  `gorm:"column:saturatedFat"`
+	Cholesterol int64  `gorm:"column:cholesterol"`
+	Sodium int64  `gorm:"column:sodium"`
+	VitaminA int64  `gorm:"column:vitaminA"`
+	VitaminB12 int64  `gorm:"column:vitaminB12"`
+	VitaminB6 int64  `gorm:"column:vitaminB6"`
+	VitaminC int64  `gorm:"column:vitaminC"`
+	VitaminD int64  `gorm:"column:vitaminD"`
+	VitaminE int64  `gorm:"column:vitaminE"`
+	VitaminK int64  `gorm:"column:vitaminK"`
+	Calcium int64  `gorm:"column:calcium"`
+	Copper int64  `gorm:"column:copper"`
+	Iron int64  `gorm:"column:iron"`
+	Magnesium int64  `gorm:"column:magnesium"`
+	Potassium int64  `gorm:"column:potassium"`
+	Zinc int64  `gorm:"column:zinc"`
+	Protein  int64  `gorm:"column:protein"`
+	GlutamicAcid int64  `gorm:"column:glutamicAcid"`
+	Carbohydrates    int64  `gorm:"column:Carbohydrates"`
+	Fiber int64  `gorm:"column:fiber"`
+	Sugars int64  `gorm:"column:sugars"`
+	Frucotse int64  `gorm:"column:frucotse"`
+	Glucose int64  `gorm:"column:glucose"`
+	Lactose int64  `gorm:"column:lactose"`
+	Alcohol int64  `gorm:"column:alcohol"`
+	Caffeine int64  `gorm:"column:caffeine"`
+}
+
 
 type Tabler interface {
 	TableName() string
