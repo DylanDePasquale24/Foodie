@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -191,9 +190,7 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 			ginContext.JSON(http.StatusInternalServerError, "Could not parse recipe data.")
 		}
 
-		ins := fmt.Sprint(recipeCreate.Ingredients)
-		IngredientStr := strings.Split(ins, ",")
-		Ingreds := strings.Join(IngredientStr, " ")
+		Ingreds := strings.Join(recipeCreate.Ingredients, "|||")
 
 		var recipe = Recipes{UserID: recipeCreate.UserID, RecipeName: recipeCreate.RecipeName, Date: time.Now().Format("01-02-2006"), Description: recipeCreate.Description, Ingredients: Ingreds, Instructions: recipeCreate.Instructions}
 
@@ -224,10 +221,12 @@ func RouterGETRecipe(router *gin.Engine) {
 		userIDint, _ := strconv.Atoi(userID)
 
 		var recipeInfo []Recipes
+		var recipeOut []RecipeData
 
 		/* Queries the database to find all the recipes that were made by the specified userID
 		   and stores them in recipeInfo
 		*/
+
 		result := db.Table("recipes").Where(&Recipes{UserID: int64(userIDint)}).Find(&recipeInfo)
 
 			
@@ -237,9 +236,12 @@ func RouterGETRecipe(router *gin.Engine) {
 		} else if result.RowsAffected == 0 {
 			c.JSON(http.StatusInternalServerError, "No recipes linked to that userID were found")
 		} else {
-			c.JSON(http.StatusOK, recipeInfo)
+			for i := 0; i < len(recipeInfo); i++ {
+				IngredientArr := strings.Split(recipeInfo[i].Ingredients, "|||")
+				recipeOut = append(recipeOut, RecipeData{recipeInfo[i].UserID, recipeInfo[i].RecipeID, recipeInfo[i].RecipeName, recipeInfo[i].Description, IngredientArr, recipeInfo[i].Instructions})
+			}
+			c.JSON(http.StatusOK, recipeOut)
 		}
-
 	})
 }
 
@@ -313,11 +315,11 @@ type Users struct {
 }
 
 type RecipeData struct {
-	UserID      int64  `gorm:"column:userID"`
-	RecipeID    int64  `gorm:"column:recipeID"`
-	RecipeName  string `gorm:"column:recipeName"`
-	Description string `gorm:"column:description"`
-	Ingredients string `gorm:"column:ingredients"`
+	UserID      int64    `gorm:"column:userID"`
+	RecipeID    int64    `gorm:"column:recipeID"`
+	RecipeName  string   `gorm:"column:recipeName"`
+	Description string   `gorm:"column:description"`
+	Ingredients []string `gorm:"column:ingredients"`
 	//Macros       []Macros `gorm:"column:macros"`
 	Instructions string `gorm:"column:instructions"`
 }
