@@ -22,10 +22,10 @@ interface dbRecipe {
   RecipeID : number
   RecipeName : string
   UserID : number
+  Date : string
 
   //ingredientMacros : Array<Macros>   //index corresponds to index of the ingredients array
   //totalMacros : Macros   //calories, protein, carbs, fat for entire recipe - adding up all ingredient macros
-  //dateCreated : string
 
 }
 /*COULD HAVE A RESPONSE RECIPE AND A FRONTEND RECIPE TOO (SEPERATE) */
