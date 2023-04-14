@@ -238,7 +238,7 @@ func RouterGETRecipe(router *gin.Engine) {
 		} else {
 			for i := 0; i < len(recipeInfo); i++ {
 				IngredientArr := strings.Split(recipeInfo[i].Ingredients, "|||")
-				recipeOut = append(recipeOut, RecipeData{recipeInfo[i].UserID, recipeInfo[i].RecipeID, recipeInfo[i].RecipeName, recipeInfo[i].Description, IngredientArr, recipeInfo[i].Instructions})
+				recipeOut = append(recipeOut, RecipeData{recipeInfo[i].UserID, recipeInfo[i].RecipeID, recipeInfo[i].RecipeName, recipeInfo[i].Description, IngredientArr, recipeInfo[i].Instructions, recipeInfo[i].Date})
 			}
 			c.JSON(http.StatusOK, recipeOut)
 		}
@@ -322,6 +322,7 @@ type RecipeData struct {
 	Ingredients []string `gorm:"column:ingredients"`
 	//Macros       []Macros `gorm:"column:macros"`
 	Instructions string `gorm:"column:instructions"`
+	Date 		string `gorm:"column:dateCreated"`
 }
 
 type RecipeInData struct {
