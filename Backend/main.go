@@ -314,12 +314,14 @@ func RouterGETMacros(router *gin.Engine) {
 				fmt.Println(test.Error)
 				c.JSON(http.StatusInternalServerError, test.Error)
 			} else if test.RowsAffected == 0 {
-				macroInfo = append(macroInfo, Macros{"N/A","N/A","N/A","N/A"} )
+				macroInfo = append(macroInfo, Macros{"N/A","N/A","N/A","N/A","N/A"} )
 				// c.JSON(http.StatusInternalServerError, "No ingredient in the ingredient table was found")
 			} else {
 				macroInfo = append(macroInfo, macro)
 			}
 		}
+
+
 
 		fmt.Println(len(macroInfo))
 
@@ -388,6 +390,7 @@ type Recipes struct {
 }
 
 type Macros struct {
+	Name     string `gorm:"column:Name"` 
 	Calories string `gorm:"column:calories"`
 	Carbs    string `gorm:"column:carbohydrate"`
 	Protein  string `gorm:"column:protein"`
