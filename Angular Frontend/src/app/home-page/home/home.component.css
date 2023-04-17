@@ -17,16 +17,17 @@
     align-items: center;
     max-width: 1000px;
     margin: auto;
-  }
+}
 
 .recipeCard {
     width: 60vw;
-    background-color: rgba(230, 230, 250, 0.5);
+    background-color: #edf2f4;
     margin-bottom: 20px;
-    border: 5px;
+
+    border: 1px;
     border-style: outset;
-    /* hardcoded the indigo color of the material theme, it's not the best but a temp fix */
-    border-color: #3f51b5;
+    border-radius: 15px;
+    border-color: #3f51b5;  /* hardcoded the indigo color of the material theme, it's not the best but a temp fix */
 }
 
 .cardTitle {
@@ -85,7 +86,7 @@
     max-height: fit-content;
     text-align: center;
     margin: auto;
-    background-color: #3f51b583;
+    background-color: #edf2f4;
     margin-bottom: 7px;
 }
 

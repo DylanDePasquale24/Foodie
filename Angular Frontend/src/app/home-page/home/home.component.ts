@@ -125,7 +125,7 @@ export class HomeComponent {
   AddRecipeDialog(){
     this.dialogService.open(AddRecipeDialogComponent, this.addRecipeDialogConfig)  //takes a component and configuration as parameters
   }
-  
+
   GetRecipes(){
 
     this.httpClient
@@ -231,6 +231,10 @@ export class HomeComponent {
         break;
     }
 
+  }
+
+  DeleteRecipe(recipeId: number){
+    
   }
 }
 
