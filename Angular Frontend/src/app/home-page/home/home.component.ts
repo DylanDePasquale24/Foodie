@@ -42,7 +42,6 @@ interface viewRecipeDialogconfig {
   maxHeight : string,
   maxWidth : string, 
   minHeight: string,
-
   data : {
     name: string | null,
     description: string | null,
@@ -234,7 +233,7 @@ export class HomeComponent {
   }
 
   DeleteRecipe(recipeId: number){
-    
+
   }
 }
 

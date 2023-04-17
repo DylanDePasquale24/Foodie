@@ -33,4 +33,8 @@ export class ViewRecipeDialogComponent {
       5,5,5
     ]
   }
+
+  DeleteRecipe(){
+    
+  }
 }
