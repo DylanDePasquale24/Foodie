@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 	"strings"
@@ -270,44 +271,54 @@ func RouterPOSTRecipeDelete(router *gin.Engine) {
 	})
 }
 
-// func RouterGETMacros(router *gin.Engine) {
-// 	router.GET(":recipeID/macros", func(c *gin.Context) {
+func RouterGETMacros(router *gin.Engine) {
+	router.GET("/macros/:recipeID", func(c *gin.Context) {
 
-// 		recipeID := c.Param("recipeID")
+		recipeID := c.Param("recipeID")
 
-// 		recIDint, _ := strconv.Atoi(recipeID)
+		recIDint, _ := strconv.Atoi(recipeID)
 
-// 		// Make a database connection
-// 		db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
-// 		sql, _ := db.DB()
-// 		if err != nil || sql.Ping() != nil {
-// 			c.JSON(http.StatusInternalServerError, "Couldn't connect to database.")
-// 		}
+		var recipeInfo Recipes
 
-// 		var recipeInfo []Recipes
+		/* Queries the database to get the specified recipe
+		*/
+		recipes := db.Table("recipes").Where(&Recipes{RecipeID: int64(recIDint)}).Find(&recipeInfo)
+		
+		fmt.Println(recipeInfo.Ingredients)
 
-// 		/* Queries the database to find all the recipes that were made by the specified userID
-// 		   and stores them in recipeInfo
-// 		*/
-// 		recipes := db.Table("recipes").Where(&Recipes{RecipeID: int64(recIDint)}).Find(&recipeInfo)
+		if recipes.Error != nil {
+			c.JSON(http.StatusInternalServerError, recipes.Error)
+		} else if recipes.RowsAffected == 0 {
+			c.JSON(http.StatusInternalServerError, "No recipes linked to that recipeID were found")
+		} 
+		
+		ingredientString := strings.Split(recipeInfo.Ingredients, "|||")
+		
+		var ingredientArr []IngredientPair
 
-// 		var macroInfo []Macros
+		// Puts the ingredients into an array of ingredient pairs
+		for i := 0; i < len(ingredientString); i++ {
+			temp := strings.Split(ingredientString[i], "|")
+			ingredientArr = append(ingredientArr, IngredientPair{temp[0], temp[1]})
+		}
 
-// 		for i := 0; i < recipes.Ingredients.size(); i++ {
+		var macroInfo Macros
+		
+		for i := 0; i < len(ingredientArr); i++ {
+			test := db.Table("nutrition").Where(ingredientArr[i].Ingredient).Find(&macroInfo)
 
-// 			macroInfo.add(db.Table("nutrition").Where(&Macros{Name: recipes.Ingredients[i]}).Find(&recipeInfo))
-// 		}
+			if test.Error != nil {
+				fmt.Println(test.Error)
+				c.JSON(http.StatusInternalServerError, test.Error)
+			} else if test.RowsAffected == 0 {
+				c.JSON(http.StatusInternalServerError, "No ingredient in the ingredient table was found")
+			} 	
+		}
 
-// 		if result.Error != nil {
-// 			c.JSON(http.StatusInternalServerError, result.Error)
-// 		} else if result.RowsAffected == 0 {
-// 			c.JSON(http.StatusInternalServerError, "No recipes linked to that userID were found")
-// 		} else {
-// 			c.JSON(http.StatusOK, recipeInfo)
-// 		}
+		c.JSON(http.StatusOK, macroInfo)
 
-// 	})
-// }
+	})
+}
 
 type Claims struct {
 	Email string `json:"email"`
@@ -374,6 +385,12 @@ type Macros struct {
 	Protein  int64 `gorm:"column:protein"`
 	Fat      int64 `gorm:"column:fat"`
 }
+
+type IngredientPair struct {
+	Ingredient string
+	Amount    string
+}
+
 type MacroDB struct {
 	Name          string `gorm:"column:name"`
 	Calories      int64  `gorm:"column:calories"`

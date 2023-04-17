@@ -123,3 +123,24 @@ func TestRouterGetRecipe(t *testing.T) {
 	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
 }
 
+func TestRouterGetMacros(t *testing.T) {
+	
+	RouterGETMacros(router)
+
+	responseRecorder := httptest.NewRecorder()
+	json := []byte(`{}`)
+	request, _ := http.NewRequest("GET", "/macros/73", bytes.NewBuffer(json))
+
+	router.ServeHTTP(responseRecorder, request)
+
+	var jsonTest bytes.Buffer
+	error := encodingJSON.Indent(&jsonTest, responseRecorder.Body.Bytes(), "", "\t")
+
+	if error != nil {
+		fmt.Println(error)
+	}
+
+	fmt.Println(string(jsonTest.Bytes()))
+
+	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
+}
