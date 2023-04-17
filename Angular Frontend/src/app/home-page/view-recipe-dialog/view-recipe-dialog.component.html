@@ -63,11 +63,18 @@
     <br>
     <br>
     <br>
-    <button mat-raised-button class="deleteBtn" color="warn" tabindex="-1" mat-dialog-close mat-dialog-close="true">Delete Recipe</button>
+    <div class="deleteBtn">
+        <button mat-raised-button color="warn" tabindex="-1" (click)="DeleteRecipe()">Delete Recipe</button>
+        <p *ngIf="deleteSpinner">
+            <br>
+            <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+        </p>
+    </div>
+    
 </mat-dialog-content>
 
 
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>Close</button>
+    <button mat-button mat-dialog-close="false">Close</button>
 </mat-dialog-actions>
 

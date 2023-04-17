@@ -38,7 +38,9 @@
     /* border: groove;
     border-color: purple; */
 }
-
+.deleteBtn{
+    text-align: center;
+}
 p {
     color: black;
 }

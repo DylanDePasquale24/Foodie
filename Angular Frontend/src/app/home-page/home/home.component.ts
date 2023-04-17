@@ -44,6 +44,7 @@ interface viewRecipeDialogconfig {
   minHeight: string,
   data : {
     name: string | null,
+    id: number | null,
     description: string | null,
     instructions: string | null,
     date: string, 
@@ -168,8 +169,8 @@ export class HomeComponent {
       let name: string = ingredString.substring(0,ingredString.indexOf("|"))
       let amt: number = Number(ingredString.split('|')[1])
 
-      console.log(name)
-      console.log(amt)
+      // console.log(name)
+      // console.log(amt)
 
 
       //Populate ingredient
@@ -191,6 +192,7 @@ export class HomeComponent {
       minHeight: "600px",
       data: {
         name: recipe.RecipeName,
+        id: recipe.RecipeID,
         description: recipe.Description, 
         instructions: recipe.Instructions,
         date: recipe.Date,         
@@ -200,8 +202,18 @@ export class HomeComponent {
       }
     }
 
-    this.dialogService.open(ViewRecipeDialogComponent, config)
-    //when delete this recipe, can make use of mat dialog close
+    let dialogRef = this.dialogService.open(ViewRecipeDialogComponent, config)
+    
+    dialogRef.afterClosed().subscribe(deletedRecipe =>{
+      if(deletedRecipe == "true"){
+        
+        //delete from array
+        this.recipes.splice(recipeIndex, 1)  
+      }
+
+      //if false, do nothing
+    })
+    
   }
   
   SortRecipes(criteria: string){
