@@ -1,5 +1,7 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ApexChart, ApexNonAxisChartSeries, ApexTitleSubtitle, ChartComponent } from "ng-apexcharts"
+
 
 @Component({
   selector: 'app-view-recipe-dialog',
@@ -8,10 +10,27 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ViewRecipeDialogComponent {
 
+  chartValues: ApexNonAxisChartSeries
+  chartType: ApexChart = {
+    type: 'pie',
+    toolbar: {
+      show: true
+    }
+  }
+  chartLabels = ["Protein", "Fat", "Carbs"]
+  chartTitle: ApexTitleSubtitle = {
+    text: 'Calorie Distribution',
+  }
+ 
+
   constructor(@Inject(MAT_DIALOG_DATA) public recipe : any){
-    // console.log(data.recipe.Ingredients)
 
+    this.chartValues = [
+      // recipe.totalMacros.protein * 4,
+      // recipe.totalMacros.Fat * 9,
+      // recipe.totalMacros.Carbs * 4
 
-    //the ingredients array is passed as a string, not an array
+      5,5,5
+    ]
   }
 }

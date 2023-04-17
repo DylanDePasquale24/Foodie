@@ -4,6 +4,7 @@ import { AppRoutingModule } from '../shared/app-routing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 // ANGULAR MATERIAL MODULES
@@ -23,6 +24,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card'
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTableModule } from '@angular/material/table'
 
 
 
@@ -41,6 +43,7 @@ import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-reci
 import { ProfileDialogComponent } from './home-page/profile-dialog/profile-dialog.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ViewRecipeDialogComponent } from './home-page/view-recipe-dialog/view-recipe-dialog.component';
+
 
 
 
@@ -83,7 +86,9 @@ import { ViewRecipeDialogComponent } from './home-page/view-recipe-dialog/view-r
     MatSnackBarModule,
     MatCardModule,
     MatAutocompleteModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTableModule,
+    NgApexchartsModule
   ],
   exports: [],
   providers: [

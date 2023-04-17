@@ -1,28 +1,67 @@
-<!-- <h1 mat-dialog-title> {{data.recipe.RecipeName}}</h1> -->
+<h1 mat-dialog-title> 
+    <span style="font-size: 25px;">{{recipe.name}}</span>
+    <br>
+    <span style="color:gray; font-weight: normal; font-size: 16px;" >{{recipe.date}}</span>
+</h1>
 
 <mat-dialog-content>
-
-
-    <!-- PUT Calories Protein, etc up top along with chart then instructions and ingredients later -->
-
-
-    <!-- NEED A WAY TO CLONE THE ARRAY BC ITS ONLY CAPTURING AS A STRING -->
-    {{recipe.ingredients[0]}}
     
+    <div class="container">
 
-    <!-- <h3>Description:</h3>
-    <p>{{data.recipe.Description}}</p>
+        <div class="descriptionWrapper">
+            <h2>Description:</h2>
+            <p><b><i>Calories: (NEED)</i></b></p>
+            <p *ngIf="recipe.description != null">
+                {{recipe.description}}
+            </p>
+            <p *ngIf="recipe.description == null">
+                You didn't add any additional information :(
+            </p>
+            
+        </div>
+    
+        <div class="macrosWrapper">
+           <h2>Macros:</h2>
+            <div class="pieChart">
+                <apx-chart [series]="chartValues" [chart]="chartType" [labels]="chartLabels" [title]="chartTitle"></apx-chart>
+            </div>
+
+            <br>
+    
+            <div>
+                <!-- center and change line height? -->
+                <p>Protein: (NEED)</p>
+                <p>Carbs: (NEED)</p>
+                <p>Fat: (NEED)</p>
+            </div>
+        </div>
+    </div>
+
+
+    <br>
     <br>
 
-    {{data.recipe.Ingredients}}
 
-    <h2>Ingredients: </h2>
-    <p *ngFor="let ingredient of data.recipe.Ingredients; let i = index;">
-        {{i + 1}}. {{ingredient}}g
+    <h2>Ingredients:</h2>
+    <table>
+
+    </table>
+
+
+    <br>
+    <br>
+
+    <h2>Instructions:</h2>
+    <p *ngIf="recipe.instructions != null">
+        {{recipe.instructions}}
     </p>
-    <br>
-
-    <h2>Instructions: </h2>
-    <p>{{data.recipe.Instructions}}</p>
-    <br> -->
+    <p *ngIf="recipe.instructions == null">
+        You didn't add any instructions :(
+    </p>
 </mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
+
