@@ -284,7 +284,7 @@ func RouterGETMacros(router *gin.Engine) {
 		*/
 		recipes := db.Table("recipes").Where(&Recipes{RecipeID: int64(recIDint)}).Find(&recipeInfo)
 		
-		fmt.Println(recipeInfo.Ingredients)
+		// fmt.Println(recipeInfo.Ingredients)
 
 		if recipes.Error != nil {
 			c.JSON(http.StatusInternalServerError, recipes.Error)
@@ -296,24 +296,32 @@ func RouterGETMacros(router *gin.Engine) {
 		
 		var ingredientArr []IngredientPair
 
+		// fmt.Println(ingredientString)
+
 		// Puts the ingredients into an array of ingredient pairs
 		for i := 0; i < len(ingredientString); i++ {
 			temp := strings.Split(ingredientString[i], "|")
 			ingredientArr = append(ingredientArr, IngredientPair{temp[0], temp[1]})
 		}
 
-		var macroInfo Macros
+		var macroInfo []Macros
 		
 		for i := 0; i < len(ingredientArr); i++ {
-			test := db.Table("nutrition").Where(ingredientArr[i].Ingredient).Find(&macroInfo)
-
+			var macro Macros
+			test := db.Table("nutrition").Where("Name like ?", "%" + ingredientArr[i].Ingredient + "%").First(&macro)
+			
 			if test.Error != nil {
 				fmt.Println(test.Error)
 				c.JSON(http.StatusInternalServerError, test.Error)
 			} else if test.RowsAffected == 0 {
-				c.JSON(http.StatusInternalServerError, "No ingredient in the ingredient table was found")
-			} 	
+				macroInfo = append(macroInfo, Macros{"N/A","N/A","N/A","N/A"} )
+				// c.JSON(http.StatusInternalServerError, "No ingredient in the ingredient table was found")
+			} else {
+				macroInfo = append(macroInfo, macro)
+			}
 		}
+
+		fmt.Println(len(macroInfo))
 
 		c.JSON(http.StatusOK, macroInfo)
 
@@ -380,10 +388,10 @@ type Recipes struct {
 }
 
 type Macros struct {
-	Calories int64 `gorm:"column:calories"`
-	Carbs    int64 `gorm:"column:carbs"`
-	Protein  int64 `gorm:"column:protein"`
-	Fat      int64 `gorm:"column:fat"`
+	Calories string `gorm:"column:calories"`
+	Carbs    string `gorm:"column:carbohydrate"`
+	Protein  string `gorm:"column:protein"`
+	Fat      string `gorm:"column:total_fat"`
 }
 
 type IngredientPair struct {
