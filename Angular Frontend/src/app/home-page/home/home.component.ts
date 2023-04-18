@@ -8,12 +8,7 @@ import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 
-interface Macros {
-  Calories : string
-  Carbs : string
-  Protein : string
-  Fat : string
-}
+/* FROM BACKEND */
 interface recipeFromBE {
   Description : string
   Ingredients : Array<string>
@@ -22,11 +17,16 @@ interface recipeFromBE {
   RecipeName : string
   UserID : number
   Date : string
-  Macros: Array<Macros>
+  MacroInformation: Array<Macros>
+}
+interface Macros {
+  Calories : string
+  Carbs : string
+  Protein : string
+  Fat : string
 }
 
-//make our own frontend recipe object here
-
+/*FRONTEND USE ONlY */
 interface Ingredient {
   name: string,
   amount: number,
@@ -35,7 +35,7 @@ interface Ingredient {
   carbs: number, 
   fat: number
 }
-interface viewRecipeDialogconfig {
+interface ViewRecipeDialogConfig {
   minWidth : string,
   maxHeight : string,
   maxWidth : string, 
@@ -124,16 +124,13 @@ export class HomeComponent {
 
   GetRecipes(){
 
-    // .get<Array<recipeFromBE>>('http://localhost:8080/recipeGet/' + this.user.id)
-    // .subscribe((recipeListResponse : Array<recipeFromBE>) => {
-
     this.httpClient
-    .get('http://localhost:8080/recipeGet/' + this.user.id)
-    .subscribe((response : any) => {
+    .get<Array<recipeFromBE>>('http://localhost:8080/recipeGet/' + this.user.id)
+    .subscribe((recipeListResponse : Array<recipeFromBE>) => {
 
-      console.log(response)
+      console.log(recipeListResponse)
       this.isDisplayingRecipes = true
-      // this.recipes = recipeListResponse
+      this.recipes = recipeListResponse
 
       // Update the options array here, for autocomplete
       this.autocompleteOptions = this.recipes.map(recipe => recipe.RecipeName);
@@ -148,14 +145,7 @@ export class HomeComponent {
       //What to do when theres an error
       this.hasNoRecipes = true
       this.noRecipeMessg = "You don't have any recipes yet. Add a recipe to get started!"
-      
-      //if time -> add custom mssg 
     })
-
-
-    this.httpClient
-    .get('http://localhost:8080/recipeGet/' + this.user.id)
-
   }
 
   ViewRecipeDialog(recipeIndex: number){
@@ -188,34 +178,34 @@ export class HomeComponent {
       ingredientsArr.push(ingredient)
     }
 
-    // let config : viewRecipeDialogconfig = {
-    //   minWidth: "850px",
-    //   maxHeight: "800px",
-    //   maxWidth: "800px",
-    //   minHeight: "600px",
-    //   data: {
-    //     name: recipe.RecipeName,
-    //     id: recipe.RecipeID,
-    //     description: recipe.Description, 
-    //     instructions: recipe.Instructions,
-    //     date: recipe.Date,         
+    let config :  ViewRecipeDialogConfig = {
+      minWidth: "850px",
+      maxHeight: "800px",
+      maxWidth: "800px",
+      minHeight: "600px",
+      data: {
+        name: recipe.RecipeName,
+        id: recipe.RecipeID,
+        description: recipe.Description, 
+        instructions: recipe.Instructions,
+        date: recipe.Date,         
        
-    //     ingredients: [...ingredientsArr], 
-    //     totalMacros: {calories: 0, protein: 0, carbs: 0, fat: 0},         //RECIPE.MACROS
-    //   }
-    // }
+        ingredients: [...ingredientsArr], 
+        totalMacros: {Calories: "0", Protein: "0", Carbs: "0", Fat: "0"},         //RECIPE.MACROS
+      }
+    }
 
-    //let dialogRef = this.dialogService.open(ViewRecipeDialogComponent, config)
+    let dialogRef = this.dialogService.open(ViewRecipeDialogComponent, config)
     
-    // dialogRef.afterClosed().subscribe(deletedRecipe =>{
-    //   if(deletedRecipe == "true"){
+    dialogRef.afterClosed().subscribe(deletedRecipe =>{
+      if(deletedRecipe == "true"){
         
-    //     //delete from array
-    //     this.recipes.splice(recipeIndex, 1)  
-    //   }
+        //delete from array
+        this.recipes.splice(recipeIndex, 1)  
+      }
 
-    //   //if false, do nothing
-    // })
+      //if false, do nothing
+    })
     
   }
   
