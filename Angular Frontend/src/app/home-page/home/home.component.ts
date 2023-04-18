@@ -26,14 +26,14 @@ interface Macros {
   Fat : string
 }
 
-/*FRONTEND USE ONlY */
+/*FRONTEND USE ONLY */
 interface Ingredient {
   name: string,
   amount: number,
-  calories: number,
-  protein: number,
-  carbs: number, 
-  fat: number
+  calories: string,
+  protein: string,
+  carbs: string, 
+  fat: string
 }
 interface ViewRecipeDialogConfig {
   minWidth : string,
@@ -41,6 +41,8 @@ interface ViewRecipeDialogConfig {
   maxWidth : string, 
   minHeight: string,
   data : {
+
+    //Recipe Info
     name: string | null,
     id: number | null,
     description: string | null,
@@ -150,30 +152,24 @@ export class HomeComponent {
 
   ViewRecipeDialog(recipeIndex: number){
 
-    let recipe = this.recipes[recipeIndex]
+    let recipe: recipeFromBE = this.recipes[recipeIndex]
 
     let ingredientsArr : Array<Ingredient> = []
     for(let i = 0; i < recipe.Ingredients.length; i++){
-      //go through the ingredients and also check the macros
-
 
       //string "chicken | 150"  -> need to seperate out delimeter for name & amt
       let ingredString : string = recipe.Ingredients[i]
       let name: string = ingredString.substring(0,ingredString.indexOf("|"))
       let amt: number = Number(ingredString.split('|')[1])
 
-      // console.log(name)
-      // console.log(amt)
-
-
       //Populate ingredient
       let ingredient = {} as Ingredient
       ingredient.name = name
       ingredient.amount = amt
-      // ingredient.calories = recipe.ingredientMacros[i].calories
-      // ingredient.carbs = recipe.ingredientMacros[i]. carbs
-      // ingredient.fat = recipe.ingredientMacrso[i].fat
-      // ingredient.protein = recipe.ingredientMacros[i].protein
+      ingredient.calories = recipe.MacroInformation[i].Calories
+      ingredient.carbs = recipe.MacroInformation[i]. Carbs
+      ingredient.fat = recipe.MacroInformation[i].Fat
+      ingredient.protein = recipe.MacroInformation[i].Protein
 
       ingredientsArr.push(ingredient)
     }
