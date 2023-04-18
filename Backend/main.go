@@ -329,47 +329,37 @@ func RouterGETMacros(router *gin.Engine) {
 
 				// c.JSON(http.StatusInternalServerError, "No ingredient in the ingredient table was found")
 			} else {
-				macroInfo = append(macroInfo, macro)
+				Amt, err := strconv.ParseFloat(ingredientArr[i].Amount, 64)
+				if err != nil {
+					fmt.Println("Ingredient Amount Conversion Error: ", err)
+				}
+
+				caloriesFloat, err := strconv.ParseFloat(macro.Calories, 64)
+				if err != nil {
+					fmt.Println("Calorie Conversion Error: ", err)
+				}
+				totalCal += Amt * caloriesFloat
+
+				carbsFloat, err := strconv.ParseFloat(macro.Carbs, 64)
+				if err != nil {
+					fmt.Println("Carbohydrate Conversion Error: ", err)
+				}
+				//fmt.Println("CARB: " + macroInfo[i].Carbs)
+				totalCarb += Amt * carbsFloat
+
+				proteinFloat, err := strconv.ParseFloat(macro.Protein, 64)
+				if err != nil {
+					fmt.Println("Protein Conversion Error: ", err)
+				}
+				totalProtein += Amt * proteinFloat
+
+				fatFloat, err := strconv.ParseFloat(macro.Fat, 64)
+				if err != nil {
+					fmt.Println("Fat Conversion Error: ", err)
+				}
+				totalFat += Amt * fatFloat
+				macroInfo = append(macroInfo, Macros{fmt.Sprintf("%f", (Amt * caloriesFloat)), fmt.Sprintf("%f", (Amt * carbsFloat)), fmt.Sprintf("%f", (Amt * proteinFloat)), fmt.Sprintf("%f", (Amt * fatFloat))})
 			}
-		}
-
-		for i := 0; i < len(macroInfo); i++ {
-			Amt, err := strconv.ParseFloat(ingredientArr[i].Amount, 64)
-			if err != nil {
-				fmt.Println("Ingredient Amount Conversion Error: ", err)
-			}
-
-			caloriesFloat, err := strconv.ParseFloat(macroInfo[i].Calories, 64)
-			if err != nil {
-				fmt.Println("Calorie Conversion Error: ", err)
-			}
-			totalCal += Amt * caloriesFloat
-
-			carbsFloat, err := strconv.ParseFloat(macroInfo[i].Carbs, 64)
-			if err != nil {
-				fmt.Println("Carbohydrate Conversion Error: ", err)
-			}
-			//fmt.Println("CARB: " + macroInfo[i].Carbs)
-			totalCarb += Amt * carbsFloat
-
-			proteinFloat, err := strconv.ParseFloat(macroInfo[i].Protein, 64)
-			if err != nil {
-				fmt.Println("Protein Conversion Error: ", err)
-			}
-			totalProtein += Amt * proteinFloat
-
-			fatFloat, err := strconv.ParseFloat(macroInfo[i].Fat, 64)
-			if err != nil {
-				fmt.Println("Fat Conversion Error: ", err)
-			}
-			totalFat += Amt * fatFloat
-
-			// fmt.Println(Amt)
-			// fmt.Println(totalCal)
-			// fmt.Println(carbsFloat)
-			// fmt.Println(totalProtein)
-			// fmt.Println(totalFat)
-
 		}
 		macroInfo = append(macroInfo, Macros{fmt.Sprintf("%f", totalCal), fmt.Sprintf("%f", totalCarb), fmt.Sprintf("%f", totalProtein), fmt.Sprintf("%f", totalFat)})
 
