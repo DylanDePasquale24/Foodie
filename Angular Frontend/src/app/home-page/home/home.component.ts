@@ -3,19 +3,18 @@ import { MatDialog } from '@angular/material/dialog'  //service
 import { AddRecipeDialogComponent } from '../add-recipe-dialog/add-recipe-dialog.component';
 import { ViewRecipeDialogComponent } from '../view-recipe-dialog/view-recipe-dialog.component';
 import { HttpClient } from '@angular/common/http';
-import { uniq } from 'cypress/types/lodash';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 
 interface Macros {
-  calories : number
-  carbs : number
-  protein : number
-  fat : number
+  Calories : string
+  Carbs : string
+  Protein : string
+  Fat : string
 }
-interface dbRecipe {
+interface recipeFromBE {
   Description : string
   Ingredients : Array<string>
   Instructions : string
@@ -23,11 +22,10 @@ interface dbRecipe {
   RecipeName : string
   UserID : number
   Date : string
-
-  //ingredientMacros : Array<Macros>   //index corresponds to index of the ingredients array
-  //totalMacros : Macros   //calories, protein, carbs, fat for entire recipe - adding up all ingredient macros
-
+  Macros: Array<Macros>
 }
+
+//make our own frontend recipe object here
 
 interface Ingredient {
   name: string,
@@ -82,13 +80,11 @@ export class HomeComponent {
     maxWidth : string
   }
 
-  
-  recipes : Array<dbRecipe>
+  recipes : Array<recipeFromBE>
   isDisplayingRecipes : boolean
   hasNoRecipes : boolean
   noRecipeMessg : string
 
-  
   constructor(private httpClient: HttpClient,private dialogService: MatDialog){
 
     this.user = {
@@ -128,13 +124,16 @@ export class HomeComponent {
 
   GetRecipes(){
 
-    this.httpClient
-    .get<Array<dbRecipe>>('http://localhost:8080/recipeGet/' + this.user.id)
-    .subscribe((recipeListResponse : Array<dbRecipe>) => {
+    // .get<Array<recipeFromBE>>('http://localhost:8080/recipeGet/' + this.user.id)
+    // .subscribe((recipeListResponse : Array<recipeFromBE>) => {
 
-      console.log(recipeListResponse)
+    this.httpClient
+    .get('http://localhost:8080/recipeGet/' + this.user.id)
+    .subscribe((response : any) => {
+
+      console.log(response)
       this.isDisplayingRecipes = true
-      this.recipes = recipeListResponse
+      // this.recipes = recipeListResponse
 
       // Update the options array here, for autocomplete
       this.autocompleteOptions = this.recipes.map(recipe => recipe.RecipeName);
@@ -152,6 +151,10 @@ export class HomeComponent {
       
       //if time -> add custom mssg 
     })
+
+
+    this.httpClient
+    .get('http://localhost:8080/recipeGet/' + this.user.id)
 
   }
 
@@ -185,34 +188,34 @@ export class HomeComponent {
       ingredientsArr.push(ingredient)
     }
 
-    let config : viewRecipeDialogconfig = {
-      minWidth: "850px",
-      maxHeight: "800px",
-      maxWidth: "800px",
-      minHeight: "600px",
-      data: {
-        name: recipe.RecipeName,
-        id: recipe.RecipeID,
-        description: recipe.Description, 
-        instructions: recipe.Instructions,
-        date: recipe.Date,         
+    // let config : viewRecipeDialogconfig = {
+    //   minWidth: "850px",
+    //   maxHeight: "800px",
+    //   maxWidth: "800px",
+    //   minHeight: "600px",
+    //   data: {
+    //     name: recipe.RecipeName,
+    //     id: recipe.RecipeID,
+    //     description: recipe.Description, 
+    //     instructions: recipe.Instructions,
+    //     date: recipe.Date,         
        
-        ingredients: [...ingredientsArr], 
-        totalMacros: {calories: 0, protein: 0, carbs: 0, fat: 0},         //RECIPE.MACROS
-      }
-    }
+    //     ingredients: [...ingredientsArr], 
+    //     totalMacros: {calories: 0, protein: 0, carbs: 0, fat: 0},         //RECIPE.MACROS
+    //   }
+    // }
 
-    let dialogRef = this.dialogService.open(ViewRecipeDialogComponent, config)
+    //let dialogRef = this.dialogService.open(ViewRecipeDialogComponent, config)
     
-    dialogRef.afterClosed().subscribe(deletedRecipe =>{
-      if(deletedRecipe == "true"){
+    // dialogRef.afterClosed().subscribe(deletedRecipe =>{
+    //   if(deletedRecipe == "true"){
         
-        //delete from array
-        this.recipes.splice(recipeIndex, 1)  
-      }
+    //     //delete from array
+    //     this.recipes.splice(recipeIndex, 1)  
+    //   }
 
-      //if false, do nothing
-    })
+    //   //if false, do nothing
+    // })
     
   }
   
