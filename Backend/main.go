@@ -281,19 +281,19 @@ func RouterGETMacros(router *gin.Engine) {
 		var recipeInfo Recipes
 
 		/* Queries the database to get the specified recipe
-		*/
+		 */
 		recipes := db.Table("recipes").Where(&Recipes{RecipeID: int64(recIDint)}).Find(&recipeInfo)
-		
+
 		// fmt.Println(recipeInfo.Ingredients)
 
 		if recipes.Error != nil {
 			c.JSON(http.StatusInternalServerError, recipes.Error)
 		} else if recipes.RowsAffected == 0 {
 			c.JSON(http.StatusInternalServerError, "No recipes linked to that recipeID were found")
-		} 
-		
+		}
+
 		ingredientString := strings.Split(recipeInfo.Ingredients, "|||")
-		
+
 		var ingredientArr []IngredientPair
 
 		// fmt.Println(ingredientString)
@@ -305,25 +305,69 @@ func RouterGETMacros(router *gin.Engine) {
 		}
 
 		var macroInfo []Macros
-		
+
 		for i := 0; i < len(ingredientArr); i++ {
 			var macro Macros
-			test := db.Table("nutrition").Where("Name like ?", "%" + ingredientArr[i].Ingredient + "%").First(&macro)
-			
+			test := db.Table("nutrition").Where("Name like ?", "%"+ingredientArr[i].Ingredient+"%").First(&macro)
+
 			if test.Error != nil {
 				fmt.Println(test.Error)
 				c.JSON(http.StatusInternalServerError, test.Error)
 			} else if test.RowsAffected == 0 {
-				macroInfo = append(macroInfo, Macros{"N/A","N/A","N/A","N/A","N/A"} )
+				macroInfo = append(macroInfo, Macros{"N/A", "N/A", "N/A", "N/A", "N/A"})
 				// c.JSON(http.StatusInternalServerError, "No ingredient in the ingredient table was found")
 			} else {
 				macroInfo = append(macroInfo, macro)
 			}
 		}
 
+		var totalCal float64
+		var totalFat float64
+		var totalCarb float64
+		var totalProtein float64
 
+		for i := 0; i < len(macroInfo); i++ {
+			Amt, err := strconv.ParseFloat(ingredientArr[i].Amount, 64)
+			if err != nil {
+				fmt.Println("Ingredient Amount Conversion Error: ", err)
+			}
 
-		fmt.Println(len(macroInfo))
+			calories := strings.TrimSuffix(macroInfo[i].Calories, " g")
+			caloriesFloat, err := strconv.ParseFloat(calories, 64)
+			if err != nil {
+				fmt.Println("Calorie Conversion Error: ", err)
+			}
+			totalCal += (Amt / 100) * caloriesFloat
+
+			carbs := strings.TrimSuffix(macroInfo[i].Carbs, " g")
+			carbsFloat, err := strconv.ParseFloat(carbs, 64)
+			if err != nil {
+				fmt.Println("Carbohydrate Conversion Error: ", err)
+			}
+			totalCarb += (Amt / 100) * carbsFloat
+
+			proteins := strings.TrimSuffix(macroInfo[i].Protein, " g")
+			proteinFloat, err := strconv.ParseFloat(proteins, 64)
+			if err != nil {
+				fmt.Println("Protein Conversion Error: ", err)
+			}
+			totalProtein += (Amt / 100) * proteinFloat
+
+			fats := strings.TrimSuffix(macroInfo[i].Fat, " g")
+			fatFloat, err := strconv.ParseFloat(fats, 64)
+			if err != nil {
+				fmt.Println("Fat Conversion Error: ", err)
+			}
+			totalFat += (Amt / 100) * fatFloat
+
+			fmt.Println(Amt)
+			fmt.Println(calories)
+			fmt.Println(carbs)
+			fmt.Println(proteins)
+			fmt.Println(fats)
+
+		}
+		macroInfo = append(macroInfo, Macros{"Total", fmt.Sprintf("%f", totalCal), fmt.Sprintf("%f", totalCarb), fmt.Sprintf("%f", totalProtein), fmt.Sprintf("%f", totalFat)})
 
 		c.JSON(http.StatusOK, macroInfo)
 
@@ -390,7 +434,7 @@ type Recipes struct {
 }
 
 type Macros struct {
-	Name     string `gorm:"column:Name"` 
+	Name     string `gorm:"column:Name"`
 	Calories string `gorm:"column:calories"`
 	Carbs    string `gorm:"column:carbohydrate"`
 	Protein  string `gorm:"column:protein"`
@@ -399,7 +443,7 @@ type Macros struct {
 
 type IngredientPair struct {
 	Ingredient string
-	Amount    string
+	Amount     string
 }
 
 type MacroDB struct {
