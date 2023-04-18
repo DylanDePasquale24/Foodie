@@ -1,109 +1,114 @@
 <app-toolbar></app-toolbar>
 
-<div class="welcomeBanner">
-    <h1 class="headline-2"> Welcome back {{user.name}}! </h1>
-    <p class="body-1">All your recipe needs - All in one place</p>
-    <p class="body-1">Get started by writing a new recipe or pickup right where you left off!</p>
-</div>
+<!-- make-footer-stick and body-flex-wrapper are needed to make the footer stick to the bottom of the page. The css for these classes are in Angular Frontend\src\styles.css -->
+<div class="make-footer-stick">
+    <div class="body-flex-wrapper">
+        <div class="welcomeBanner">
+            <h1 class="headline-2"> Welcome back {{user.name}}! </h1>
+            <p class="body-1">All your recipe needs - All in one place</p>
+            <p class="body-1">Get started by writing a new recipe or pickup right where you left off!</p>
+        </div>
 
 
 
-<div class="headline">
-    <h1 class="headline-1">My Recipes</h1>
+        <div class="headline">
+            <h1 class="headline-1">My Recipes</h1>
 
 
-    <!-- Search -->
-    <mat-form-field appearance="outline">
-        <mat-label>Search Recipe</mat-label>
-        <input [formControl]="searchControl"
-               matInput
-               type="text"
-               placeholder="ex. Chicken Parmesan"
-               [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 3" [value]="option">
-            {{option}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
+            <!-- Search -->
+            <mat-form-field appearance="outline">
+                <mat-label>Search Recipe</mat-label>
+                <input [formControl]="searchControl"
+                    matInput
+                    type="text"
+                    placeholder="ex. Chicken Parmesan"
+                    [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 3" [value]="option">
+                    {{option}}
+                </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
 
 
-    <!-- Sort by -->
-    <mat-form-field appearance="outline">
-        <mat-label>Sort By</mat-label>
+            <!-- Sort by -->
+            <mat-form-field appearance="outline">
+                <mat-label>Sort By</mat-label>
 
-        <mat-select [(ngModel)]="headlineInputs.sortBy">
-            <mat-option value="date" selected>Date</mat-option>
-            <mat-option value="calories">Calories</mat-option>
-            <mat-option value="protein">Protein</mat-option>
-            <mat-option value="carbs">Carbs</mat-option>
-            <mat-option value="fat">Fat</mat-option>
-        </mat-select>
-    </mat-form-field>
-    
+                <mat-select [(ngModel)]="headlineInputs.sortBy">
+                    <mat-option value="date" selected>Date</mat-option>
+                    <mat-option value="calories">Calories</mat-option>
+                    <mat-option value="protein">Protein</mat-option>
+                    <mat-option value="carbs">Carbs</mat-option>
+                    <mat-option value="fat">Fat</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
 
-    <!-- Order (Ascending / Descending) -->
-    <mat-form-field appearance="outline">
-        <mat-label>Order</mat-label>
+            <!-- Order (Ascending / Descending) -->
+            <mat-form-field appearance="outline">
+                <mat-label>Order</mat-label>
 
-        <mat-select [(ngModel)]="headlineInputs.order">
-            <mat-option value="ascending" selected>Ascending</mat-option>
-            <mat-option value="descending">Descending</mat-option>
-        </mat-select>
-    </mat-form-field>
-    
+                <mat-select [(ngModel)]="headlineInputs.order">
+                    <mat-option value="ascending" selected>Ascending</mat-option>
+                    <mat-option value="descending">Descending</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
 
-    <!-- Add Recipe -->
-    <button mat-fab color="primary" (click)="AddRecipeDialog()" matTooltip="New Recipe" style="margin: 0.5vw" id="add-recipe-button"> 
-        <mat-icon>add</mat-icon>
-    </button>
-    
-</div>
+            <!-- Add Recipe -->
+            <button mat-fab color="primary" (click)="AddRecipeDialog()" matTooltip="New Recipe" style="margin: 0.5vw" id="add-recipe-button"> 
+                <mat-icon>add</mat-icon>
+            </button>
+            
+        </div>
 
 
-<ng-container *ngFor="let currentRecipe of recipes; let i = index;">
-    <div class="recipeCardWrapper" *ngIf="isDisplayingRecipes">
+        <ng-container *ngFor="let currentRecipe of recipes; let i = index;">
+            <div class="recipeCardWrapper" *ngIf="isDisplayingRecipes">
 
-        <mat-card class="recipeCard">
+                <mat-card class="recipeCard">
 
-            <div class="cardTitle">
-                <mat-card-title class="recipeTitleText">
-                    {{currentRecipe.RecipeName}}
-                </mat-card-title>
-        
-                <mat-card-subtitle class="recipeOverviewText">
-                    Calories: (STILL NEED)
-                    <br>
-                <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
-                    Date: (STILL NEED)
-                </mat-card-subtitle>
+                    <div class="cardTitle">
+                        <mat-card-title class="recipeTitleText">
+                            {{currentRecipe.RecipeName}}
+                        </mat-card-title>
+                
+                        <mat-card-subtitle class="recipeOverviewText">
+                            Calories: (STILL NEED)
+                            <br>
+                        <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
+                            Date: (STILL NEED)
+                        </mat-card-subtitle>
+                    </div>
+
+                    <div class="cardMacros">
+                        <mat-card-subtitle class="macrosText">
+                            <p>Protein: (STILL NEED)g</p>
+                            <p>Fat: (STILL NEED)g</p>
+                            <p>Carbs: (STILL NEED)g</p>
+                        </mat-card-subtitle>
+                    </div>
+
+                    <button mat-button color="accent" (click)="ViewRecipeDialog(i)">See More</button>
+                </mat-card>
+
             </div>
+        </ng-container>
 
-            <div class="cardMacros">
-                <mat-card-subtitle class="macrosText">
-                    <p>Protein: (STILL NEED)g</p>
-                    <p>Fat: (STILL NEED)g</p>
-                    <p>Carbs: (STILL NEED)g</p>
-                </mat-card-subtitle>
-            </div>
-
-            <button mat-button color="accent" (click)="ViewRecipeDialog(i)">See More</button>
-        </mat-card>
-
+        <div *ngIf="!isDisplayingRecipes" style="text-align: center;">
+            <h2>
+                {{this.noRecipeMessg}}
+            </h2>
+            <span *ngIf="!hasNoRecipes">
+                <p>This should only take a few moments</p>
+                <p>
+                    <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+                </p>
+            </span>
+        </div>
     </div>
-</ng-container>
 
-<div *ngIf="!isDisplayingRecipes" style="text-align: center;">
-    <h2>
-        {{this.noRecipeMessg}}
-    </h2>
-    <span *ngIf="!hasNoRecipes">
-        <p>This should only take a few moments</p>
-        <p>
-            <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
-        </p>
-    </span>
+    <app-footer></app-footer>
 </div>
-
-
 
