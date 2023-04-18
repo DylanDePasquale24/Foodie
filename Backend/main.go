@@ -219,8 +219,72 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 	})
 }
 
-func RouterGETRecipe(router *gin.Engine) {
+func macrofunc(IngredientArr []string) []Macros {
 
+	var ingredientArrSP []IngredientPair
+
+	// Puts the ingredients into an array of ingredient pairs
+	for i := 0; i < len(IngredientArr); i++ {
+		temp := strings.Split(IngredientArr[i], "|")
+		ingredientArrSP = append(ingredientArrSP, IngredientPair{strings.TrimSuffix(temp[0], " "), strings.TrimPrefix(temp[1], " ")})
+	}
+
+	var macroInfo []Macros
+
+	var totalCal float64
+	var totalFat float64
+	var totalCarb float64
+	var totalProtein float64
+
+	for i := 0; i < len(ingredientArrSP); i++ {
+		var macro Macros
+		test := db.Table("nutrients").Where("Name like ?", "%"+ingredientArrSP[i].Ingredient+"%").First(&macro)
+
+		if test.Error != nil {
+			macroInfo = append(macroInfo, Macros{"N/A", "N/A", "N/A", "N/A"})
+			fmt.Println(test.Error)
+			//c.JSON(http.StatusInternalServerError, test.Error)
+		} else if test.RowsAffected == 0 {
+
+			// c.JSON(http.StatusInternalServerError, "No ingredient in the ingredient table was found")
+		} else {
+			Amt, err := strconv.ParseFloat(ingredientArrSP[i].Amount, 64)
+			if err != nil {
+				fmt.Println("Ingredient Amount Conversion Error: ", err)
+			}
+
+			caloriesFloat, err := strconv.ParseFloat(macro.Calories, 64)
+			if err != nil {
+				fmt.Println("Calorie Conversion Error: ", err)
+			}
+			totalCal += Amt * caloriesFloat
+
+			carbsFloat, err := strconv.ParseFloat(macro.Carbs, 64)
+			if err != nil {
+				fmt.Println("Carbohydrate Conversion Error: ", err)
+			}
+			//fmt.Println("CARB: " + macroInfo[i].Carbs)
+			totalCarb += Amt * carbsFloat
+
+			proteinFloat, err := strconv.ParseFloat(macro.Protein, 64)
+			if err != nil {
+				fmt.Println("Protein Conversion Error: ", err)
+			}
+			totalProtein += Amt * proteinFloat
+
+			fatFloat, err := strconv.ParseFloat(macro.Fat, 64)
+			if err != nil {
+				fmt.Println("Fat Conversion Error: ", err)
+			}
+			totalFat += Amt * fatFloat
+			macroInfo = append(macroInfo, Macros{fmt.Sprintf("%f", (Amt * caloriesFloat)), fmt.Sprintf("%f", (Amt * carbsFloat)), fmt.Sprintf("%f", (Amt * proteinFloat)), fmt.Sprintf("%f", (Amt * fatFloat))})
+		}
+	}
+	macroInfo = append(macroInfo, Macros{fmt.Sprintf("%f", totalCal), fmt.Sprintf("%f", totalCarb), fmt.Sprintf("%f", totalProtein), fmt.Sprintf("%f", totalFat)})
+
+	return macroInfo
+}
+func RouterGETRecipe(router *gin.Engine) {
 	//TODO: add auth back! wasnt working properly
 	router.GET("/recipeGet/:userid", func(c *gin.Context) {
 
@@ -230,6 +294,7 @@ func RouterGETRecipe(router *gin.Engine) {
 
 		var recipeInfo []Recipes
 		var recipeOut []RecipeData
+		var MacroInfo []Macros
 
 		/* Queries the database to find all the recipes that were made by the specified userID
 		   and stores them in recipeInfo
@@ -244,9 +309,11 @@ func RouterGETRecipe(router *gin.Engine) {
 		} else {
 			for i := 0; i < len(recipeInfo); i++ {
 				IngredientArr := strings.Split(recipeInfo[i].Ingredients, "|||")
-				recipeOut = append(recipeOut, RecipeData{recipeInfo[i].UserID, recipeInfo[i].RecipeID, recipeInfo[i].RecipeName, recipeInfo[i].Description, IngredientArr, recipeInfo[i].Instructions, recipeInfo[i].Date})
+				MacroInfo = macrofunc(IngredientArr)
+				recipeOut = append(recipeOut, RecipeData{recipeInfo[i].UserID, recipeInfo[i].RecipeID, recipeInfo[i].RecipeName, recipeInfo[i].Description, IngredientArr, MacroInfo, recipeInfo[i].Instructions, recipeInfo[i].Date})
 			}
 			c.JSON(http.StatusOK, recipeOut)
+
 		}
 	})
 }
@@ -364,7 +431,6 @@ func RouterGETMacros(router *gin.Engine) {
 		macroInfo = append(macroInfo, Macros{fmt.Sprintf("%f", totalCal), fmt.Sprintf("%f", totalCarb), fmt.Sprintf("%f", totalProtein), fmt.Sprintf("%f", totalFat)})
 
 		c.JSON(http.StatusOK, macroInfo)
-
 	})
 }
 
@@ -399,14 +465,14 @@ type Users struct {
 }
 
 type RecipeData struct {
-	UserID      int64    `gorm:"column:userID"`
-	RecipeID    int64    `gorm:"column:recipeID"`
-	RecipeName  string   `gorm:"column:recipeName"`
-	Description string   `gorm:"column:description"`
-	Ingredients []string `gorm:"column:ingredients"`
-	//Macros       []Macros `gorm:"column:macros"`
-	Instructions string `gorm:"column:instructions"`
-	Date         string `gorm:"column:dateCreated"`
+	UserID           int64    `gorm:"column:userID"`
+	RecipeID         int64    `gorm:"column:recipeID"`
+	RecipeName       string   `gorm:"column:recipeName"`
+	Description      string   `gorm:"column:description"`
+	Ingredients      []string `gorm:"column:ingredients"`
+	MacroInformation []Macros `gorm:"column:macros"`
+	Instructions     string   `gorm:"column:instructions"`
+	Date             string   `gorm:"column:dateCreated"`
 }
 
 type RecipeInData struct {
