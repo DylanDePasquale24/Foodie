@@ -1,6 +1,6 @@
 import { Component, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ApexChart, ApexNonAxisChartSeries, ApexTitleSubtitle, ChartComponent } from "ng-apexcharts"
+import { ApexChart, ApexNonAxisChartSeries, ApexTitleSubtitle, ChartComponent, ApexTooltip, ApexResponsive } from "ng-apexcharts"
 import { HttpClient } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -23,6 +23,18 @@ export class ViewRecipeDialogComponent {
   chartTitle: ApexTitleSubtitle = {
     text: 'Calorie Distribution',
   }
+
+  chartOptions: {
+    tooltip: ApexTooltip;
+  } = {
+    tooltip: {
+      y: {
+        formatter: function (value: number) {
+          return value + ' calories';
+        },
+      },
+    },
+  };
 
   deleteSpinner: boolean
  
