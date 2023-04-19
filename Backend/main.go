@@ -332,7 +332,7 @@ func RouterDELETERecipe(router *gin.Engine) {
 		// Bind JSON data to object
 		// This gets the JSON data from the request body
 
-		delres := db.Table("recipes").Where(&Recipes{UserID: int64(recIDint)}).Delete(&recIDint)
+		delres := db.Table("recipes").Where(&Recipes{RecipeID: int64(recIDint)}).Delete(&recIDint)
 
 		if delres.Error != nil {
 			c.JSON(http.StatusInternalServerError, "Could not delete recipe.")
