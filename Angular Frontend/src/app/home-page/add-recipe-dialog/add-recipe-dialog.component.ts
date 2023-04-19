@@ -91,7 +91,7 @@ export class AddRecipeDialogComponent {
       this.dialogRef.close()
 
       //snack bar
-      this.snackBar.open("Recipe created successfully! Refresh the page to update", "Dismiss")
+      this.snackBar.open("Recipe created successfully! (Refresh to Update)", "Dismiss")
       
     }, (err) =>{
 
