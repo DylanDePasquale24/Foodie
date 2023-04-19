@@ -32,12 +32,11 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
 * Recipe Card Grid
   * Shows all the cards on the home page in a list format
   * Each card displays it's name, date, calories, protein, carbs, & fat
-  * Users can sort the recipes based on 5 criteria (protein, carbs, fat, calories, date) which affects the order in which they are displayed.
-  * Users can also dynamically filter recipes by name (in real time) through the search bar
-  * When user clicks "see more" it brings up a dialog box with more recipe information (see below bullet)
+  * Users can sort and dynamically filter recipes (see search bar and autocomplete)
+  * When user clicks "see more" it brings up a dialog box with more recipe information (see "View Recipe Dialog")
   
 * Search bar and autocomplete
-  * Implement a search bar that will filter the recipe cards based on the search query
+  * Implemented a search bar that will filter the recipe cards based on the search query
   * Have autocomplete suggestions for the search bar
   * Recipe cards will dynamically update as the user types in the search bar
 
@@ -47,10 +46,16 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
   * Recipe cards will display and be sorted based on the user's selection
 
 * View Recipe Dialog (View More for each Recipe Card)
-  * Includes a Macro Breakdown and Calorie Contribution from each macro, includes pie chart as visual
-  * Ingredients of the recipe
+  * Description
+    * Displays the user's inputted description and the recipe's total calories
+    * If no description was entered it notifies the user to limit confusion
+  * Macros
+    * Displays the calorie distribution of each of the 3 macro-nutrients (protein, carbs, fat) and what percent of the total calories they make up
+  * Ingredients
+    * Implemented a sortable table that can sort ingredients based on all their criteria
+  * Instructions
   * Delete Recipe Button
-  * Description and Instructions of the recipe
+    * Sends a delete request to the backend and deletes it from the data base. Automatically refreshes on frontenjd
   
 * Toolbar 
   * Profile Dialog
