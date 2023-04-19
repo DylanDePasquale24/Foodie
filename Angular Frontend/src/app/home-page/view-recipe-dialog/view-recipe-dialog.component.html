@@ -10,7 +10,7 @@
 
         <div class="descriptionWrapper">
             <h2>Description:</h2>
-            <p><b><i>Calories: (NEED)</i></b></p>
+            <p><b><i>Calories: {{recipe.totalMacros.Calories}}</i></b></p>
             <p *ngIf="recipe.description != null">
                 {{recipe.description}}
             </p>
@@ -30,9 +30,9 @@
     
             <div>
                 <!-- center and change line height? -->
-                <p>Protein: (NEED)</p>
-                <p>Carbs: (NEED)</p>
-                <p>Fat: (NEED)</p>
+                <p>Protein: {{recipe.totalMacros.Protein}}</p>
+                <p>Carbs: {{recipe.totalMacros.Carbs}}</p>
+                <p>Fat: {{recipe.totalMacros.Fat}</p>
             </div>
         </div>
     </div>

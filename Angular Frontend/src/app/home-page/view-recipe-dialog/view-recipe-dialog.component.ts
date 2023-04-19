@@ -30,25 +30,19 @@ export class ViewRecipeDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public recipe : any, private dialogRef: MatDialogRef<ViewRecipeDialogComponent>, private snackBar: MatSnackBar, private httpClient: HttpClient){
 
     this.chartValues = [
-      // recipe.totalMacros.protein * 4,
-      // recipe.totalMacros.Fat * 9,
-      // recipe.totalMacros.Carbs * 4
-
-      5,5,5
+      Number(recipe.totalMacros.Protein * 4),
+      Number(recipe.totalMacros.Fat * 9),
+      Number(recipe.totalMacros.Carbs * 4)
     ]
 
     this.deleteSpinner = false
   }
 
   DeleteRecipe(){
-
     this.deleteSpinner = true
 
     this.httpClient
-    .post('http://localhost:8080/recipeDelete' + this.recipe.id, {
-      
-      
-    })
+    .post('http://localhost:8080/recipeDelete' + this.recipe.id, {})
     .subscribe((response: any) => {
       
       //What to do if success -> close dialog

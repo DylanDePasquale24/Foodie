@@ -17,7 +17,7 @@ interface recipeFromBE {
   RecipeName : string
   UserID : number
   Date : string
-  MacroInformation: Array<Macros>
+  MacroInformation: Array<Macros>  //last element is total macros
 }
 interface Macros {
   Calories : string
@@ -232,10 +232,6 @@ export class HomeComponent {
         // sort by date
         break;
     }
-
-  }
-
-  DeleteRecipe(recipeId: number){
 
   }
 }
