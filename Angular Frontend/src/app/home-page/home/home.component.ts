@@ -154,6 +154,7 @@ export class HomeComponent {
 
     let recipe: recipeFromBE = this.recipes[recipeIndex]
 
+    //Making better formated ingredients format to send to dialog in config
     let ingredientsArr : Array<Ingredient> = []
     for(let i = 0; i < recipe.Ingredients.length; i++){
 
@@ -187,7 +188,9 @@ export class HomeComponent {
         date: recipe.Date,         
        
         ingredients: [...ingredientsArr], 
-        totalMacros: {Calories: "0", Protein: "0", Carbs: "0", Fat: "0"},         //RECIPE.MACROS
+
+        //last element of MacroInformation is totalMacros
+        totalMacros: recipe.MacroInformation[recipe.MacroInformation.length - 1],    
       }
     }
 
@@ -202,7 +205,6 @@ export class HomeComponent {
 
       //if false, do nothing
     })
-    
   }
   
   SortRecipes(criteria: string){
