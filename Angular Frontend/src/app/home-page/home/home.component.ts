@@ -285,32 +285,12 @@ export class HomeComponent {
 
   }
   
-  SortRecipes(criteria: string){
-    
-    criteria = criteria.toUpperCase()
-
-    switch(criteria)
-    {
-      case 'DATE':
-        // sort by date
-        break;
-      case 'CALORIES':
-        // sort by calories
-        break;
-      case 'PROTEIN':
-        // sort by protein
-        break;
-      case 'CARBS':
-        // sort by carbs
-        break;
-      case 'FAT':
-        // sort by fat
-        break;
-      default:
-        // sort by date
-        break;
-    }
-
+  onSortByChange(newValue: string) {
+    console.log(`New value: ${newValue}`);
+  }
+  
+  onOrderByChange(newValue: string) {
+    console.log(`New value: ${newValue}`);
   }
 
   RoundToNearest5(numStr: string): string{

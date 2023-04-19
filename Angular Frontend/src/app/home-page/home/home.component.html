@@ -36,7 +36,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Sort By</mat-label>
 
-                <mat-select [(ngModel)]="headlineInputs.sortBy">
+                <mat-select [(ngModel)]="headlineInputs.sortBy" (ngModelChange)="onSortByChange($event)">
                     <mat-option value="date" selected>Date</mat-option>
                     <mat-option value="calories">Calories</mat-option>
                     <mat-option value="protein">Protein</mat-option>
@@ -50,7 +50,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Order</mat-label>
 
-                <mat-select [(ngModel)]="headlineInputs.order">
+                <mat-select [(ngModel)]="headlineInputs.order" (ngModelChange)="onOrderByChange($event)">
                     <mat-option value="ascending" selected>Ascending</mat-option>
                     <mat-option value="descending">Descending</mat-option>
                 </mat-select>
