@@ -28,31 +28,36 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
 * Functionality to add recipe from backend..
   * Send HTTP POST request to backend create recipes
   * Receive the added recipe and add to a our recipe display grid
+  * Be able to delete recipes with a delete button and via HTTP DELETE request to backend
 
 * Recipe Card Grid
   * Shows all the cards on the home page, formatted to show info like name, date, and macros
   * Each card has protein, carbs, fat, calories, date
   * Implement "view more" to bring up a dialog of the recipe to show a more detailed view (includes visualizations and instructions)
+  
 
 * Vew Recipe Dialog (View More for each Recipe Card)
-  * Macro Breakdown
-  * ingredients
-  * Delete Recipe
-  * description, instructions
+  * Includes a Macro Breakdown and Calorie Contribution from each macro, includes pie chart as visual
+  * Ingredients of the recipe
+  * Delete Recipe Button
+  * Description and Instructions of the recipe
   
 * Toolbar 
-  * Profile
+  * Profile Dialog
+    * Displays the user's name and email
   * Create Recipe
+    * Additional button to create a recipe
   
 * Styling
   * Landing Page
-    * changed foodie logo size and button color
+    * Changed foodie logo size and button color
+    * Minor changes to sizing and spacing
   * Headline
-    * fixed spacing 
+    * Fixed spacing 
   * Welcome Page Banner
-    * removed
+    * Removed from home page to look more professional
   * Footer
-    * added footer to all pages
+    * Added a simple footer to all pages
 
  
 
