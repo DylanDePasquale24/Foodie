@@ -235,10 +235,10 @@ export class HomeComponent {
       let ingredient = {} as Ingredient
       ingredient.name = name
       ingredient.amount = amt
-      ingredient.calories = recipe.MacroInformation[i].Calories
-      ingredient.carbs = recipe.MacroInformation[i]. Carbs
-      ingredient.fat = recipe.MacroInformation[i].Fat
-      ingredient.protein = recipe.MacroInformation[i].Protein
+      ingredient.calories = this.Round(recipe.MacroInformation[i].Calories)
+      ingredient.carbs = this.Round(recipe.MacroInformation[i]. Carbs)
+      ingredient.fat = this.Round(recipe.MacroInformation[i].Fat)
+      ingredient.protein = this.Round(recipe.MacroInformation[i].Protein)
 
       ingredientsArr.push(ingredient)
     }

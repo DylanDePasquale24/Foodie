@@ -4,10 +4,23 @@ import { ApexChart, ApexNonAxisChartSeries, ApexTitleSubtitle, ChartComponent, A
 import { HttpClient } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
+
 import { MatTableDataSource } from '@angular/material/table';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {MatSort, Sort} from '@angular/material/sort';
 import { any } from 'cypress/types/bluebird';
+
+
+
+interface Ingredient {
+  name: string
+  amount: string
+  calories: string
+  protein: string
+  carbs: string
+  fat: string
+}
 
 @Component({
   selector: 'app-view-recipe-dialog',
@@ -44,19 +57,10 @@ export class ViewRecipeDialogComponent{
   }
 
   deleteSpinner: boolean
-  displayedColumns: string[] = ['name', 'amount']
-  // , 'calories','protein', 'carbs', 'fat'
 
-  dataSource = [
-    {
-      name: 'hello',
-      amount: '4'
-    },
-    {
-      name: 'hi',
-      amount: '3'
-    }
-  ]
+  displayedColumns: string[] = ['name', 'amount', 'calories', 'protein', 'carbs', 'fat'];
+  dataSource : Array<Ingredient>
+
   // @ViewChild(MatSort) sort = new MatSort();
   
   constructor(@Inject(MAT_DIALOG_DATA) public recipe : any, private dialogRef: MatDialogRef<ViewRecipeDialogComponent>, private snackBar: MatSnackBar, private httpClient: HttpClient, private _liveAnnouncer: LiveAnnouncer){
@@ -70,7 +74,6 @@ export class ViewRecipeDialogComponent{
     this.deleteSpinner = false
 
     this.dataSource = recipe.ingredients
-    
   }
   // ngAfterViewInit() {
   //   this.dataSource.sort = this.sort;
@@ -80,10 +83,7 @@ export class ViewRecipeDialogComponent{
     this.deleteSpinner = true
 
     this.httpClient
-    .post('http://localhost:8080/recipeDelete/' + this.recipe.id, {
-
-    
-    })
+    .delete('http://localhost:8080/recipeDelete/' + this.recipe.id)
     .subscribe((response: any) => {
       
       //What to do if success -> close dialog
