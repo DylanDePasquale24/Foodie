@@ -210,11 +210,13 @@ func RouterPOSTRecipeCreate(router *gin.Engine) {
 			ginContext.JSON(http.StatusOK, gin.H{
 				"id": recipe.RecipeID,
 			})
-		} else {
-			ginContext.JSON(http.StatusOK, gin.H{
-				"id": recipe.RecipeID,
-			})
+		} else if copy.RowsAffected == 0 {
+			// ginContext.JSON(http.StatusOK, gin.H{
+			// 	"id": recipe.RecipeID,
+			// })
 			ginContext.JSON(http.StatusInternalServerError, "Recipe already in use.")
+		} else {
+			ginContext.JSON(http.StatusInternalServerError, "Could not create recipe.")
 		}
 	})
 }
