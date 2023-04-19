@@ -25,18 +25,20 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
 ## Work Completed in Sprint 4
 
 ***Front-End***
-* Functionality to add recipe from backend..
-  * Send HTTP POST request to backend create recipes
-  * Receive the added recipe and add to a our recipe display grid
-  * Be able to delete recipes with a delete button and via HTTP DELETE request to backend
+* HTTP Request to add recipe to the backend database
+  * Sends HTTP POST request to backend to add it to the database under that user. When successful, dialog closes and sends a snackbar to let user know it worked. 
+    * If unsuccessful, the dialog remains open and a snackbar notifies user it was unsuccessful
 
 * Recipe Card Grid
-  * Shows all the cards on the home page, formatted to show info like name, date, and macros
-  * Each card has protein, carbs, fat, calories, date
-  * Implement "view more" to bring up a dialog of the recipe to show a more detailed view (includes visualizations and instructions)
+  * Shows all the cards on the home page in a list format
+  * Each card displays it's name, date, calories, protein, carbs, & fat
+  * Users can sort the recipes based on 5 criteria (protein, carbs, fat, calories, date) which affects the order in which they are displayed.
+  * Users can also dynamically filter recipes by name (in real time) through the search bar
+  * When user clicks "see more" it brings up a dialog box with more recipe information (see below bullet)
+  
   
 
-* Vew Recipe Dialog (View More for each Recipe Card)
+* Vew Recipe Dialog (View More Button)
   * Includes a Macro Breakdown and Calorie Contribution from each macro, includes pie chart as visual
   * Ingredients of the recipe
   * Delete Recipe Button
@@ -46,7 +48,7 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
   * Profile Dialog
     * Displays the user's name and email
   * Create Recipe
-    * Additional button to create a recipe
+    * Brings up the Add Recipe Dialog
   
 * Styling
   * Landing Page
@@ -55,7 +57,7 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
   * Headline
     * Fixed spacing 
   * Welcome Page Banner
-    * Removed from home page to look more professional
+    * Removed from home page to look more clean & professional, as well as to clear up space
   * Footer
     * Added a simple footer to all pages
 
