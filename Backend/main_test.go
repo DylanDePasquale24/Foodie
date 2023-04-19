@@ -87,11 +87,11 @@ func TestRouterPOSTRecipeCreate(t *testing.T) {
 	responseRecorder := httptest.NewRecorder()
 
 	json := []byte(`{
-		"userID": "1",
-		"recipeName": "Test Recipe Name 2",
-		"description": "Test description",
-		"ingredients": "Test ingredients",
-		"instructions": "Test instructions"
+		"UserID": "10",
+		"RecipeName": "Test Recipe Name 2",
+		"Description": "Test description",
+		"Ingredients": ["Turkey | 1|||Spaghetti | 1"],
+		"Instructions": "Test instructions"
 	  }`)
 
 	request, _ := http.NewRequest("POST", "/recipeCreate", bytes.NewBuffer(json))
@@ -119,6 +119,19 @@ func TestRouterGetRecipe(t *testing.T) {
 	}
 
 	// fmt.Println(string(jsonTest.Bytes()))
+
+	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
+}
+
+func TestRouterDELETERecipe(t *testing.T) {
+
+	RouterDELETERecipe(router)
+
+	responseRecorder := httptest.NewRecorder()
+	json := []byte(`{}`)
+	request, _ := http.NewRequest("DELETE", "/recipeDelete/82", bytes.NewBuffer(json))
+
+	router.ServeHTTP(responseRecorder, request)
 
 	assert.Equal(t, 200, responseRecorder.Code, "Error Message: %s", responseRecorder.Body.String())
 }
