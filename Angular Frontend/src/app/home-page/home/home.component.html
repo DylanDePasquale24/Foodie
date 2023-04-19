@@ -23,6 +23,7 @@
                 placeholder="ex. Chicken Parmesan"
                 [matAutocomplete]="auto"
                 (input)="applyFilter(searchControl.value)"> <!-- Added (input) event listener -->
+                id="search-recipe-input"
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="applyFilter($event.option.value)">
             <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 3" [value]="option">
                 {{option}}
