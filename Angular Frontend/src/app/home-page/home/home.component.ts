@@ -82,10 +82,74 @@ export class HomeComponent {
     maxWidth : string
   }
 
-  recipes : Array<recipeFromBE>
+  recipesList : Array<recipeFromBE>
   isDisplayingRecipes : boolean
   hasNoRecipes : boolean
   noRecipeMessg : string
+
+  // ------------------------------------------------------------------------------
+  // CREATE A TEMPORARY LIST OF RECIPES TO TEST THE SEARCH AND SORT FUNCTIONALITY
+
+  mockRecipe1: recipeFromBE = {
+    Description: "Sushi rolls with rice, salmon, and avocado",
+    Ingredients: ["rice", "salmon", "avocado"],
+    Instructions:
+      "Cut up the salmon and avocado. Roll the rice, salmon, and avocado into a sushi roll. Enjoy!",
+    RecipeID: 56,
+    RecipeName: "Sushi",
+    UserID: 6,
+    Date: "2023-04-18",
+    MacroInformation: [
+      {
+        Calories: "400",
+        Carbs: "50g",
+        Protein: "20g",
+        Fat: "15g",
+      },
+    ],
+  };
+
+  mockRecipe2: recipeFromBE = {
+    Description: "A classic BLT",
+    Ingredients: ["bacon", "lettuce", "tomato", "bread"],
+    Instructions:
+      "Assemble the BLT. Enjoy!",
+    RecipeID: 20,
+    RecipeName: "BLT",
+    UserID: 6,
+    Date: "2023-09-12",
+    MacroInformation: [
+      {
+        Calories: "900",
+        Carbs: "20g",
+        Protein: "30g",
+        Fat: "20g",
+      },
+    ],
+  };
+
+  mockRecipe3: recipeFromBE = {
+    Description: "Homemade Cheese Pizza",
+    Ingredients: ["cheese", "sauce", "dough"],
+    Instructions:
+      "Assemble the pizza. Enjoy!",
+    RecipeID: 34,
+    RecipeName: "Cheese Pizza",
+    UserID: 6,
+    Date: "2019-09-12",
+    MacroInformation: [
+      {
+        Calories: "2000",
+        Carbs: "70g",
+        Protein: "30g",
+        Fat: "40g",
+      },
+    ],
+  };
+
+
+  // ------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------
 
   constructor(private httpClient: HttpClient,private dialogService: MatDialog){
 
@@ -106,7 +170,7 @@ export class HomeComponent {
       maxWidth: "800px"
     }
 
-    this.recipes = [] 
+    this.recipesList = [] 
     this.isDisplayingRecipes = false
     this.hasNoRecipes = false
     this.noRecipeMessg = "Fetching Saved Recipes..."
@@ -132,10 +196,10 @@ export class HomeComponent {
 
       console.log(recipeListResponse)
       this.isDisplayingRecipes = true
-      this.recipes = recipeListResponse
+      this.recipesList = recipeListResponse
 
       // Update the options array here, for autocomplete
-      this.autocompleteOptions = this.recipes.map(recipe => recipe.RecipeName);
+      this.autocompleteOptions = this.recipesList.map(recipe => recipe.RecipeName);
       this.filteredOptions = this.searchControl.valueChanges
         .pipe(
           startWith(''),
@@ -152,7 +216,7 @@ export class HomeComponent {
 
   ViewRecipeDialog(recipeIndex: number){
 
-    let recipe: recipeFromBE = this.recipes[recipeIndex]
+    let recipe: recipeFromBE = this.recipesList[recipeIndex]
 
     //Making better formated ingredients format to send to dialog in config
     let ingredientsArr : Array<Ingredient> = []
@@ -200,7 +264,7 @@ export class HomeComponent {
       if(deletedRecipe == "true"){
         
         //delete from array
-        this.recipes.splice(recipeIndex, 1)  
+        this.recipesList.splice(recipeIndex, 1)  
       }
 
       //if false, do nothing
