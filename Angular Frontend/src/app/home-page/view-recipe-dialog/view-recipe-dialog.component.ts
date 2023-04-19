@@ -21,7 +21,7 @@ export class ViewRecipeDialogComponent {
   }
   chartLabels = ["Protein", "Fat", "Carbs"]
   chartTitle: ApexTitleSubtitle = {
-    text: 'Calorie Distribution',
+    text: 'Calories From Each Macro-Nutrient',
   }
 
   chartOptions: {

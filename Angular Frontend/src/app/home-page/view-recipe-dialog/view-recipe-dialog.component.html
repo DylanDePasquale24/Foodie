@@ -15,12 +15,12 @@
                 {{recipe.description}}
             </p>
             <p *ngIf="recipe.description == ''">
-                You didn't add any additional information :(
+                Unfortunately, you didn't add a personal description :(
             </p>
         </div>
     
         <div class="macrosWrapper">
-           <h2>Macros:</h2>
+           <h2>Macro Breakdown:</h2>
            <div class="pieChart">
             <apx-chart
               [series]="chartValues"
@@ -29,16 +29,7 @@
               [title]="chartTitle"
               [tooltip]="chartOptions.tooltip">
             </apx-chart>
-          </div>
-
-            <br>
-    
-            <div>
-                <!-- center and change line height? -->
-                <p>Protein: {{Round(recipe.totalMacros.Protein)}}g</p>
-                <p>Carbs: {{Round(recipe.totalMacros.Carbs)}}g</p>
-                <p>Fat: {{Round(recipe.totalMacros.Fat)}}g</p>
-            </div>
+          </div> 
         </div>
     </div>
 
