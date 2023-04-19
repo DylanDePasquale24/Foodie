@@ -88,69 +88,69 @@ export class HomeComponent {
   hasNoRecipes : boolean
   noRecipeMessg : string
 
-  // ------------------------------------------------------------------------------
-  // CREATE A TEMPORARY LIST OF RECIPES TO TEST THE SEARCH AND SORT FUNCTIONALITY
+  // // ------------------------------------------------------------------------------
+  // // CREATE A TEMPORARY LIST OF RECIPES TO TEST THE SEARCH AND SORT FUNCTIONALITY
 
-  mockRecipe1: recipeFromBE = {
-    Description: "Sushi rolls with rice, salmon, and avocado",
-    Ingredients: ["rice", "salmon", "avocado"],
-    Instructions:
-      "Cut up the salmon and avocado. Roll the rice, salmon, and avocado into a sushi roll. Enjoy!",
-    RecipeID: 56,
-    RecipeName: "Sushi",
-    UserID: 6,
-    Date: "2023-04-18",
-    MacroInformation: [
-      {
-        Calories: "400",
-        Carbs: "50",
-        Protein: "20",
-        Fat: "15",
-      },
-    ],
-  };
+  // mockRecipe1: recipeFromBE = {
+  //   Description: "Sushi rolls with rice, salmon, and avocado",
+  //   Ingredients: ["rice", "salmon", "avocado"],
+  //   Instructions:
+  //     "Cut up the salmon and avocado. Roll the rice, salmon, and avocado into a sushi roll. Enjoy!",
+  //   RecipeID: 56,
+  //   RecipeName: "Sushi",
+  //   UserID: 6,
+  //   Date: "2023-04-18",
+  //   MacroInformation: [
+  //     {
+  //       Calories: "400",
+  //       Carbs: "50",
+  //       Protein: "20",
+  //       Fat: "15",
+  //     },
+  //   ],
+  // };
 
-  mockRecipe2: recipeFromBE = {
-    Description: "A classic BLT",
-    Ingredients: ["bacon", "lettuce", "tomato", "bread"],
-    Instructions:
-      "Assemble the BLT. Enjoy!",
-    RecipeID: 20,
-    RecipeName: "BLT",
-    UserID: 6,
-    Date: "2023-09-12",
-    MacroInformation: [
-      {
-        Calories: "900",
-        Carbs: "20",
-        Protein: "30",
-        Fat: "20",
-      },
-    ],
-  };
+  // mockRecipe2: recipeFromBE = {
+  //   Description: "A classic BLT",
+  //   Ingredients: ["bacon", "lettuce", "tomato", "bread"],
+  //   Instructions:
+  //     "Assemble the BLT. Enjoy!",
+  //   RecipeID: 20,
+  //   RecipeName: "BLT",
+  //   UserID: 6,
+  //   Date: "2023-09-12",
+  //   MacroInformation: [
+  //     {
+  //       Calories: "900",
+  //       Carbs: "20",
+  //       Protein: "30",
+  //       Fat: "20",
+  //     },
+  //   ],
+  // };
 
-  mockRecipe3: recipeFromBE = {
-    Description: "Homemade Cheese Pizza",
-    Ingredients: ["cheese", "sauce", "dough"],
-    Instructions:
-      "Assemble the pizza. Enjoy!",
-    RecipeID: 34,
-    RecipeName: "Cheese Pizza",
-    UserID: 6,
-    Date: "2019-09-12",
-    MacroInformation: [
-      {
-        Calories: "2000",
-        Carbs: "70",
-        Protein: "30",
-        Fat: "40",
-      },
-    ],
-  };
+  // mockRecipe3: recipeFromBE = {
+  //   Description: "Homemade Cheese Pizza",
+  //   Ingredients: ["cheese", "sauce", "dough"],
+  //   Instructions:
+  //     "Assemble the pizza. Enjoy!",
+  //   RecipeID: 34,
+  //   RecipeName: "Cheese Pizza",
+  //   UserID: 6,
+  //   Date: "2019-09-12",
+  //   MacroInformation: [
+  //     {
+  //       Calories: "2000",
+  //       Carbs: "70",
+  //       Protein: "30",
+  //       Fat: "40",
+  //     },
+  //   ],
+  // };
 
 
-  // ------------------------------------------------------------------------------
-  // ------------------------------------------------------------------------------
+  // // ------------------------------------------------------------------------------
+  // // ------------------------------------------------------------------------------
 
   constructor(private httpClient: HttpClient,private dialogService: MatDialog){
 

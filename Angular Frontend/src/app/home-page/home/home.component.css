@@ -27,7 +27,7 @@
     border: 1px;
     border-style: outset;
     border-radius: 15px;
-    border-color: #3f51b5;  /* hardcoded the indigo color of the material theme, it's not the best but a temp fix */
+    /* border-color: #3f51b5;  hardcoded the indigo color of the material theme, it's not the best but a temp fix */
 }
 
 .cardTitle {
