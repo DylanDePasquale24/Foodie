@@ -14,21 +14,22 @@
             <h1 class="headline-1">My Recipes</h1>
 
 
-            <!-- Search -->
-            <mat-form-field appearance="outline">
-                <mat-label>Search Recipe</mat-label>
-                <input [formControl]="searchControl"
-                    matInput
-                    type="text"
-                    placeholder="ex. Chicken Parmesan"
-                    [matAutocomplete]="auto"
-                    (input)="applyFilter(searchControl.value)">
-                <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 3" [value]="option">
-                    {{option}}
-                </mat-option>
-                </mat-autocomplete>
-            </mat-form-field>
+        <!-- Search -->
+        <mat-form-field appearance="outline">
+            <mat-label>Search Recipe</mat-label>
+            <input [formControl]="searchControl"
+                matInput
+                type="text"
+                placeholder="ex. Chicken Parmesan"
+                [matAutocomplete]="auto"
+                (input)="applyFilter(searchControl.value)"> <!-- Added (input) event listener -->
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="applyFilter($event.option.value)">
+            <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 3" [value]="option">
+                {{option}}
+            </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
 
 
             <!-- Sort by -->
