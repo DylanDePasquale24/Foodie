@@ -152,6 +152,9 @@ export class HomeComponent {
   // // ------------------------------------------------------------------------------
   // // ------------------------------------------------------------------------------
 
+  // NEEDED FOR SORTING
+  isAscending: boolean = true;
+
   constructor(private httpClient: HttpClient,private dialogService: MatDialog){
 
     this.user = {
@@ -289,19 +292,84 @@ export class HomeComponent {
     console.log(`New value: ${newOrderSelection}`);
 
     this.recipesList = this.recipesList.sort((a, b) => {
-      
-      const proteinA = parseFloat(a.MacroInformation[a.MacroInformation.length - 1].Protein);
-      const proteinB = parseFloat(b.MacroInformation[b.MacroInformation.length - 1].Protein);
+
+      switch(newOrderSelection){
+        case 'date': {
+          // What to do when there is no date??
+
+          const dateA = new Date(a.Date);
+          const dateB = new Date(b.Date);
+
+          if(this.isAscending){
+            return dateA.getTime() - dateB.getTime();
+          } else {
+            return dateB.getTime() - dateA.getTime();
+          }
+        }
+
+        case 'calories': {
+          const caloriesA = parseFloat(a.MacroInformation[a.MacroInformation.length - 1].Calories);
+          const caloriesB = parseFloat(b.MacroInformation[b.MacroInformation.length - 1].Calories);
+        
+          if(this.isAscending){
+            return caloriesA - caloriesB;
+          } else {
+            return caloriesB - caloriesA;
+          }
+        }
+
+        case 'protein': {
+          const proteinA = parseFloat(a.MacroInformation[a.MacroInformation.length - 1].Protein);
+          const proteinB = parseFloat(b.MacroInformation[b.MacroInformation.length - 1].Protein);
+        
+          if(this.isAscending){
+            return proteinA - proteinB;
+          } else {
+            return proteinB - proteinA;
+          }
+        }
+
+        case 'carbs': {
+          const carbsA = parseFloat(a.MacroInformation[a.MacroInformation.length - 1].Carbs);
+          const carbsB = parseFloat(b.MacroInformation[b.MacroInformation.length - 1].Carbs);
+        
+          if(this.isAscending){
+            return carbsA - carbsB;
+          } else {
+            return carbsB - carbsA;
+          }
+        }
+
+        case 'fat': {
+          const fatA = parseFloat(a.MacroInformation[a.MacroInformation.length - 1].Fat);
+          const fatB = parseFloat(b.MacroInformation[b.MacroInformation.length - 1].Fat);
+        
+          if(this.isAscending){
+            return fatA - fatB;
+          } else {
+            return fatB - fatA;
+          }
+        }
+
+      }
+
+      return 0;
     
-      // For ascending order, swap "proteinA" and "proteinB" for descending order
-      return proteinB - proteinA;
     });
 
-    console.log(this.recipesList)
+    // console.log(this.recipesList)
   }
   
   onOrderByChange(newValue: string) {
-    console.log(`New value: ${newValue}`);
+    console.log(`Sorting changed: ${newValue}`);
+
+    if(newValue == 'ascending'){
+      this.isAscending = true
+      this.onSortByChange(this.headlineInputs.sortBy)
+    } else {
+      this.isAscending = false
+      this.onSortByChange(this.headlineInputs.sortBy)
+    }
   }
 
   RoundToNearest5(numStr: string): string{
