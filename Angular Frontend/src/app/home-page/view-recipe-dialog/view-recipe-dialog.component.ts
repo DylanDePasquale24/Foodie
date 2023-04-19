@@ -19,13 +19,9 @@ export class ViewRecipeDialogComponent {
       show: true
     }
   }
-  chartLabels = ["Protein calories", "Fat cal", "Carbs cal"]
+  chartLabels = ["Protein", "Fat", "Carbs"]
   chartTitle: ApexTitleSubtitle = {
     text: 'Calories From Each Macro-Nutrient',
-  }
-  dataLabels = {
-    enabled: true,
-    position: 'bottom'
   }
   deleteSpinner: boolean
  
