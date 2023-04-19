@@ -21,9 +21,15 @@
     
         <div class="macrosWrapper">
            <h2>Macro Breakdown:</h2>
-            <div class="pieChart">
-                <apx-chart [series]="chartValues" [chart]="chartType" [labels]="chartLabels" [title]="chartTitle"></apx-chart>
-            </div> 
+           <div class="pieChart">
+            <apx-chart
+              [series]="chartValues"
+              [chart]="chartType"
+              [labels]="chartLabels"
+              [title]="chartTitle"
+              [tooltip]="chartOptions.tooltip">
+            </apx-chart>
+          </div> 
         </div>
     </div>
 
