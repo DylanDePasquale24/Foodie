@@ -285,8 +285,19 @@ export class HomeComponent {
 
   }
   
-  onSortByChange(newValue: string) {
-    console.log(`New value: ${newValue}`);
+  onSortByChange(newOrderSelection: string) {
+    console.log(`New value: ${newOrderSelection}`);
+
+    this.recipesList = this.recipesList.sort((a, b) => {
+      
+      const proteinA = parseFloat(a.MacroInformation[a.MacroInformation.length - 1].Protein);
+      const proteinB = parseFloat(b.MacroInformation[b.MacroInformation.length - 1].Protein);
+    
+      // For ascending order, swap "proteinA" and "proteinB" for descending order
+      return proteinB - proteinA;
+    });
+
+    console.log(this.recipesList)
   }
   
   onOrderByChange(newValue: string) {
