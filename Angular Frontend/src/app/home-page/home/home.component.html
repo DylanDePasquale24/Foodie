@@ -21,7 +21,8 @@
                     matInput
                     type="text"
                     placeholder="ex. Chicken Parmesan"
-                    [matAutocomplete]="auto">
+                    [matAutocomplete]="auto"
+                    (input)="applyFilter(searchControl.value)">
                 <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 3" [value]="option">
                     {{option}}
@@ -64,7 +65,7 @@
 
 
         <ng-container *ngFor="let currentRecipe of recipesList; let i = index;">
-            <div class="recipeCardWrapper" *ngIf="isDisplayingRecipes">
+            <div class="recipeCardWrapper" *ngIf="isDisplayingRecipes && !currentRecipe.hidden">
 
                 <mat-card class="recipeCard">
 

@@ -18,6 +18,7 @@ interface recipeFromBE {
   UserID : number
   Date : string
   MacroInformation: Array<Macros>  //last element is total macros
+  hidden?: boolean
 }
 interface Macros {
   Calories : string
@@ -102,9 +103,9 @@ export class HomeComponent {
     MacroInformation: [
       {
         Calories: "400",
-        Carbs: "50g",
-        Protein: "20g",
-        Fat: "15g",
+        Carbs: "50",
+        Protein: "20",
+        Fat: "15",
       },
     ],
   };
@@ -121,9 +122,9 @@ export class HomeComponent {
     MacroInformation: [
       {
         Calories: "900",
-        Carbs: "20g",
-        Protein: "30g",
-        Fat: "20g",
+        Carbs: "20",
+        Protein: "30",
+        Fat: "20",
       },
     ],
   };
@@ -140,9 +141,9 @@ export class HomeComponent {
     MacroInformation: [
       {
         Calories: "2000",
-        Carbs: "70g",
-        Protein: "30g",
-        Fat: "40g",
+        Carbs: "70",
+        Protein: "30",
+        Fat: "40",
       },
     ],
   };
@@ -269,6 +270,19 @@ export class HomeComponent {
 
       //if false, do nothing
     })
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim().toLowerCase();
+
+    this.recipesList.forEach(recipe => {
+      if (recipe.RecipeName.toLowerCase().includes(filterValue)) {
+        recipe.hidden = false;
+      } else {
+        recipe.hidden = true;
+      }
+    });
+
   }
   
   SortRecipes(criteria: string){
