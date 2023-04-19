@@ -44,6 +44,10 @@ Pranav Venu and Paul Jablonowski
  1. Complete all the steps in the "Running the Application" section
  2. Open another terminal window and navigate into the Angular Frontend folder with `cd '.\Angular Frontend\'`. Run the command `'npx cypress open'` to open the Cypress test runner.
 
-### Running Unit Tests
+### Running Frontend Unit Tests
  1. Complete all the steps in the "Running the Application" section
  2. Open another terminal window and navigate into the Angular Frontend folder with `cd '.\Angular Frontend\'`. Run the command `ng test` to run the unit tests.
+
+### Running Backend Unit Tests
+ 1. Complete all the steps in the "Running the Application" section
+ 2. Open another terminal window and navigate into the Backend folder with `cd '.\Backend\'`. Run the command `go test` to run the unit tests.
