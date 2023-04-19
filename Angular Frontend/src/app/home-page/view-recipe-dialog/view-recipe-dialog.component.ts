@@ -1,33 +1,20 @@
-import { Component, Inject, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Inject, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApexChart, ApexNonAxisChartSeries, ApexTitleSubtitle, ChartComponent, ApexTooltip, ApexResponsive } from "ng-apexcharts"
 import { HttpClient } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-
 import { MatTableDataSource } from '@angular/material/table';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {MatSort, Sort} from '@angular/material/sort';
 import { any } from 'cypress/types/bluebird';
-
-
-
-interface Ingredient {
-  name: string
-  amount: string
-  calories: string
-  protein: string
-  carbs: string
-  fat: string
-}
 
 @Component({
   selector: 'app-view-recipe-dialog',
   templateUrl: './view-recipe-dialog.component.html',
   styleUrls: ['./view-recipe-dialog.component.css']
 })
-export class ViewRecipeDialogComponent{
+export class ViewRecipeDialogComponent implements AfterViewInit{
 
   chartValues: ApexNonAxisChartSeries
   chartType: ApexChart = {
@@ -57,11 +44,13 @@ export class ViewRecipeDialogComponent{
   }
 
   deleteSpinner: boolean
-
   displayedColumns: string[] = ['name', 'amount', 'calories', 'protein', 'carbs', 'fat'];
-  dataSource : Array<Ingredient>
+  dataSource: any
 
-  // @ViewChild(MatSort) sort = new MatSort();
+  @ViewChild(MatSort) sort = new MatSort();
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
   
   constructor(@Inject(MAT_DIALOG_DATA) public recipe : any, private dialogRef: MatDialogRef<ViewRecipeDialogComponent>, private snackBar: MatSnackBar, private httpClient: HttpClient, private _liveAnnouncer: LiveAnnouncer){
 
@@ -72,13 +61,9 @@ export class ViewRecipeDialogComponent{
     ]
 
     this.deleteSpinner = false
-
-    this.dataSource = recipe.ingredients
+    this.dataSource = new MatTableDataSource(recipe.ingredients)
   }
-  // ngAfterViewInit() {
-  //   this.dataSource.sort = this.sort;
-  // }
-
+ 
   DeleteRecipe(){
     this.deleteSpinner = true
 
@@ -104,7 +89,6 @@ export class ViewRecipeDialogComponent{
       this.snackBar.open("Recipe could NOT be deleted!", "Dismiss")
     })
   }
-
   RoundToNearest5(numStr: string): string{
 
     let num: number = Number(numStr)
@@ -125,11 +109,4 @@ export class ViewRecipeDialogComponent{
   Round(numStr: string): string{
     return Math.round(Number(numStr)).toString()
   }
-  // AnnounceSortChange(sortState: Sort) {
-  //   if (sortState.direction) {
-  //     this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-  //   } else {
-  //     this._liveAnnouncer.announce('Sorting cleared');
-  //   }
-  // }
 }
