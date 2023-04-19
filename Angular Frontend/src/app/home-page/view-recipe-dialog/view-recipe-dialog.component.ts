@@ -63,4 +63,25 @@ export class ViewRecipeDialogComponent {
       this.snackBar.open("Recipe could NOT be deleted!", "Dismiss")
     })
   }
+
+  RoundToNearest5(numStr: string): string{
+
+    let num: number = Number(numStr)
+
+    const remainder = num % 5; // Get the remainder when dividing by 5
+    const halfOfInterval = 2.5; // Half of the 5 unit interval
+  
+    if (remainder < halfOfInterval) {
+      // Round down to the nearest 5
+      num = num - remainder;
+    } else {
+      // Round up to the nearest 5
+      num = num + (5 - remainder);
+    }
+
+    return num.toString()
+  }
+  Round(numStr: string): string{
+    return Math.round(Number(numStr)).toString()
+  }
 }

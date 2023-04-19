@@ -75,18 +75,18 @@
                         </mat-card-title>
                 
                         <mat-card-subtitle class="recipeOverviewText">
-                            Calories: (NEED)
+                            Calories: {{RoundToNearest5(currentRecipe.MacroInformation[currentRecipe.MacroInformation.length - 1].Calories)}}
                             <br>
                         <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
-                            Date: (STILL NEED)
+                            Date: {{currentRecipe.Date}}
                         </mat-card-subtitle>
                     </div>
 
                     <div class="cardMacros">
                         <mat-card-subtitle class="macrosText">
-                            <p>Protein: (STILL NEED)g</p>
-                            <p>Fat: (STILL NEED)g</p>
-                            <p>Carbs: (STILL NEED)g</p>
+                            <p>Protein: {{Round(currentRecipe.MacroInformation[currentRecipe.MacroInformation.length - 1].Protein)}}g</p>
+                            <p>Fat: {{Round(currentRecipe.MacroInformation[currentRecipe.MacroInformation.length - 1].Fat)}}g</p>
+                            <p>Carbs: {{Round(currentRecipe.MacroInformation[currentRecipe.MacroInformation.length - 1].Carbs)}}g</p>
                         </mat-card-subtitle>
                     </div>
 

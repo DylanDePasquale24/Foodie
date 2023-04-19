@@ -10,14 +10,13 @@
 
         <div class="descriptionWrapper">
             <h2>Description:</h2>
-            <p><b><i>Calories: {{recipe.totalMacros.Calories}}</i></b></p>
+            <p><b><i>Calories: {{RoundToNearest5(recipe.totalMacros.Calories)}}</i></b></p>
             <p *ngIf="recipe.description != null">
                 {{recipe.description}}
             </p>
             <p *ngIf="recipe.description == null">
                 You didn't add any additional information :(
             </p>
-            
         </div>
     
         <div class="macrosWrapper">
@@ -30,9 +29,9 @@
     
             <div>
                 <!-- center and change line height? -->
-                <p>Protein: {{recipe.totalMacros.Protein}}</p>
-                <p>Carbs: {{recipe.totalMacros.Carbs}}</p>
-                <p>Fat: {{recipe.totalMacros.Fat}</p>
+                <p>Protein: {{Round(recipe.totalMacros.Protein)}}g</p>
+                <p>Carbs: {{Round(recipe.totalMacros.Carbs)}}g</p>
+                <p>Fat: {{Round(recipe.totalMacros.Fat)}}g</p>
             </div>
         </div>
     </div>
