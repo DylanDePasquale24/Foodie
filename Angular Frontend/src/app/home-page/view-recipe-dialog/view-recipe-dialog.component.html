@@ -11,10 +11,10 @@
         <div class="descriptionWrapper">
             <h2>Description:</h2>
             <p><b><i>Calories: {{RoundToNearest5(recipe.totalMacros.Calories)}}</i></b></p>
-            <p *ngIf="recipe.description != null">
+            <p *ngIf="recipe.description != ''">
                 {{recipe.description}}
             </p>
-            <p *ngIf="recipe.description == null">
+            <p *ngIf="recipe.description == ''">
                 You didn't add any additional information :(
             </p>
         </div>
@@ -51,10 +51,10 @@
     <br>
 
     <h2>Instructions:</h2>
-    <p *ngIf="recipe.instructions != null">
+    <p *ngIf="recipe.instructions != ''">
         {{recipe.instructions}}
     </p>
-    <p *ngIf="recipe.instructions == null">
+    <p *ngIf="recipe.instructions == ''">
         You didn't add any instructions :(
     </p>
 
