@@ -27,8 +27,8 @@
    
 
     /* Visualizing */
-    border: groove;
-    border-color: black;
+    /* border: groove;
+    border-color: black; */
 } 
 .pieChart {
     width: 325px;
