@@ -323,7 +323,7 @@ func RouterDELETERecipe(router *gin.Engine) {
 
 	//TODO: Auth isn't working properly (add it)
 	//when unauthorized jwt, it says unauthorized, but still continues to next function and posts.
-	router.DELETE("/recipeDelete:recipeID", func(c *gin.Context) {
+	router.DELETE("/recipeDelete/:recipeID", func(c *gin.Context) {
 
 		recID := c.Param("recipeID")
 
