@@ -1,16 +1,20 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild, AfterViewInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ApexChart, ApexNonAxisChartSeries, ApexTitleSubtitle, ChartComponent, ApexTooltip, ApexResponsive } from "ng-apexcharts"
 import { HttpClient } from '@angular/common/http';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTableDataSource } from '@angular/material/table';
+import {LiveAnnouncer} from '@angular/cdk/a11y';
+import {MatSort, Sort} from '@angular/material/sort';
+import { any } from 'cypress/types/bluebird';
 
 @Component({
   selector: 'app-view-recipe-dialog',
   templateUrl: './view-recipe-dialog.component.html',
   styleUrls: ['./view-recipe-dialog.component.css']
 })
-export class ViewRecipeDialogComponent {
+export class ViewRecipeDialogComponent{
 
   chartValues: ApexNonAxisChartSeries
   chartType: ApexChart = {
@@ -23,7 +27,6 @@ export class ViewRecipeDialogComponent {
   chartTitle: ApexTitleSubtitle = {
     text: 'Calories From Each Macro',
   }
-
   chartOptions: {
     tooltip: ApexTooltip;
   } = {
@@ -39,10 +42,24 @@ export class ViewRecipeDialogComponent {
     enabled: true,
     position: 'bottom'
   }
-  deleteSpinner: boolean
- 
 
-  constructor(@Inject(MAT_DIALOG_DATA) public recipe : any, private dialogRef: MatDialogRef<ViewRecipeDialogComponent>, private snackBar: MatSnackBar, private httpClient: HttpClient){
+  deleteSpinner: boolean
+  displayedColumns: string[] = ['name', 'amount']
+  // , 'calories','protein', 'carbs', 'fat'
+
+  dataSource = [
+    {
+      name: 'hello',
+      amount: '4'
+    },
+    {
+      name: 'hi',
+      amount: '3'
+    }
+  ]
+  // @ViewChild(MatSort) sort = new MatSort();
+  
+  constructor(@Inject(MAT_DIALOG_DATA) public recipe : any, private dialogRef: MatDialogRef<ViewRecipeDialogComponent>, private snackBar: MatSnackBar, private httpClient: HttpClient, private _liveAnnouncer: LiveAnnouncer){
 
     this.chartValues = [
       Number(recipe.totalMacros.Protein * 4),
@@ -51,7 +68,13 @@ export class ViewRecipeDialogComponent {
     ]
 
     this.deleteSpinner = false
+
+    this.dataSource = recipe.ingredients
+    
   }
+  // ngAfterViewInit() {
+  //   this.dataSource.sort = this.sort;
+  // }
 
   DeleteRecipe(){
     this.deleteSpinner = true
@@ -99,4 +122,11 @@ export class ViewRecipeDialogComponent {
   Round(numStr: string): string{
     return Math.round(Number(numStr)).toString()
   }
+  // AnnounceSortChange(sortState: Sort) {
+  //   if (sortState.direction) {
+  //     this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+  //   } else {
+  //     this._liveAnnouncer.announce('Sorting cleared');
+  //   }
+  // }
 }

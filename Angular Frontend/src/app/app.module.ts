@@ -25,6 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatCardModule } from '@angular/material/card'
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule } from '@angular/material/table'
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -88,7 +89,8 @@ import { ViewRecipeDialogComponent } from './home-page/view-recipe-dialog/view-r
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatTableModule,
-    NgApexchartsModule
+    NgApexchartsModule,
+    MatSortModule
   ],
   exports: [],
   providers: [
