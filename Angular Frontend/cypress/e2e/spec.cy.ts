@@ -255,5 +255,9 @@ describe('Test Home Page', () => {
   });
 
   //ADD TESTS WHEN MORE BUTTON IS PRESSED
+  it('Should filter out other recipes', () => {
 
+    cy.get('#add-recipe-button').click();
+
+  });
 })

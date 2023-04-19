@@ -12,6 +12,9 @@ import { MatOption } from '@angular/material/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatRippleModule } from '@angular/material/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatAutocomplete, MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatSpinner } from '@angular/material/progress-spinner';
 
 import { OverlayModule } from '@angular/cdk/overlay';
 
@@ -22,6 +25,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { HomeComponent } from './home.component';
 import { ToolbarComponent } from '../../toolbar/toolbar.component';
+import { FooterComponent } from 'src/app/footer/footer.component';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -41,7 +45,9 @@ describe('HomeComponent', () => {
         FormsModule,
         MatInputModule,
         BrowserAnimationsModule,
-        MatRippleModule
+        MatRippleModule,
+        ReactiveFormsModule,
+        MatAutocompleteModule
       ],
       declarations: [ 
         HomeComponent, 
@@ -49,7 +55,10 @@ describe('HomeComponent', () => {
         MatFormField,
         MatLabel,
         MatSelect,
-        MatOption
+        MatOption,
+        MatAutocomplete,
+        FooterComponent,
+        MatSpinner
       ],
       providers: [
         { provide: MatDialog, useValue: {} },
