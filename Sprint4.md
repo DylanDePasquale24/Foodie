@@ -59,11 +59,27 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 ***Back-End***
 * Main.go
 
-  * stuff
+  * Updated the Recipe Out struct to include an array of macro objects
+
+  * Recipe Get Function
+    * Gets all recipes from the database and returns them as a JSON object
+	* Added a Macrofunc
+		* Does the same thing as the getMacro Function but locally
+		* Returns an array of macros for each recipe
+
+  * Recipe Delete Function
+	* Deletes a recipe based on the given recipe id
+	* Returns a success message if successful
+
+  * Get Macro Function
+	* Gets the macro values for a given recipe id
+	* Returns an array of macros for each recipe
+	* Adds the total macro values for the recipe at the end of the array
+
 
 * Database
-
-  * stuff
+  * Added a new table for "nutrients" which contains the macro values of each ingredient.
+	* New Table has much easier names and only the macro data we need (Calories, Carbohydrates, Protein, Fat)
   
 * Created Unit Tests
 
