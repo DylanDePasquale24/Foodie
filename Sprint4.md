@@ -25,10 +25,34 @@ As a user of Foodie, I would like to save and organize recipes so that I can eas
 ## Work Completed in Sprint 4
 
 ***Front-End***
-* Stuff
-  * stuff
+* Functionality to add recipe from backend..
+  * send http post req to backend
+  * recieve the added recipe and add to a our recipe display grid
 
-* more stuff
+* Recipe Card Grid
+  * shows all the cards 
+  * each card has protein, carbs, fat, calories, date
+  * has the option to click "view more" to brin up a dialog of the recipe thats more detailed (see below )
+
+* Vew Recipe Dialog
+  * Macro Breakdown
+  * ingredients
+  * Delete Recipe
+  * description, instructions
+  
+* Toolbar 
+  * Profile
+  * Create Recipe
+  
+* Styling
+  * Landing Page
+    * changed foodie logo size and button color
+  * Headline
+    * fixed spacing 
+  * Welcome Page Banner
+    * removed
+  * Footer
+    * added footer to all pages
 
  
 

@@ -80,7 +80,10 @@ export class ViewRecipeDialogComponent{
     this.deleteSpinner = true
 
     this.httpClient
-    .post('http://localhost:8080/recipeDelete' + this.recipe.id, {})
+    .post('http://localhost:8080/recipeDelete/' + this.recipe.id, {
+
+    
+    })
     .subscribe((response: any) => {
       
       //What to do if success -> close dialog
