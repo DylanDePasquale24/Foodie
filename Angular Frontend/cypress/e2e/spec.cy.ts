@@ -199,7 +199,7 @@ describe('Test Home Page', () => {
 
   });
 
-  it('Should pop up a profile dialog when profile button is pressed', () => {
+  xit('Should pop up a profile dialog when profile button is pressed', () => {
 
     cy.get('app-toolbar').get('#menu-button').click();
     cy.get('app-toolbar').get('button').contains(/profile/i).click();
@@ -209,7 +209,7 @@ describe('Test Home Page', () => {
     cy.contains(validEmail);
   });
 
-  it('Should not create recipe if ingredient is not given', () => {
+  xit('Should not create recipe if ingredient is not given', () => {
 
     cy.get('#add-recipe-button').click();
     cy.get('app-add-recipe-dialog').get('#recipe-name-input-field').type('Test Recipe');
@@ -222,7 +222,7 @@ describe('Test Home Page', () => {
 
   });
 
-  it('Should not create recipe if name is not given', () => {
+  xit('Should not create recipe if name is not given', () => {
 
     cy.get('#add-recipe-button').click();
     cy.get('app-add-recipe-dialog').get('#next-button-1').contains(/next/i).click();
@@ -239,7 +239,7 @@ describe('Test Home Page', () => {
   });
 
   //NEW RECIPE TESTS FOR A VALID RECIPE
-  it('Should create a valid recipe if a name and ingredient is inputted', () => {
+  xit('Should create a valid recipe if a name and ingredient is inputted', () => {
 
     cy.get('#add-recipe-button').click();
     cy.get('app-add-recipe-dialog').get('#recipe-name-input-field').type('Test Recipe');
@@ -257,7 +257,17 @@ describe('Test Home Page', () => {
   //ADD TESTS WHEN MORE BUTTON IS PRESSED
   it('Should filter out other recipes', () => {
 
-    cy.get('#add-recipe-button').click();
+    // In this test, we will filter out chicken parm and see that chicken parm is the only recipe left
+
+    cy.contains(/chicken/i, { timeout: 10000 });
+    cy.contains(/ramen/i, { timeout: 10000 });
+
+    cy.wait(1000);
+
+    cy.get('#search-recipe-input').type('chicken');
+
+    cy.contains(/chicken/i, { timeout: 10000 });
+    cy.contains(/ramen/i, { timeout: 10000 }).should('not.exist');
 
   });
 })

@@ -15,15 +15,14 @@
 
 
         <!-- Search -->
-        <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline" id="search-recipe-input">
             <mat-label>Search Recipe</mat-label>
             <input [formControl]="searchControl"
                 matInput
                 type="text"
                 placeholder="ex. Chicken Parmesan"
                 [matAutocomplete]="auto"
-                (input)="applyFilter(searchControl.value)"
-                id="search-recipe-input">
+                (input)="applyFilter(searchControl.value)">
             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="applyFilter($event.option.value)">
             <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 3" [value]="option">
                 {{option}}
