@@ -35,8 +35,17 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
   * Each card has protein, carbs, fat, calories, date
   * Implement "view more" to bring up a dialog of the recipe to show a more detailed view (includes visualizations and instructions)
   
+* Search bar and autocomplete
+  * Implement a search bar that will filter the recipe cards based on the search query
+  * Have autocomplete suggestions for the search bar
+  * Recipe cards will dynamically update as the user types in the search bar
 
-* Vew Recipe Dialog (View More for each Recipe Card)
+* Sorting Functionality
+  * Added two dropdowns that allow the user to sort recipes based on a given criteria: date, calories, protein, carbs, fat, etc
+  * User can choose either ascending or descending order
+  * Recipe cards will display and be sorted based on the user's selection
+
+* View Recipe Dialog (View More for each Recipe Card)
   * Includes a Macro Breakdown and Calorie Contribution from each macro, includes pie chart as visual
   * Ingredients of the recipe
   * Delete Recipe Button
