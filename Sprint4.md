@@ -102,15 +102,59 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
 ## Unit Tests
 
 ***Front-End***
-* stuff
+
+Existing Unit Tests Pass, new tests are written in cypress
+  * 'should navigate to login page'
+  * 'should navigate to register page'
+  * 'should throw error message if email is missing' 
+  * 'should throw error message if password is missing'
+  * 'should make a POST request to the server and navigate to home' 
+  * 'should set error message and clear form fields on error' 
+  * should display error if log in fails, should also receive an error message from backend
+  * 'should navigate to register page'
+  * 'should navigate to login page on click of "Already have an account?" button'
+  * 'should return true for a valid email'
+  * 'should return false for an invalid email'
+  * 'should make a POST request to the server and navigate to home'
 
 ***Back-End***
 
 
 
+
 ## Cypress Tests (Front-end)
 
+Existing e2e tests (refer to previous sprint documents for more details):
+* 'Goes to Landing Page'
+  * 'Visits landing page and checks main elements'
+  * 'Should have the login toolbar'
+  * 'Should navigate to register page when clicking Start for Free button'
+  * 'Should route to login page when LOG IN button is clicked'
+  * 'Clicking logo in toolbar directs to landing page'
+* 'Test Log in functionality'
+  * 'Should login in successfully with a correct account'
+  * 'Should not login with a invalid account'
+  * 'Should login with enter key'
+* 'Test Register' (Tests the register page)
+  * 'Should not register if email is already in use'
+* 'Test Routing and Auth Guard'
+  * 'Should not route to home page if user is not logged in'
+  * 'Should be able to route to home page if user is logged in'
 
+New/Updated e2e tests:
+* 'Test Home Page'
+  * 'Should log out when log out button is pressed'
+    * This tests checks that the log out button works and that the user is redirected to the landing page, the user should not be able to route back to the home page
+  * 'Should pop up a dialog when add recipe button is pressed'
+    * Tests the add recipe functionality, a dialog should pop up when the add recipe button is pressed
+  * 'Should pop up a profile dialog when profile button is pressed'
+    * Tests that profile information can be displayed
+  * 'Should not create recipe if ingredient is not given'
+    * Application should not allow a recipe to be created if the ingredient field is empty
+  * 'Should not create recipe if name is not given'
+    * Application should not allow a recipe to be created if the name field is empty
+  * 'Should create a valid recipe if a name and ingredient is inputted'
+    * If a name and ingredient is inputted, the application should create a recipe and display it on the home page
 
 
 ## Backend API Documentation
