@@ -90,7 +90,7 @@ func TestRouterPOSTRecipeCreate(t *testing.T) {
 		"UserID": "10",
 		"RecipeName": "Test Recipe Name 2",
 		"Description": "Test description",
-		"Ingredients": ["Test ingredient | 1"],
+		"Ingredients": ["Turkey | 1|||Spaghetti | 1"],
 		"Instructions": "Test instructions"
 	  }`)
 
