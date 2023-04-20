@@ -79,7 +79,7 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
 ***Back-End***
 * Main.go
 
-  * Updated the Recipe Out struct to include an array of macro objects
+  * Updated the Recipe Out struct to include an array of macronutrient objects
 
   * Recipe Get Function
     * Gets all recipes from the database and returns them as a JSON object
@@ -92,7 +92,7 @@ https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
 	* Returns a success message if successful
 
   * Get Macro Function
-	* Gets the macro values for a given recipe id
+	* Gets the calories and macronutrient values for a given recipe id
 	* Returns an array of macros for each recipe
 	* Adds the total macro values for the recipe at the end of the array
 
@@ -124,6 +124,41 @@ Existing Unit Tests Pass, new tests are written in cypress
 
 ***Back-End***
 
+TestHashPassword
+ -  This test checks that the password hashing function that is part of the bcrypt package works properly
+ -  It hashes a test password and calls bcrypt's compare function to see if the hashed password matches the test password. If the compare function returns nil, then there are no errors and the test passes. Otherwise, the test throws an error message
+ - (Completed in a previous sprint)
+
+TestRouterPOSTRegister
+- This tests the /register endpoint by trying to register a new user
+- If the response is status code 200, then the user was successfully registered and the test passes. Otherwise, a status code of 500 is returned along with an error message
+ - Note: This test will fail if you rerun the test without deleting the user it created in the database
+- (Completed in a previous sprint)
+
+TestRouterPOSTLogin
+- This tests the /login endpoint by trying to log in the user created in the TestRouterPOSTRegister test
+- If the response is status code 200, then the user was successfully logged in and the test passes. Otherwise, a status code of 500 is returned along with an error message
+- (Completed in a previous sprint)
+
+TestRouterPOSTRecipeCreate
+ - This tests the /recipeCreate endpoint by sending a POST request to the backend in order to create a recipe entry in the database. The request also holds the recipe information that will be stored.
+ - The test passes when a status code of 200 is in the response, meaning that the recipe was successfully stored. If the test fails, a status code of 500 is returned along with an error message.
+ - (Completed in a previous sprint)
+
+TestRouterGetRecipe
+ - This tests the /recipeGet/:id endpoint by sending a GET request to the backend in order to get all the recipe entries connected to the specified user id. The user id is passed through the route where it says ":id".
+ - The test passes when a status code of 200 is in the response, meaning that there are recipes connected to that user id, and all the recipes are returned in the response as well. If the test fails, a status code of 500 is returned along with an error message.
+ - (Completed in a previous sprint)
+
+TestRouterDELETERecipe
+ - This tests the /recipeDelete/:recipeID endpoint by sending a DELETE request to the backend in order to delete a recipe entry in the database. The recipe id is passed through the route where it says ":recipeID".
+ - The test passes when a status code of 200 is in the response, meaning that there is a recipe with that id and it was deleted. If the test fails, a status code of 500 is returned along with an error message.
+ - (This test was completed in this sprint)
+
+TestRouterGetMacros
+ - This tests the /macros/:recipeID endpoint by sending a GET request to the backend in order to get the calories and macronutrient information (fat, carbohydrates, and protein) of the ingredients in a recipe. The recipe id is passed through the route where it says ":recipeID".
+ - The test passes when a status code of 200 is in the response, meaning that there is a recipe with that id, and the macronutrient information of the ingredients in the recipe are returned as well. If the test fails, a status code of 500 is returned along with an error message.
+ - (This test was completed in this sprint) 
 
 
 
