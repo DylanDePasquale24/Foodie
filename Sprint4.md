@@ -8,8 +8,8 @@
 https://github.com/DylanDePasquale24/Foodie/tree/sprint-4
 
 ## Link to Demo
-- Link to Video Demo: 
-
+- Link to Frontend Video Demo: https://youtu.be/vMyMpmszX1U
+- Link to Backend Video Demo: 
 
 ## User Stories
 
