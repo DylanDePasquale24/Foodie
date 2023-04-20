@@ -4,6 +4,7 @@ import { AppRoutingModule } from '../shared/app-routing.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 // ANGULAR MATERIAL MODULES
@@ -19,7 +20,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSelectModule } from '@angular/material/select'
 import {MatTooltipModule } from '@angular/material/tooltip'
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatStepperModule } from '@angular/material/stepper'
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatCardModule } from '@angular/material/card'
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTableModule } from '@angular/material/table'
+import { MatSortModule } from '@angular/material/sort';
 
 
 
@@ -35,6 +41,10 @@ import { RegisterComponent } from './register/register.component';
 import { FooterComponent } from './footer/footer.component';
 import { JwtInterceptor } from 'src/shared/services/jwt.interceptor';
 import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-recipe-dialog.component';
+import { ProfileDialogComponent } from './home-page/profile-dialog/profile-dialog.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ViewRecipeDialogComponent } from './home-page/view-recipe-dialog/view-recipe-dialog.component';
+
 
 
 
@@ -51,7 +61,9 @@ import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-reci
     LoginToolbarComponent,
     RegisterComponent,
     FooterComponent,
-    AddRecipeDialogComponent
+    AddRecipeDialogComponent,
+    ProfileDialogComponent,
+    ViewRecipeDialogComponent
   ],
   entryComponents: [AddRecipeDialogComponent],
   imports: [
@@ -71,7 +83,14 @@ import { AddRecipeDialogComponent } from './home-page/add-recipe-dialog/add-reci
     MatGridListModule,
     MatSelectModule,
     MatTooltipModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatTableModule,
+    NgApexchartsModule,
+    MatSortModule
   ],
   exports: [],
   providers: [

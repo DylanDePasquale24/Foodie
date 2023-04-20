@@ -24,7 +24,7 @@ p{
 .grid-container2 {
     grid-gap: 20px;
     margin-top: 8vw;
-    margin-bottom: 5vw;
+    margin-bottom: 2vw;
     background-color: lavender;
   }
   
@@ -74,12 +74,12 @@ p{
 }
 
 .landing-logo{
-    margin-top: 100px;
-    margin-bottom: 100px;
+    margin-top: 20px;
+    margin-bottom: 0px;
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 50%;
+    width: 20%;
 }
 
 .button-text{

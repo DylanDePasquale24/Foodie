@@ -1,4 +1,5 @@
 node_modules
 angular-crash/
-Angular Frontend\cypress\screenshots
-Angular Frontend\cypress\videos
+Angular Frontend/cypress/screenshots
+Angular Frontend/cypress/videos
+videos/

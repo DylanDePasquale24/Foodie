@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 
 @Component({
@@ -20,11 +23,11 @@ export class AddRecipeDialogComponent {
     amount : any
   }
 
-  val: boolean = false
-
   addedFirstIngredient : boolean
+  savingSpinner : boolean
+  test = new Date()
 
-  constructor(private httpClient: HttpClient){
+  constructor(private httpClient: HttpClient, private dialogRef: MatDialogRef<AddRecipeDialogComponent>, private snackBar: MatSnackBar){
     this.recipe = {
       name: null,
       description: null,
@@ -36,12 +39,10 @@ export class AddRecipeDialogComponent {
       amount: null
     }
     this.addedFirstIngredient = false
+    this.savingSpinner = false
   }
 
   AddIngredient(): void{
-
-    //TODO: VERIFY INGREDIENT WITH BACKEND BEFORE YOU ADD IT
-
 
     //Empty Inputs
     if(this.temp.ingredient == null || this.temp.amount == null){
@@ -66,30 +67,43 @@ export class AddRecipeDialogComponent {
     this.recipe.ingredients.pop()
   }
   SendRecipeToBackend(): void{
-    
+
+    this.savingSpinner = true
+
+    let date = new Date()
+    console.log(date)
 
     this.httpClient
-    .post<Response>('http://localhost:8080/login', {
+    .post('http://localhost:8080/recipeCreate', {
       
-      //post stuff
-      //make a response interface
-
+      UserID: localStorage.getItem('userId'),
+      RecipeName: this.recipe.name,
+      Description: this.recipe.description,
+      Ingredients: this.recipe.ingredients,
+      Instructions: this.recipe.instructions
     })
-    .subscribe((response: Response) => {
+    .subscribe((response: any) => {
       
-      //response
+      //What to do if success
+      
+      console.log(response)
+      this.savingSpinner = false
+      this.dialogRef.close()
 
+      //snack bar
+      this.snackBar.open("Recipe created successfully! (Refresh to Update)", "Dismiss")
+      
     }, (err) =>{
 
-      //to do if error
+      //What to do if error
+      console.log(err)
+      this.savingSpinner = false
+
+      //Snack bar
+      this.snackBar.open("Recipe could NOT be created!", "Dismiss")
     })
-  
-    
 
-    //if desc = null, set to something
-    //if instructions = null, set to something
-
-
-    //SNACKBAR ONCE COMPLETE!
   }
 }
+
+

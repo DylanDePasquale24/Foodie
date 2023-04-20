@@ -1,0 +1,114 @@
+<h1 mat-dialog-title> 
+    <span style="font-size: 25px;">{{recipe.name}}</span>
+    <br>
+    <span style="color:gray; font-weight: normal; font-size: 16px;" >{{recipe.date}}</span>
+</h1>
+
+<mat-dialog-content>
+    
+    <div class="container">
+
+        <div class="descriptionWrapper">
+            <h2>Description:</h2>
+            <p><b><i>Calories: {{RoundToNearest5(recipe.totalMacros.Calories)}}</i></b></p>
+            <p *ngIf="recipe.description != ''">
+                {{recipe.description}}
+            </p>
+            <p *ngIf="recipe.description == ''">
+                <!-- Unfortunately, you didn't add a personal description :( -->
+                No description provided.
+            </p>
+        </div>
+    
+        <div class="macrosWrapper">
+           <h2>Macro Breakdown:</h2>
+           <div class="pieChart">
+            <apx-chart
+              [series]="chartValues"
+              [chart]="chartType"
+              [labels]="chartLabels"
+              [title]="chartTitle"
+              [tooltip]="chartOptions.tooltip">
+            </apx-chart>
+          </div> 
+        </div>
+    </div>
+
+
+    <br>
+    <br>
+
+
+    <h2>Ingredients:</h2>
+    <table mat-table [dataSource]="dataSource"  matSort class="mat-elevation-z8">
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+      
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef> Amount (g) </th>
+          <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+        </ng-container>
+      
+        <!-- Calories Column -->
+        <ng-container matColumnDef="calories">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef> Calories </th>
+          <td mat-cell *matCellDef="let element"> {{element.calories}} </td>
+        </ng-container>
+      
+        <!-- Protein Column -->
+        <ng-container matColumnDef="protein">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef> Protein (g) </th>
+          <td mat-cell *matCellDef="let element"> {{element.protein}} </td>
+        </ng-container>
+
+        <!-- Carbs Column -->
+        <ng-container matColumnDef="carbs">
+            <th mat-header-cell mat-sort-header *matHeaderCellDef> Carbs (g) </th>
+            <td mat-cell *matCellDef="let element"> {{element.carbs}} </td>
+        </ng-container>
+
+        <!-- Fat Column -->
+        <ng-container matColumnDef="fat">
+        <th mat-header-cell mat-sort-header *matHeaderCellDef> Fat (g) </th>
+        <td mat-cell *matCellDef="let element"> {{element.fat}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <br>
+    <br>
+
+    <h2>Instructions:</h2>
+    <p *ngIf="recipe.instructions != ''">
+        {{recipe.instructions}}
+    </p>
+    <p *ngIf="recipe.instructions == ''">
+        You didn't add any instructions :(
+    </p>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="deleteBtn">
+        <button mat-raised-button color="warn" tabindex="-1" (click)="DeleteRecipe()">Delete Recipe</button>
+        <p *ngIf="deleteSpinner">
+            <br>
+            <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+        </p>
+    </div>
+    
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close="false">Close</button>
+</mat-dialog-actions>
+

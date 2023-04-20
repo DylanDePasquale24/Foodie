@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 
 interface Response {
   id : string
-  usersName: string
+  usersFName: string
+  usersLName: string
   jwt: string
 }
 
@@ -65,7 +66,12 @@ export class LoginComponent {
       //Local Storage
       localStorage.setItem('token', response.jwt)
       localStorage.setItem('userId', response.id)
-      localStorage.setItem('usersName', response.usersName)
+      localStorage.setItem('usersFName', response.usersFName)
+      localStorage.setItem('usersLName', response.usersLName)
+
+      if (this.email !== undefined && this.email !== null) {
+        localStorage.setItem('usersEmail', this.email);
+      }
   
       this.email = null
       this.password = null

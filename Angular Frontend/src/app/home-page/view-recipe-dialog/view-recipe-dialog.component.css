@@ -1,0 +1,48 @@
+.container {
+    width: 785px;
+    display: flex;
+
+    /* Visualizing */
+    /* border: groove;
+    border-color: green; */
+}
+.descriptionWrapper {
+    
+    width: 300px;
+
+
+    overflow-wrap: break-word; 
+
+
+    /* Visualizing */
+    /* border: groove;
+    border-color: red; */
+}
+.macrosWrapper {
+   
+    width: 330px;
+    position: relative;
+    left: 145px;   /* ^number = more right */
+    
+   
+
+    /* Visualizing */
+    /* border: groove;
+    border-color: black; */
+} 
+.pieChart {
+    width: 325px;
+    height: 200px;
+
+    /* Visualizing */
+    /* border: groove;
+    border-color: purple; */
+}
+.deleteBtn{
+    text-align: center;
+}
+p {
+    color: black;
+}
+
+

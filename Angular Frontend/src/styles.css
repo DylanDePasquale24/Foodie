@@ -3,3 +3,16 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/* This is for making the footer stick to the bottom of the page */
+.body-flex-wrapper
+{
+    flex-grow: 1;
+}
+
+.make-footer-stick
+{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+

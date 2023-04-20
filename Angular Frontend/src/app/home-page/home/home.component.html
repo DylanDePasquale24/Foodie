@@ -1,64 +1,115 @@
 <app-toolbar></app-toolbar>
 
-<div class="welcomeBanner">
-    <h1 class="headline-2"> Welcome back, {{user.name}}! </h1>
-    <p class="body-1">All your recipe needs - All in one place</p>
-    <p class="body-1">Get started by writing a new recipe or pickup right where you left off!</p>
+<!-- make-footer-stick and body-flex-wrapper are needed to make the footer stick to the bottom of the page. The css for these classes are in Angular Frontend\src\styles.css -->
+<div class="make-footer-stick">
+    <div class="body-flex-wrapper">
+
+        <!-- <div class="welcomeBanner">
+            <h1 class="headline-2"> Welcome back {{user.name}}! </h1>
+            <p class="body-1">All your recipe needs - All in one place</p>
+            <p class="body-1">Get started by writing a new recipe or pickup right where you left off!</p>
+        </div> -->
+
+        <div class="headline">
+            <h1 class="headline-1">My Recipes</h1>
+
+
+        <!-- Search -->
+        <mat-form-field appearance="outline" id="search-recipe-input">
+            <mat-label>Search Recipe</mat-label>
+            <input [formControl]="searchControl"
+                matInput
+                type="text"
+                placeholder="ex. Chicken Parmesan"
+                [matAutocomplete]="auto"
+                (input)="applyFilter(searchControl.value)">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="applyFilter($event.option.value)">
+            <mat-option *ngFor="let option of filteredOptions | async | slice : 0 : 3" [value]="option">
+                {{option}}
+            </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+
+
+
+            <!-- Sort by -->
+            <mat-form-field appearance="outline">
+                <mat-label>Sort By</mat-label>
+
+                <mat-select [(ngModel)]="headlineInputs.sortBy" (ngModelChange)="onSortByChange($event)">
+                    <mat-option value="date" selected>Date</mat-option>
+                    <mat-option value="calories">Calories</mat-option>
+                    <mat-option value="protein">Protein</mat-option>
+                    <mat-option value="carbs">Carbs</mat-option>
+                    <mat-option value="fat">Fat</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+
+            <!-- Order (Ascending / Descending) -->
+            <mat-form-field appearance="outline">
+                <mat-label>Order</mat-label>
+
+                <mat-select [(ngModel)]="headlineInputs.order" (ngModelChange)="onOrderByChange($event)">
+                    <mat-option value="ascending" selected>Ascending</mat-option>
+                    <mat-option value="descending">Descending</mat-option>
+                </mat-select>
+            </mat-form-field>
+            
+
+            <!-- Add Recipe -->
+            <button mat-fab color="primary" (click)="AddRecipeDialog()" matTooltip="New Recipe" style="margin: 0.5vw" id="add-recipe-button"> 
+                <mat-icon>add</mat-icon>
+            </button>
+            
+        </div>
+
+
+        <ng-container *ngFor="let currentRecipe of recipesList; let i = index;">
+            <div class="recipeCardWrapper" *ngIf="isDisplayingRecipes && !currentRecipe.hidden">
+
+                <mat-card class="recipeCard">
+
+                    <div class="cardTitle">
+                        <mat-card-title class="recipeTitleText">
+                            {{currentRecipe.RecipeName}}
+                        </mat-card-title>
+                
+                        <mat-card-subtitle class="recipeOverviewText">
+                            Calories: {{RoundToNearest5(currentRecipe.MacroInformation[currentRecipe.MacroInformation.length - 1].Calories)}}
+                            <br>
+                        <!-- -------------- Look for a date time package that will handling sorting by date. Do not implement yourself manually. -------------- -->
+                            Date: {{currentRecipe.Date}}
+                        </mat-card-subtitle>
+                    </div>
+
+                    <div class="cardMacros">
+                        <mat-card-subtitle class="macrosText">
+                            <p>Protein: {{Round(currentRecipe.MacroInformation[currentRecipe.MacroInformation.length - 1].Protein)}}g</p>
+                            <p>Fat: {{Round(currentRecipe.MacroInformation[currentRecipe.MacroInformation.length - 1].Fat)}}g</p>
+                            <p>Carbs: {{Round(currentRecipe.MacroInformation[currentRecipe.MacroInformation.length - 1].Carbs)}}g</p>
+                        </mat-card-subtitle>
+                    </div>
+
+                    <button mat-button color="accent" (click)="ViewRecipeDialog(i)">See More</button>
+                </mat-card>
+
+            </div>
+        </ng-container>
+
+        <div *ngIf="!isDisplayingRecipes" style="text-align: center;">
+            <h2>
+                {{this.noRecipeMessg}}
+            </h2>
+            <span *ngIf="!hasNoRecipes">
+                <p>This should only take a few moments</p>
+                <p>
+                    <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+                </p>
+            </span>
+        </div>
+    </div>
+
+    <app-footer></app-footer>
 </div>
-
-
-
-<div class="headline">
-    <h1>My Recipes</h1>
-
-
-    <!-- Search -->
-    <mat-form-field appearance="outline">
-        <!-- TODO: Add autocomplete -->
-        <mat-label>Search Recipe</mat-label>
-        <input [(ngModel)]="headlineInputs.search" matInput  placeholder="ex. Chicken Parmesan">
-    </mat-form-field>
-
-
-    <!-- Sort by -->
-    <mat-form-field appearance="outline">
-        <mat-label>Sort By</mat-label>
-
-        <mat-select [(ngModel)]="headlineInputs.sortBy">
-            <mat-option value="date" selected>Date</mat-option>
-            <mat-option value="calories">Calories</mat-option>
-            <mat-option value="protein">Protein</mat-option>
-            <mat-option value="carbs">Carbs</mat-option>
-            <mat-option value="fat">Fat</mat-option>
-        </mat-select>
-    </mat-form-field>
-    
-
-    <!-- Order (Ascending / Descending) -->
-    <mat-form-field appearance="outline">
-        <mat-label>Order</mat-label>
-
-        <mat-select [(ngModel)]="headlineInputs.order">
-            <mat-option value="ascending" selected>Ascending</mat-option>
-            <mat-option value="descending">Descending</mat-option>
-        </mat-select>
-    </mat-form-field>
-    
-
-    <!-- Add Recipe -->
-    <button mat-fab color="primary" (click)="OpenDialog()" matTooltip="New Recipe"> 
-        <mat-icon>add</mat-icon>
-    </button>
-    
-</div>
-
-
-
-
-<!-- TODO: make paginator in case too many recipes -->
-<div class="recipeGrid">
-    <!-- display current recipe grid -->
-</div>
-
-
 

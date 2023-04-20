@@ -7,6 +7,17 @@
         <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+        <!-- Profile Button -->
+        <button (click)="DisplayProfile()" mat-menu-item>
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+        </button>
+        <!-- Create Recipe Button -->
+        <button (click)="CreateRecipe()" mat-menu-item>
+            <mat-icon>book</mat-icon>
+            <span>Create Recipe</span>
+        </button>
+        <!-- Logout Button -->
         <button (click)="LogOut()" mat-menu-item>
           <mat-icon>logout</mat-icon>
           <span>Logout</span>

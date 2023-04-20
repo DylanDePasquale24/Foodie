@@ -1,36 +1,48 @@
 <app-login-toolbar></app-login-toolbar>
-<div class="landing-page">
-    <div class="grid-container1">
-        <mat-grid-list cols="2" rowHeight="5.5:4">
-            <mat-grid-tile>
-                <div class="grid-item left-align">
-                    <h1 class="headline-4">Recipe tracking made easy.</h1>
-                    <p class="body-1">Easily create and share custom recipies for all your nutrition needs.</p>
-                </div>
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <img src="assets\images\Food_Bowl.png" alt="Landing Image" class="landing-image">
-            </mat-grid-tile>
-        </mat-grid-list>
+<!-- make-footer-stick and body-flex-wrapper are needed to make the footer stick to the bottom of the page. The css for these classes are in Angular Frontend\src\styles.css -->
+<div class="make-footer-stick">
+    <div class="body-flex-wrapper">
+        <div class="landing-page">
+            <div class="grid-container1">
+                <mat-grid-list cols="2" rowHeight="5.5:4">
+                    <mat-grid-tile>
+                        <div class="grid-item left-align">
+                            <h1 class="headline-4">Recipe tracking made easy.</h1>
+                            <p class="body-1">Easily create and share custom recipes for all your nutrition needs.</p>
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <img src="assets\images\Food_Bowl.png" alt="Landing Image" class="landing-image">
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+
+            <div class="grid-container2">
+                <mat-grid-list cols="2" rowHeight="7:4">
+                    <mat-grid-tile>
+                        <img src="assets\images\meal-prep.png" alt="Landing Image" class="landing-image">
+                    </mat-grid-tile>
+                    <mat-grid-tile>
+                        <div class="grid-item left-align">
+                            <h1 class="headline-2">Powered by data.</h1>
+                            <p class="body-1">Track calories, macros, and nutritional data by just writing a recipe!</p>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+
+            <img src="assets\images\Foodie_Logo_Orange.png" alt="Foodie Logo Orange" class="landing-logo">
+
+            <button (click)="goToRegister()" mat-raised-button class="button-text" id="get-started-button" style="background-color: #f67571; color: white;">Start for Free</button>
+        
+            <br>
+            <br>
+            <br>
+            <br>
+        </div>
     </div>
 
-    <div class="grid-container2">
-        <mat-grid-list cols="2" rowHeight="7:4">
-            <mat-grid-tile>
-                <img src="assets\images\meal-prep.png" alt="Landing Image" class="landing-image">
-            </mat-grid-tile>
-            <mat-grid-tile>
-                <div class="grid-item left-align">
-                    <h1 class="headline-2">Powered by data.</h1>
-                    <p class="body-1">Track calories, macros, and nutritional data by just writing a recipe!</p>
-                </div>
-            </mat-grid-tile>
-        </mat-grid-list>
-    </div>
+    <app-footer></app-footer>
 
-    <button (click)="goToRegister()" mat-raised-button color="primary" class="button-text" id="get-started-button">Start for Free</button>
-
-    <img src="assets\images\Foodie_Logo_Orange.png" alt="Foodie Logo Orange" class="landing-logo">
 </div>
-
 

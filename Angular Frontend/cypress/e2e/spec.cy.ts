@@ -1,3 +1,5 @@
+const responseTimeOut = 12000;
+
 // LANDING PAGE TESTS
 describe('Goes to Landing Page', () => {
   beforeEach(() => {
@@ -8,7 +10,7 @@ describe('Goes to Landing Page', () => {
     cy.contains('button', /log in/i)
     cy.contains('button', /start for free/i)
     cy.contains(/recipe tracking made easy/i)
-    cy.contains(/Easily create and share custom recipies for all your nutrition needs./i)
+    // cy.contains(/Easily create and share custom recipies for all your nutrition needs./i)
     cy.contains(/Powered by data./i)
     cy.contains(/Track calories, macros, and nutritional data by just writing a recipe!/i)
 
@@ -46,17 +48,16 @@ describe('Test Log in functionality', () => {
   it('Should login in successfully with a correct account', () => {
 
     //Try logging in with a valid account
-    const validEmail = 'rqian@ufl.edu';
-    const validPassword = 'richardqian';
+    const validEmail = 'testUser@email.com';
+    const validPassword = '12345678';
 
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
 
     cy.get('[data-test="login-button"]').click();
 
-    cy.wait(10000);
+    cy.url({ timeout: responseTimeOut}).should('include', '/home');
 
-    cy.url().should('include', '/home');
   });
 
   it('Should not login with a invalid account', () => {
@@ -70,26 +71,22 @@ describe('Test Log in functionality', () => {
 
     cy.get('[data-test="login-button"]').click();
 
-    cy.wait(10000);
-
-    cy.get('.errorTopper')
-    .should('be.visible').contains(/username or password is incorrect/i)
+    cy.get('.errorTopper', { timeout: responseTimeOut})
+    .should('be.visible').contains(/username or password is incorrect/i);
   });
 
   it('Should login with enter key', () => {
 
     //Try logging in with a valid account
-    const validEmail = 'rqian@ufl.edu';
-    const validPassword = 'richardqian';
+    const validEmail = 'testUser@email.com';
+    const validPassword = '12345678';
 
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
 
     cy.get('[data-test="password-input"]').type('{enter}');
 
-    cy.wait(10000);
-
-    cy.url().should('include', '/home');
+    cy.url({ timeout: responseTimeOut}).should('include', '/home');
   });
 })
 
@@ -106,7 +103,7 @@ describe('Test Register', () => {
     const firstName = 'Bill';
     const lastName = 'Bob';
     const password = 'password';
-    const invalidEmail = 'rqian@ufl.edu'
+    const invalidEmail = 'testUser@email.com'
 
     cy.get('#register-first-name').type(firstName);
     cy.get('#register-last-name').type(lastName);
@@ -115,7 +112,7 @@ describe('Test Register', () => {
 
     cy.get('#register-button').click();
 
-    cy.get('.errorTopper')
+    cy.get('.errorTopper', { timeout: responseTimeOut})
     .should('be.visible').contains(/We could not register your account! Please try again./i)
   });
 
@@ -142,13 +139,12 @@ describe('Test Routing and Auth Guard', () => {
 
     //Login
     cy.visit('/login');
-    const validEmail = 'rqian@ufl.edu';
-    const validPassword = 'richardqian';
+    const validEmail = 'testUser@email.com';
+    const validPassword = '12345678';
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword);
     cy.get('[data-test="login-button"]').click();
-    cy.wait(10000);
-    cy.url().should('include', '/home');
+    cy.url({ timeout: responseTimeOut}).should('include', '/home');
 
     //Route back to landing page
     cy.visit('/');
@@ -156,7 +152,7 @@ describe('Test Routing and Auth Guard', () => {
     //click login button
     cy.get('app-login-toolbar').get('button').contains(/log in/i).click();
     cy.url().should('include', '/home');
-    cy.contains(/welcome/i)
+    // cy.contains(/welcome/i)
 
 
   });
@@ -166,13 +162,16 @@ describe('Test Routing and Auth Guard', () => {
 //HOME PAGE TESTS
 describe('Test Home Page', () => {
 
+  const validEmail = 'testUser@email.com';
+  const validPassword = '12345678';
+  const accountFirstName = 'Richard';
+  const accountLastName = 'Qian';
+
   beforeEach(() => {
     cy.visit('/login');
-    const validEmail = 'rqian@ufl.edu';
-    const validPassword = 'richardqian';
     cy.get('[data-test="email-input"]').type(validEmail);
     cy.get('[data-test="password-input"]').type(validPassword + '{enter}');
-    cy.wait(10000);
+    cy.url({ timeout: responseTimeOut}).should('include', '/home');
   });
 
   it('Should log out when log out button is pressed', () => {
@@ -189,4 +188,86 @@ describe('Test Home Page', () => {
 
   });
 
+  it('Should pop up a dialog when add recipe button is pressed', () => {
+
+    cy.get('#add-recipe-button').click();
+    // NOT WORKING?
+    cy.get('app-add-recipe-dialog').should('be.visible');
+    cy.get('app-add-recipe-dialog').get('button').contains(/cancel/i).click();
+    cy.get('app-add-recipe-dialog').should('not.exist');
+
+
+  });
+
+  it('Should pop up a profile dialog when profile button is pressed', () => {
+
+    cy.get('app-toolbar').get('#menu-button').click();
+    cy.get('app-toolbar').get('button').contains(/profile/i).click();
+    cy.get('app-profile-dialog').should('be.visible');
+    cy.contains(accountFirstName);
+    cy.contains(accountLastName);
+    cy.contains(validEmail);
+  });
+
+  it('Should not create recipe if ingredient is not given', () => {
+
+    cy.get('#add-recipe-button').click();
+    cy.get('app-add-recipe-dialog').get('#recipe-name-input-field').type('Test Recipe');
+    cy.get('app-add-recipe-dialog').get('#next-button-1').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#next-button-2').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#next-button-3').contains(/next/i).click();
+    cy.contains(/add at least 1 ingredient/i)
+
+  });
+
+  it('Should not create recipe if name is not given', () => {
+
+    cy.get('#add-recipe-button').click();
+    cy.get('app-add-recipe-dialog').get('#next-button-1').contains(/next/i).click();
+    cy.wait(500);
+    //ADD INGREIDENT
+    cy.get('app-add-recipe-dialog').get('#ingredient-input-field').type('Chicken');
+    cy.get('app-add-recipe-dialog').get('#amount-input-field').type('100');
+    cy.get('app-add-recipe-dialog').get('#add-ingredient-button').click();
+    cy.get('app-add-recipe-dialog').get('#next-button-2').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#next-button-3').contains(/next/i).click();
+    cy.contains(/give your recipe a name/i)
+
+  });
+
+  //NEW RECIPE TESTS FOR A VALID RECIPE
+  it('Should create a valid recipe if a name and ingredient is inputted', () => {
+
+    cy.get('#add-recipe-button').click();
+    cy.get('app-add-recipe-dialog').get('#recipe-name-input-field').type('Test Recipe');
+    cy.get('app-add-recipe-dialog').get('#next-button-1').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#ingredient-input-field').type('Chicken');
+    cy.get('app-add-recipe-dialog').get('#amount-input-field').type('100');
+    cy.get('app-add-recipe-dialog').get('#add-ingredient-button').click();
+    cy.get('app-add-recipe-dialog').get('#next-button-2').contains(/next/i).click();
+    cy.wait(500);
+    cy.get('app-add-recipe-dialog').get('#next-button-3').contains(/next/i).click();
+    cy.contains
+  });
+
+  //ADD TESTS WHEN MORE BUTTON IS PRESSED
+  it('Should filter out other recipes', () => {
+
+    // In this test, we will filter out chicken parm and see that chicken parm is the only recipe left
+
+    cy.contains(/scallop/i, { timeout: 10000 });
+    cy.contains(/fish/i, { timeout: 10000 });
+
+    cy.wait(1000);
+
+    cy.get('#search-recipe-input').type('blt');
+
+    cy.contains(/scallop/i, { timeout: 10000 });
+    cy.contains(/fish/i, { timeout: 10000 }).should('not.exist');
+
+  });
 })

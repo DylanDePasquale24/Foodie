@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { ToolbarComponent } from './toolbar.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 describe('ToolbarComponent', () => {
   let component: ToolbarComponent;
@@ -13,7 +14,8 @@ describe('ToolbarComponent', () => {
     await TestBed.configureTestingModule({
       imports : [
         MatIconModule,
-        MatMenuModule
+        MatMenuModule,
+        MatDialogModule
       ],
       declarations: [
       ToolbarComponent, 

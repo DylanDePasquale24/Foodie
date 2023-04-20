@@ -8,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { LandingComponent } from './landing.component';
 import { LoginToolbarComponent } from '../login-toolbar/login-toolbar.component';
+import { FooterComponent } from '../footer/footer.component';
 
 describe('LandingComponent', () => {
   let component: LandingComponent;
@@ -23,7 +24,8 @@ describe('LandingComponent', () => {
       ],
       declarations: [ 
         LandingComponent,
-        LoginToolbarComponent
+        LoginToolbarComponent,
+        FooterComponent
       ]
     })
     .compileComponents();

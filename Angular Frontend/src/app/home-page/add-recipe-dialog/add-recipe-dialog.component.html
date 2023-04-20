@@ -9,7 +9,7 @@
             <div class="stepContent">
                 <h1>What is it? </h1>
 
-                <mat-form-field style="width: 375px" appearance="outline">
+                <mat-form-field style="width: 375px" appearance="outline" id="recipe-name-input-field">
                     <mat-label>Recipe Name</mat-label>
                     <input [(ngModel)]="recipe.name" placeholder="Chicken Parmesan" matInput required>
                 </mat-form-field>
@@ -21,7 +21,7 @@
                 </mat-form-field>
             </div>
 
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperNext id="next-button-1">Next</button>
         </mat-step>
 
 
@@ -45,22 +45,22 @@
                     <h1>Try adding an ingredient...</h1>
                 </div>
                 
-                <mat-form-field style="width: 150px" appearance="outline">
+                <mat-form-field style="width: 150px" appearance="outline" id="ingredient-input-field">
                     <mat-label>Ingredient</mat-label>
                     <input [(ngModel)]="temp.ingredient" placeholder="Chicken" matInput>
                 </mat-form-field>
 
-                <mat-form-field style="width: 150px" appearance="outline">
+                <mat-form-field style="width: 150px" appearance="outline" id="amount-input-field">
                     <mat-label>Amount (grams)</mat-label>
                     <input [(ngModel)]="temp.amount" placeholder="250" matInput>
                 </mat-form-field>
                 
-                <button mat-raised-button color="primary" (click)="AddIngredient()">Add</button>
+                <button mat-raised-button color="primary" (click)="AddIngredient()" id="add-ingredient-button">Add</button>
         
             </div>
 
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperNext id="next-button-2">Next</button>
            
             
         </mat-step>
@@ -78,19 +78,15 @@
             </div>
 
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperNext id="next-button-3">Next</button>
         </mat-step>
 
 
         <!-- Review -->
-        <!-- TODO: 
-        Show the recipe and all the data the backend calculates... protein
-        //show these buttons actually only in review section?
-        -->
         <mat-step label="Review">
 
             <!-- Error Mssg -->
-            <div *ngIf="recipe.name == null || recipe.ingredients.length == 0">
+            <div *ngIf="recipe.name == null || recipe.ingredients.length == 0" id="recipe-error-message">
                 <h1>Please complete the following steps:</h1>
                 <span *ngIf="recipe.name == null">
                     - Give your recipe a name
@@ -126,9 +122,17 @@
                 <br>
                 <br>
 
-                <p>*Once saved, our algorithm will automatically calculate total calories, protein, carbs, & fat! </p>
+                <div class="savingFooter" *ngIf="savingSpinner">
+                    <p>Saving Recipe...</p>
+                    <p>(This should only take a few moments)</p>
+                    <p>
+                        <mat-spinner [diameter]="25" style="margin: auto"></mat-spinner>
+                    </p>
+                </div>
+
                 <button mat-button matStepperPrevious>Back</button>
-                <button mat-button mat-dialog-close mat-dialog-close="Clicked Save & Close Btn" (click)="SendRecipeToBackend()">Save & Close</button>
+                <button mat-button (click)="SendRecipeToBackend()">Save</button>
+
             </div>
         </mat-step>
 
@@ -138,5 +142,5 @@
 
 <!--Cancel-->
 <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close mat-dialog-close="Clicked Cancel Btn">Cancel</button>
+    <button mat-button mat-dialog-close mat-dialog-close="Clicked Cancel Btn" id="cancel-button">Cancel</button>
 </mat-dialog-actions>
