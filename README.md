@@ -1,6 +1,7 @@
 # Foodie
 ## Description 
 Foodie a web application that allows the user to write, edit, and share recipes. The application automatically calculates relevant data (macronutrients, calories, nutritional value, etc.) based on the ingredients of the recipe. The data is presented via interactive data visualizations (graphs, charts, etc.). Recipes created by a user will be stored on a user's account and displayed on the home page. Users can also filter recipes by certain criteria (i.e. most recent, high protein, low calorie, etc.). Users can choose from hundreds of ingredients in our database to create recipes and track calories/nutrients. Try Foodie yourself!
+
 ## Members
 **Front-End**
  Dylan DePasquale and Richard Qian  
